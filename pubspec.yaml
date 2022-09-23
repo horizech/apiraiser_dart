@@ -1,6 +1,6 @@
 name: apiraiser
 description: Dart package for accessing Apiraiser, a headless CMS which provides easy-to-use backend for various kinds of applications like E-commerce, blogs, CMS etc.
-version: 0.1.0
+version: 0.1.1
 homepage: https://apiraiser.com
 repository: https://github.com/horizech/apiraiser_dart
 
