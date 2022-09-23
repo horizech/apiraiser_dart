@@ -9,7 +9,7 @@ export 'src/enums/column_condition.dart';
 export 'src/enums/column_data_type.dart';
 
 export 'src/models/api_result.dart';
-export 'src/models/coumn_info.dart';
+export 'src/models/column_info.dart';
 export 'src/models/initialize_request.dart';
 export 'src/models/login_request.dart';
 export 'src/models/query_search_item.dart';

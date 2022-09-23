@@ -29,7 +29,7 @@ class QuerySearchItem {
   Map<String, dynamic> toJson(QuerySearchItem instance) => <String, dynamic>{
         'Name': instance.name,
         'Value': instance.value,
-        'Condition': instance.condition,
+        'Condition': instance.condition.index,
         'CaseSensitive': instance.caseSensitive
       };
 }

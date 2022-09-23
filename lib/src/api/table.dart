@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 
 import 'package:apiraiser/src/helpers/state.dart';
 import 'package:apiraiser/src/helpers/headers.dart';
-import 'package:apiraiser/src/models/coumn_info.dart';
+import 'package:apiraiser/src/models/column_info.dart';
 import 'package:apiraiser/src/models/api_result.dart';
 
 /// Table APIs

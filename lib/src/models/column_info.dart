@@ -40,7 +40,7 @@ class ColumnInfo {
   /// Get Json from model
   Map<String, dynamic> toJson(ColumnInfo instance) => <String, dynamic>{
         'Name': instance.name,
-        'Datatype': instance.datatype,
+        'Datatype': instance.datatype.index,
         'IsRequired': instance.isRequired,
         'IsUnique': instance.isUnique,
         'IsForeignKey': instance.isForeignKey,
