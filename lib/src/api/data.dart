@@ -1,10 +1,10 @@
 import 'dart:convert';
-import 'package:apiraiser/src/models/query_search_item.dart';
 import 'package:http/http.dart' as http;
 
-import 'package:apiraiser/src/helpers/state.dart';
-import 'package:apiraiser/src/helpers/headers.dart';
 import 'package:apiraiser/src/models/api_result.dart';
+import 'package:apiraiser/src/models/query_search_item.dart';
+import 'package:apiraiser/src/helpers/headers.dart';
+import 'package:apiraiser/src/helpers/state.dart';
 
 /// Data APIs
 class Data {
@@ -71,7 +71,7 @@ class Data {
       var res = await http.post(
         Uri.parse('${State.endPoint}/API/table/$table/GetRowsByConditions'),
         headers: Headers.getHeaders(),
-        body: json.encode(conditions),
+        body: jsonEncode(conditions),
       );
       return APIResult.fromJson(json.decode(res.body));
     } catch (e) {
@@ -103,7 +103,7 @@ class Data {
       var res = await http.delete(
         Uri.parse('${State.endPoint}/API/table/$table/DeleteRows'),
         headers: Headers.getHeaders(),
-        body: json.encode(conditions),
+        body: jsonEncode(conditions),
       );
       return APIResult.fromJson(json.decode(res.body));
     } catch (e) {

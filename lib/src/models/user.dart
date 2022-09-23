@@ -6,7 +6,7 @@ class User {
   final String email;
   final String? password;
   final String? token;
-  final int? role;
+  final List<dynamic>? roles;
   final List<int>? roleIds;
   final List<String>? roleNames;
 
@@ -18,7 +18,7 @@ class User {
     required this.email,
     this.password,
     this.token,
-    this.role,
+    this.roles,
     this.roleIds,
     this.roleNames,
   });
@@ -29,13 +29,17 @@ class User {
       User user = User(
           id: json['Id'] as int?,
           username: json['Username'] as String,
-          fullname: json['Fullname'] as String,
+          fullname: json['Fullname'] ? json['Fullname'] as String : "",
           email: json['Email'] as String,
-          password: json['Password'] as String,
+          password: json['Password'] ? json['Password'] as String : null,
           token: json['Token'] as String,
-          role: json['Role'] as int?,
-          roleIds: json['RoleIds'] as List<int>?,
-          roleNames: json['RoleNames'] as List<String>?);
+          roles: (json['Roles'] as List<dynamic>),
+          roleIds: (json['Roles'] as List<dynamic>)
+              .map((x) => (x as Map<String, dynamic>)["Id"] as int)
+              .toList(),
+          roleNames: (json['Roles'] as List<dynamic>)
+              .map((x) => (x as Map<String, dynamic>)["Name"] as String)
+              .toList());
       return user;
     } catch (e) {
       rethrow;
@@ -50,7 +54,7 @@ class User {
         'Email': instance.email,
         'Password': instance.password,
         'Token': instance.token,
-        'Role': instance.role,
+        'Role': instance.roles,
         'RoleIds': instance.roleIds,
         'RoleNames': instance.roleNames,
       };

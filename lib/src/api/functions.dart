@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
+import 'package:apiraiser/src/models/api_result.dart';
 import 'package:apiraiser/src/helpers/state.dart';
 import 'package:apiraiser/src/helpers/headers.dart';
-import 'package:apiraiser/src/models/api_result.dart';
 
 /// Function APIs
 class Functions {
@@ -14,7 +14,7 @@ class Functions {
       var res = await http.post(
         Uri.parse('${State.endPoint}/API/function/Execute/$id'),
         headers: Headers.getHeaders(),
-        body: json.encode(jsonQuery),
+        body: jsonEncode(jsonQuery),
       );
       return APIResult.fromJson(json.decode(res.body));
     } catch (e) {
