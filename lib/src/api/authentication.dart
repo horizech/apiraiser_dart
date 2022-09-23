@@ -43,4 +43,9 @@ class Authentication {
     );
     return APIResult.fromJson(json.decode(res.body));
   }
+
+  /// Whether the user is signed in
+  bool isSignedIn() {
+    return State.jwt?.isNotEmpty ?? false;
+  }
 }
