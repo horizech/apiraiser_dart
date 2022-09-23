@@ -33,7 +33,7 @@ class QuerySearchItem {
     List<String> jsonList = [];
 
     for (final item in items) {
-      String jsonItem = json.encode(item);
+      String jsonItem = json.encode(item.toJson(item));
       jsonList.add(jsonItem);
     }
     //data['itemStockEntries'] = {'data': jsonList};

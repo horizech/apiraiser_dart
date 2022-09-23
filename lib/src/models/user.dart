@@ -29,9 +29,10 @@ class User {
       User user = User(
           id: json['Id'] as int?,
           username: json['Username'] as String,
-          fullname: json['Fullname'] ? json['Fullname'] as String : "",
+          fullname: json['Fullname'] != null ? json['Fullname'] as String : "",
           email: json['Email'] as String,
-          password: json['Password'] ? json['Password'] as String : null,
+          password:
+              json['Password'] != null ? json['Password'] as String : null,
           token: json['Token'] as String,
           roles: (json['Roles'] as List<dynamic>),
           roleIds: (json['Roles'] as List<dynamic>)
