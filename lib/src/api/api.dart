@@ -3,7 +3,6 @@ import 'package:apiraiser/src/api/initalization.dart';
 import 'package:apiraiser/src/api/miscellaneous.dart';
 import 'package:apiraiser/src/api/table.dart';
 import 'package:apiraiser/src/helpers/state.dart';
-import 'package:apiraiser/src/models/api_result.dart';
 import 'package:apiraiser/src/api/column.dart';
 import 'package:apiraiser/src/api/data.dart';
 import 'package:apiraiser/src/api/authentication.dart';
@@ -47,12 +46,6 @@ class Apiraiser {
   /// Loads and performs Authentication using jwt if exists
   static init(String endpoint) async {
     State.endPoint = endpoint;
-    String? jwt = await State.loadJwt();
-    if (jwt != null && jwt.isNotEmpty) {
-      APIResult result = await authentication.authLogin(jwt);
-      if (result.success) {
-        State.storeJwt(result.data['token']);
-      }
-    }
+    await authentication.loadLastSession();
   }
 }

@@ -1,10 +1,11 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-import 'package:apiraiser/src/helpers/state.dart';
+import 'package:apiraiser/src/models/api_result.dart';
 import 'package:apiraiser/src/models/login_request.dart';
 import 'package:apiraiser/src/models/signup_request.dart';
-import 'package:apiraiser/src/models/api_result.dart';
+import 'package:apiraiser/src/models/user.dart';
+import 'package:apiraiser/src/helpers/state.dart';
 
 /// Authentication APIs
 class Authentication {
@@ -17,7 +18,8 @@ class Authentication {
       headers: {"Content-Type": "application/json"},
       body: jsonEncode(loginData),
     );
-    return APIResult.fromJson(json.decode(res.body));
+    return State.processAuthenticationResult(
+        APIResult.fromJson(json.decode(res.body)));
   }
 
   /// Signup
@@ -29,23 +31,34 @@ class Authentication {
       headers: {"Content-Type": "application/json"},
       body: jsonEncode(signupData),
     );
-    return APIResult.fromJson(json.decode(res.body));
+    return State.processAuthenticationResult(
+        APIResult.fromJson(json.decode(res.body)));
   }
 
-  /// Perform auth login
-  authLogin(String jwt) async {
-    var res = await http.get(
-      Uri.parse('${State.endPoint}/API/Authentication/AuthLogin'),
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": "Bearer $jwt",
-      },
-    );
-    return APIResult.fromJson(json.decode(res.body));
+  /// Load last session
+  loadLastSession() async {
+    String? jwt = await State.loadJwt();
+    if (jwt?.isNotEmpty ?? false) {
+      var res = await http.get(
+        Uri.parse('${State.endPoint}/API/Authentication/AuthLogin'),
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer $jwt",
+        },
+      );
+      return State.processAuthenticationResult(
+          APIResult.fromJson(json.decode(res.body)));
+    } else {
+      return APIResult(success: false, message: "No previous session found!");
+    }
   }
 
   /// Whether the user is signed in
   bool isSignedIn() {
     return State.jwt?.isNotEmpty ?? false;
+  }
+
+  User? getCurrentUser() {
+    return State.user;
   }
 }
