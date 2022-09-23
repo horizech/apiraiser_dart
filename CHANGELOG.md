@@ -1,3 +1,7 @@
+## 0.1.6
+- Bugfixes.
+- Compatable with Apiraiser v0.6.1.
+
 ## 0.1.5
 - Updated User and jsonEncode.
 - Compatable with Apiraiser v0.6.1.
