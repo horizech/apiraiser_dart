@@ -71,7 +71,7 @@ class Data {
       var res = await http.post(
         Uri.parse('${State.endPoint}/API/table/$table/GetRowsByConditions'),
         headers: Headers.getHeaders(),
-        body: jsonEncode(conditions),
+        body: QuerySearchItem.toJsonList(conditions),
       );
       return APIResult.fromJson(json.decode(res.body));
     } catch (e) {
@@ -103,7 +103,7 @@ class Data {
       var res = await http.delete(
         Uri.parse('${State.endPoint}/API/table/$table/DeleteRows'),
         headers: Headers.getHeaders(),
-        body: jsonEncode(conditions),
+        body: QuerySearchItem.toJsonList(conditions),
       );
       return APIResult.fromJson(json.decode(res.body));
     } catch (e) {

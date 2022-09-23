@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:apiraiser/src/enums/column_condition.dart';
 
 /// Model used for conditions
@@ -23,6 +25,20 @@ class QuerySearchItem {
         condition: json['Condition'] as ColumnCondition,
         caseSensitive: json['CaseSensitive'] as bool);
     return info;
+  }
+
+  /// Get model from Json
+  static String toJsonList(List<QuerySearchItem> items) {
+    // new list of json strings to pass into data map
+    List<String> jsonList = [];
+
+    for (final item in items) {
+      String jsonItem = json.encode(item);
+      jsonList.add(jsonItem);
+    }
+    //data['itemStockEntries'] = {'data': jsonList};
+
+    return json.encode(jsonList);
   }
 
   /// Get Json from model
