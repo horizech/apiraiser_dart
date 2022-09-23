@@ -1,3 +1,7 @@
+## 0.1.4
+- Bugfixes.
+- Compatable with Apiraiser v0.6.1.
+
 ## 0.1.3
 - Bugfixes.
 - Compatable with Apiraiser v0.6.1.
