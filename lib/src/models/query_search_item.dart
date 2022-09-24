@@ -36,9 +36,8 @@ class QuerySearchItem {
       String jsonItem = json.encode(item.toJson(item));
       jsonList.add(jsonItem);
     }
-    //data['itemStockEntries'] = {'data': jsonList};
 
-    return json.encode(jsonList);
+    return "[${jsonList.join(",")}]";
   }
 
   /// Get Json from model

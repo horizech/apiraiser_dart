@@ -41,7 +41,7 @@ class State {
     if (auth.success) {
       /// The result seems good, load the user and jwt from it
       State.user = User.fromJson(auth.data);
-      State.jwt = auth.data['token'];
+      State.jwt = auth.data['Token'];
       storeJwt(State.jwt);
     } else {
       /// The result was unsuccessful, clear the session if exists
