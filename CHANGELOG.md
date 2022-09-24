@@ -1,3 +1,7 @@
+## 0.1.8
+- Updated Token logic.
+- Compatable with Apiraiser v0.6.1.
+
 ## 0.1.7
 - Updated jsonEncode.
 - Compatable with Apiraiser v0.6.1.
