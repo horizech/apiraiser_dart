@@ -18,7 +18,7 @@ class Authentication {
       headers: {"Content-Type": "application/json"},
       body: jsonEncode(loginData),
     );
-    return State.processAuthenticationResult(
+    return await State.processAuthenticationResult(
         APIResult.fromJson(json.decode(res.body)));
   }
 
@@ -31,7 +31,7 @@ class Authentication {
       headers: {"Content-Type": "application/json"},
       body: jsonEncode(signupData),
     );
-    return State.processAuthenticationResult(
+    return await State.processAuthenticationResult(
         APIResult.fromJson(json.decode(res.body)));
   }
 
@@ -46,7 +46,7 @@ class Authentication {
           "Authorization": "Bearer $jwt",
         },
       );
-      return State.processAuthenticationResult(
+      return await State.processAuthenticationResult(
           APIResult.fromJson(json.decode(res.body)));
     } else {
       return APIResult(success: false, message: "No previous session found!");
