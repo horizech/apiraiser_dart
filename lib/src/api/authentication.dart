@@ -58,7 +58,13 @@ class Authentication {
     return State.jwt?.isNotEmpty ?? false;
   }
 
+  /// Get current signed in user
   User? getCurrentUser() {
     return State.user;
+  }
+
+  /// Signout user by clearing session
+  void signOut() async {
+    await State.clearSession();
   }
 }
