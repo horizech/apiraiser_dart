@@ -1,3 +1,7 @@
+## 0.2.0
+- Asynchronous improvements.
+- Added signOut API.
+
 ## 0.1.8
 - Updated Token logic.
 - Compatable with Apiraiser v0.6.1.
