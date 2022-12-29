@@ -10,7 +10,7 @@ import 'package:apiraiser/src/helpers/state.dart';
 /// Authentication APIs
 class Authentication {
   /// Login
-  login(LoginRequest loginRequest) async {
+  Future<APIResult> login(LoginRequest loginRequest) async {
     Map<String, dynamic> loginData = loginRequest.toJson(loginRequest);
 
     var res = await http.post(
@@ -23,7 +23,7 @@ class Authentication {
   }
 
   /// Signup
-  signup(SignupRequest signupRequest) async {
+  Future<APIResult> signup(SignupRequest signupRequest) async {
     Map<String, dynamic> signupData = signupRequest.toJson(signupRequest);
 
     var res = await http.post(
@@ -36,7 +36,7 @@ class Authentication {
   }
 
   /// Load last session
-  loadLastSession() async {
+  Future<APIResult> loadLastSession() async {
     String? jwt = await State.loadJwt();
     if (jwt?.isNotEmpty ?? false) {
       var res = await http.get(
@@ -54,7 +54,7 @@ class Authentication {
   }
 
   /// Whether the user is signed in
-  isSignedIn() async {
+  Future<bool> isSignedIn() async {
     String? jwt = await State.loadJwt();
     return jwt?.isNotEmpty ?? false;
   }

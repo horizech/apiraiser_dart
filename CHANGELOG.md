@@ -1,3 +1,7 @@
+## 0.2.2
+
+- Updated authentication APIs.
+
 ## 0.2.1
 
 - Updated isSignedIn function.
