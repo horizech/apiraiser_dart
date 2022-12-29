@@ -54,8 +54,9 @@ class Authentication {
   }
 
   /// Whether the user is signed in
-  bool isSignedIn() {
-    return State.jwt?.isNotEmpty ?? false;
+  isSignedIn() async {
+    String? jwt = await State.loadJwt();
+    return jwt?.isNotEmpty ?? false;
   }
 
   /// Get current signed in user
