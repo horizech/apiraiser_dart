@@ -1,10 +1,10 @@
 import 'dart:convert';
+import 'dart:typed_data';
+import 'package:apiraiser/apiraiser.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:apiraiser/src/helpers/state.dart';
 import 'package:apiraiser/src/helpers/headers.dart';
-import 'package:apiraiser/src/models/column_info.dart';
-import 'package:apiraiser/src/models/api_result.dart';
 
 /// Table APIs
 class Table {
@@ -27,6 +27,26 @@ class Table {
   Future<APIResult> getList() async {
     var res = await http.get(Uri.parse('${State.endPoint}/API/GetTablesList'),
         headers: Headers.getHeaders());
+    return APIResult.fromJson(json.decode(res.body));
+  }
+
+  /// Download table Definition File
+  Future<Uint8List> downloadDefinitionFile(String table) async {
+    var res = await http.get(
+      Uri.parse('${State.endPoint}/API/DownloadTableDefinitionFile/$table'),
+      headers: Headers.getHeaders(),
+    );
+    return res.bodyBytes;
+  }
+
+  /// Delete a table
+  Future<APIResult> delete(
+    String table,
+  ) async {
+    var res = await http.delete(
+      Uri.parse('${State.endPoint}/API/DeleteTable?table=$table'),
+      headers: Headers.getHeaders(),
+    );
     return APIResult.fromJson(json.decode(res.body));
   }
 }

@@ -1,6 +1,9 @@
 import 'package:apiraiser/src/api/functions.dart';
+import 'package:apiraiser/src/api/importexport.dart';
 import 'package:apiraiser/src/api/initalization.dart';
+import 'package:apiraiser/src/api/media.dart';
 import 'package:apiraiser/src/api/miscellaneous.dart';
+import 'package:apiraiser/src/api/storage.dart';
 import 'package:apiraiser/src/api/table.dart';
 import 'package:apiraiser/src/helpers/state.dart';
 import 'package:apiraiser/src/api/column.dart';
@@ -33,6 +36,15 @@ class Apiraiser {
 
   /// Users APIs
   static Users users = Users();
+
+  /// Media APIs
+  static Media media = Media();
+
+  /// ImportExport APIs
+  static ImportExport importExport = ImportExport();
+
+  /// Storage APIs
+  static Storage storage = Storage();
 
   /// Token Validation
   static void validateAuthentication() {
