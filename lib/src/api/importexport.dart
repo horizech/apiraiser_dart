@@ -1,7 +1,6 @@
 import 'dart:typed_data';
 import 'package:apiraiser/apiraiser.dart';
 import 'package:apiraiser/src/helpers/headers.dart';
-import 'package:apiraiser/src/models/import_request.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:apiraiser/src/helpers/state.dart';

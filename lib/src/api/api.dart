@@ -1,8 +1,11 @@
+import 'package:apiraiser/src/api/encryption.dart';
+import 'package:apiraiser/src/api/features.dart';
 import 'package:apiraiser/src/api/functions.dart';
 import 'package:apiraiser/src/api/importexport.dart';
 import 'package:apiraiser/src/api/initalization.dart';
 import 'package:apiraiser/src/api/media.dart';
 import 'package:apiraiser/src/api/miscellaneous.dart';
+import 'package:apiraiser/src/api/oauth2.dart';
 import 'package:apiraiser/src/api/storage.dart';
 import 'package:apiraiser/src/api/table.dart';
 import 'package:apiraiser/src/helpers/state.dart';
@@ -43,8 +46,17 @@ class Apiraiser {
   /// ImportExport APIs
   static ImportExport importExport = ImportExport();
 
+  /// Feature APIs
+  static Feature feature = Feature();
+
   /// Storage APIs
   static Storage storage = Storage();
+
+  /// OAuth2 APIs
+  static OAuth2 oAuth2 = OAuth2();
+
+  /// Encryption APIs
+  static Encryption encryption = Encryption();
 
   /// Token Validation
   static void validateAuthentication() {
@@ -56,8 +68,12 @@ class Apiraiser {
   /// Initialize the library with provided [endpoint]
   ///
   /// Loads and performs Authentication using jwt if exists
-  static init(String endpoint) async {
+  static init(String endpoint, {String? jwt}) async {
     State.endPoint = endpoint;
-    await authentication.loadLastSession();
+    if (jwt != null && jwt.isNotEmpty) {
+      return await Apiraiser.authentication.loadSessionUsingJwt(jwt);
+    } else {
+      return true;
+    }
   }
 }

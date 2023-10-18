@@ -10,7 +10,9 @@ environment:
 
 dependencies:
   flutter_secure_storage: ^8.0.0
-  http: ^1.0.0
+  http: ^1.1.0
+  http_parser:
+  dio: ^5.3.3
 
 dev_dependencies:
   lints: ^2.0.0

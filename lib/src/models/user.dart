@@ -1,14 +1,18 @@
 /// User model
 class User {
-  final int? id;
+  final String? id;
   final String username;
   final String fullname;
   final String email;
   final String? password;
-  final String? token;
+  final String? accessToken;
+  final String? refreshToken;
   final List<dynamic>? roles;
-  final List<int>? roleIds;
+  final List<String>? roleIds;
   final List<String>? roleNames;
+  final bool? emailVerified;
+  final String? phone;
+  final String? address;
 
   /// Constructor
   User({
@@ -17,7 +21,11 @@ class User {
     required this.fullname,
     required this.email,
     this.password,
-    this.token,
+    this.accessToken,
+    this.refreshToken,
+    this.address,
+    this.emailVerified,
+    this.phone,
     this.roles,
     this.roleIds,
     this.roleNames,
@@ -27,20 +35,26 @@ class User {
   factory User.fromJson(Map<String, dynamic> json) {
     try {
       User user = User(
-          id: json['Id'] as int?,
+          id: json['Id'] as String?,
           username: json['Username'] as String,
           fullname: json['Fullname'] != null ? json['Fullname'] as String : "",
           email: json['Email'] as String,
           password:
               json['Password'] != null ? json['Password'] as String : null,
-          token: json['Token'] as String,
+          accessToken: json['AccessToken'] as String?,
+          refreshToken: json['RefreshToken'] as String?,
+          address: json['Address'] as String?,
+          phone: json['Phone'] as String?,
           roles: (json['Roles'] as List<dynamic>),
           roleIds: (json['Roles'] as List<dynamic>)
-              .map((x) => (x as Map<String, dynamic>)["Id"] as int)
+              .map((x) => (x as Map<String, dynamic>)["Id"] as String)
               .toList(),
           roleNames: (json['Roles'] as List<dynamic>)
               .map((x) => (x as Map<String, dynamic>)["Name"] as String)
-              .toList());
+              .toList(),
+          emailVerified: (json['EmailVerified'] as bool?) != null
+              ? json['EmailVerified'] as bool
+              : false);
       return user;
     } catch (e) {
       rethrow;
@@ -54,7 +68,11 @@ class User {
         'Fullname': instance.fullname,
         'Email': instance.email,
         'Password': instance.password,
-        'Token': instance.token,
+        'AccessToken': instance.accessToken,
+        'RefreshToken': instance.refreshToken,
+        'Address': instance.address,
+        'Phone': instance.phone,
+        'EmailVerified': instance.emailVerified,
         'Role': instance.roles,
         'RoleIds': instance.roleIds,
         'RoleNames': instance.roleNames,

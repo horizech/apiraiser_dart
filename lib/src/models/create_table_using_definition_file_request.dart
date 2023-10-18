@@ -3,12 +3,12 @@ import 'dart:typed_data';
 /// CreateTableUsingDefinitionFileRequest model
 class CreateTableUsingDefinitionFileRequest {
   final Uint8List file;
-  final int menuGroup;
+  final String? tags;
 
   /// Constructor
   const CreateTableUsingDefinitionFileRequest({
     required this.file,
-    required this.menuGroup,
+    this.tags,
   });
 
   /// Get model from Json
@@ -16,7 +16,7 @@ class CreateTableUsingDefinitionFileRequest {
       Map<String, dynamic> json) {
     CreateTableUsingDefinitionFileRequest info =
         CreateTableUsingDefinitionFileRequest(
-      menuGroup: json['MenuGroup'] as int,
+      tags: json['Tags'] as String?,
       file: json['FormFile'] as Uint8List,
     );
     return info;
@@ -26,6 +26,6 @@ class CreateTableUsingDefinitionFileRequest {
   Map<String, dynamic> toJson(CreateTableUsingDefinitionFileRequest instance) =>
       <String, dynamic>{
         'FormFile': instance.file,
-        'MenuGroup': instance.menuGroup,
+        'Tags': instance.tags,
       };
 }

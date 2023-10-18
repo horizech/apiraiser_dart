@@ -38,14 +38,16 @@ class ColumnInfo {
   }
 
   /// Get Json from model
-  Map<String, dynamic> toJson(ColumnInfo instance) => <String, dynamic>{
-        'Name': instance.name,
-        'Datatype': instance.datatype.index,
-        'IsRequired': instance.isRequired,
-        'IsUnique': instance.isUnique,
-        'IsForeignKey': instance.isForeignKey,
-        'ForeignTable': instance.foreignTable,
-        'ForeignName': instance.foreignName,
-        'DefaultValue': instance.defaultValue,
-      };
+  Map<String, dynamic> toJson(ColumnInfo instance) {
+    return <String, dynamic>{
+      'Name': instance.name,
+      'Datatype': instance.datatype.index,
+      'IsRequired': instance.isRequired,
+      'IsUnique': instance.isUnique,
+      'IsForeignKey': instance.isForeignKey,
+      'ForeignTable': instance.foreignTable,
+      'ForeignName': instance.foreignName,
+      'DefaultValue': instance.defaultValue,
+    };
+  }
 }

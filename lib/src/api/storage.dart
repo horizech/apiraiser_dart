@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:typed_data';
 import 'package:apiraiser/src/helpers/headers.dart';
 import 'package:apiraiser/src/models/sorage_upload_request.dart';
 import 'package:http/http.dart' as http;
@@ -48,14 +49,21 @@ class Storage {
     );
   }
 
-  /// Delete a Storage
-  Future<APIResult> delete(
-    int storageId,
-  ) async {
+  /// Delete Storage
+  Future<APIResult> delete(String storageId) async {
     var res = await http.delete(
-      Uri.parse('${State.endPoint}/API/Storage?StorageId=$storageId'),
+      Uri.parse('${State.endPoint}/API/Storage/$storageId'),
       headers: Headers.getHeaders(),
     );
     return APIResult.fromJson(json.decode(res.body));
+  }
+
+  /// Download Storage
+  Future<Uint8List> download(String storageId) async {
+    var res = await http.get(
+      Uri.parse('${State.endPoint}/API/Storage/download/$storageId'),
+      headers: Headers.getHeaders(),
+    );
+    return res.bodyBytes;
   }
 }

@@ -9,7 +9,7 @@ import 'package:apiraiser/src/helpers/headers.dart';
 class Functions {
   /// Execute Function by [id]
   Future<APIResult> excuteFunction(
-      int id, Map<String, dynamic> jsonQuery) async {
+      String id, Map<String, dynamic> jsonQuery) async {
     try {
       var res = await http.post(
         Uri.parse('${State.endPoint}/API/function/Execute/$id'),

@@ -10,11 +10,15 @@ import 'package:apiraiser/src/helpers/state.dart';
 class Data {
   /// Get table rows
   Future<APIResult> get(String table, int limit) async {
-    var res = await http.get(
-        Uri.parse(
-            '${State.endPoint}/API/table/$table${limit > 0 ? '?limit=$limit' : ''}'),
-        headers: Headers.getHeaders());
-    return APIResult.fromJson(json.decode(res.body));
+    try {
+      var res = await http.get(
+          Uri.parse(
+              '${State.endPoint}/API/table/$table${limit > 0 ? '?limit=$limit' : ''}'),
+          headers: Headers.getHeaders());
+      return APIResult.fromJson(json.decode(res.body));
+    } catch (e) {
+      rethrow;
+    }
   }
 
   /// Insert a new row
@@ -32,26 +36,34 @@ class Data {
   }
 
   /// Get row
-  Future<APIResult> getById(String table, int id) async {
-    var res = await http.get(
-        Uri.parse('${State.endPoint}/API/table/$table/$id'),
-        headers: Headers.getHeaders());
-    return APIResult.fromJson(json.decode(res.body));
+  Future<APIResult> getById(String table, String id) async {
+    try {
+      var res = await http.get(
+          Uri.parse('${State.endPoint}/API/table/$table/$id'),
+          headers: Headers.getHeaders());
+      return APIResult.fromJson(json.decode(res.body));
+    } catch (e) {
+      rethrow;
+    }
   }
 
   /// Update row
   Future<APIResult> update(
-      String table, int id, Map<String, dynamic> data) async {
-    var res = await http.put(
-      Uri.parse('${State.endPoint}/API/table/$table/$id'),
-      headers: Headers.getHeaders(),
-      body: jsonEncode(data),
-    );
-    return APIResult.fromJson(json.decode(res.body));
+      String table, String id, Map<String, dynamic> data) async {
+    try {
+      var res = await http.put(
+        Uri.parse('${State.endPoint}/API/table/$table/$id'),
+        headers: Headers.getHeaders(),
+        body: jsonEncode(data),
+      );
+      return APIResult.fromJson(json.decode(res.body));
+    } catch (e) {
+      rethrow;
+    }
   }
 
   /// Delete row
-  Future<APIResult> delete(String table, int id) async {
+  Future<APIResult> delete(String table, String id) async {
     try {
       var res = await http.delete(
           Uri.parse('${State.endPoint}/API/table/$table/$id'),
@@ -87,6 +99,25 @@ class Data {
         Uri.parse('${State.endPoint}/API/table/$table/InsertRows'),
         headers: Headers.getHeaders(),
         body: jsonEncode(data),
+      );
+      return APIResult.fromJson(json.decode(res.body));
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  /// Update rows by conditions
+  Future<APIResult> updateByConditions(String table,
+      List<QuerySearchItem> conditions, Map<String, dynamic> data) async {
+    Map<String, dynamic> dataMap = {
+      "Data": data,
+      "Parameters": conditions.map((e) => e.toJson(e)).toList()
+    };
+    try {
+      var res = await http.put(
+        Uri.parse('${State.endPoint}/API/table/$table/UpdateRows'),
+        headers: Headers.getHeaders(),
+        body: jsonEncode(dataMap),
       );
       return APIResult.fromJson(json.decode(res.body));
     } catch (e) {

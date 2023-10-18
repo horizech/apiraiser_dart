@@ -10,17 +10,26 @@ import 'package:apiraiser/src/models/api_result.dart';
 class Column {
   /// Get predefined columns
   Future<APIResult> getPredefinedColumns() async {
-    var res = await http.get(
-        Uri.parse('${State.endPoint}/API/GetPredefinedColumns'),
-        headers: Headers.getHeaders());
-    return APIResult.fromJson(json.decode(res.body));
+    try {
+      var res = await http.get(
+          Uri.parse('${State.endPoint}/API/GetPredefinedColumns'),
+          headers: Headers.getHeaders());
+      return APIResult.fromJson(json.decode(res.body));
+    } catch (e) {
+      rethrow;
+    }
   }
 
   /// Get columns
   Future<APIResult> get(String table) async {
-    var res = await http.get(Uri.parse('${State.endPoint}/API/$table/Columns'),
-        headers: Headers.getHeaders());
-    return APIResult.fromJson(json.decode(res.body));
+    try {
+      var res = await http.get(
+          Uri.parse('${State.endPoint}/API/$table/Columns'),
+          headers: Headers.getHeaders());
+      return APIResult.fromJson(json.decode(res.body));
+    } catch (e) {
+      rethrow;
+    }
   }
 
   /// Add a new column

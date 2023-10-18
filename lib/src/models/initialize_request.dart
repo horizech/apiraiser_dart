@@ -3,14 +3,12 @@ class InitializeRequest {
   final String username;
   final String email;
   final String password;
-  final String? template;
 
   /// Constructor
   const InitializeRequest({
     required this.username,
     required this.email,
     required this.password,
-    this.template,
   });
 
   /// Get model from Json
@@ -20,7 +18,6 @@ class InitializeRequest {
         username: json['Username'] as String,
         email: json['Email'] as String,
         password: json['Password'] as String,
-        template: json['Template'] as String?,
       );
       return initializeRequest;
     } catch (e) {
@@ -33,6 +30,5 @@ class InitializeRequest {
         'Username': instance.username,
         'Email': instance.email,
         'Password': instance.password,
-        'Template': instance.template,
       };
 }

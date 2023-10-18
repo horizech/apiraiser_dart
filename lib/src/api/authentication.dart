@@ -36,11 +36,11 @@ class Authentication {
   }
 
   /// Load last session
-  Future<APIResult> loadLastSession() async {
-    String? jwt = await State.loadJwt();
-    if (jwt?.isNotEmpty ?? false) {
+  Future<APIResult> loadSessionUsingJwt(String? jwt) async {
+    if (jwt != null && jwt.isNotEmpty) {
+      State.jwt = jwt;
       var res = await http.get(
-        Uri.parse('${State.endPoint}/API/Authentication/AuthLogin'),
+        Uri.parse('${State.endPoint}/API/Authentication/LoadSessionUsingJwt'),
         headers: {
           "Content-Type": "application/json",
           "Authorization": "Bearer $jwt",
@@ -49,7 +49,11 @@ class Authentication {
       return await State.processAuthenticationResult(
           APIResult.fromJson(json.decode(res.body)));
     } else {
-      return APIResult(success: false, message: "No previous session found!");
+      return APIResult(
+        success: false,
+        data: null,
+        message: 'Please provide JWT token!',
+      );
     }
   }
 
