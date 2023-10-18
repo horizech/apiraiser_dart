@@ -1,10 +1,11 @@
 import 'dart:convert';
 import 'dart:typed_data';
 import 'package:apiraiser/apiraiser.dart';
+import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:apiraiser/src/helpers/state.dart';
-import 'package:apiraiser/src/helpers/headers.dart';
+import 'package:apiraiser/src/helpers/headers.dart' as helper;
 
 /// Table APIs
 class Table {
@@ -16,12 +17,12 @@ class Table {
           columns.map((e) => e.toJson(e)).toList();
       var res = await http.post(
         Uri.parse('${State.endPoint}/API/CreateTable?table=$table&tags=$tags'),
-        headers: Headers.getHeaders(),
+        headers: helper.Headers.getHeaders(),
         body: jsonEncode(data),
       );
       return APIResult.fromJson(json.decode(res.body));
     } catch (e) {
-      rethrow;
+      return APIResult(message: e.toString(), success: false);
     }
   }
 
@@ -31,14 +32,26 @@ class Table {
   Future<APIResult> createUsingDefinitionFile(
       CreateTableUsingDefinitionFileRequest request) async {
     try {
-      var res = await http.post(
-        Uri.parse('${State.endPoint}/API/CreateTableUsingDefinitionFile'),
-        headers: Headers.getHeaders(),
-        body: jsonEncode(request),
-      );
-      return APIResult.fromJson(json.decode(res.body));
+      final dio = Dio();
+      dio.options.headers['content-Type'] = 'application/json';
+      if (State.jwt?.isNotEmpty ?? false) {
+        dio.options.headers["authorization"] = "Bearer ${State.jwt}";
+      }
+
+      // single file
+      FormData formData = FormData.fromMap({
+        "FormFile": MultipartFile.fromBytes(
+          request.file,
+          filename: "file",
+        ),
+        "Tags": request.tags
+      });
+      var response = await dio.post(
+          '${State.endPoint}/API/CreateTableUsingDefinitionFile',
+          data: formData);
+      return APIResult.fromJson(response.data);
     } catch (e) {
-      rethrow;
+      return APIResult(message: e.toString(), success: false);
     }
   }
 
@@ -46,10 +59,10 @@ class Table {
   Future<APIResult> getList() async {
     try {
       var res = await http.get(Uri.parse('${State.endPoint}/API/GetTablesList'),
-          headers: Headers.getHeaders());
+          headers: helper.Headers.getHeaders());
       return APIResult.fromJson(json.decode(res.body));
     } catch (e) {
-      rethrow;
+      return APIResult(message: e.toString(), success: false);
     }
   }
 
@@ -58,7 +71,7 @@ class Table {
     try {
       var res = await http.get(
         Uri.parse('${State.endPoint}/API/DownloadTableDefinitionFile/$table'),
-        headers: Headers.getHeaders(),
+        headers: helper.Headers.getHeaders(),
       );
       return res.bodyBytes;
     } catch (e) {
@@ -71,11 +84,11 @@ class Table {
     try {
       var res = await http.delete(
         Uri.parse('${State.endPoint}/API/DeleteTable?table=$table'),
-        headers: Headers.getHeaders(),
+        headers: helper.Headers.getHeaders(),
       );
       return APIResult.fromJson(json.decode(res.body));
     } catch (e) {
-      rethrow;
+      return APIResult(message: e.toString(), success: false);
     }
   }
 }

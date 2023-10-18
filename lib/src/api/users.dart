@@ -66,7 +66,7 @@ class Users {
       );
       return APIResult.fromJson(json.decode(res.body));
     } catch (e) {
-      rethrow;
+      return APIResult(message: e.toString(), success: false);
     }
   }
 
@@ -97,7 +97,7 @@ class Users {
       );
       return APIResult.fromJson(json.decode(res.body));
     } catch (e) {
-      rethrow;
+      return APIResult(message: e.toString(), success: false);
     }
   }
 
@@ -109,7 +109,7 @@ class Users {
           headers: Headers.getHeaders());
       return APIResult.fromJson(json.decode(res.body));
     } catch (e) {
-      rethrow;
+      return APIResult(message: e.toString(), success: false);
     }
   }
 }

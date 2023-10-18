@@ -1,7 +1,8 @@
 import 'dart:convert';
 import 'dart:typed_data';
-import 'package:apiraiser/src/helpers/headers.dart';
+import 'package:apiraiser/src/helpers/headers.dart' as headers;
 import 'package:apiraiser/src/models/sorage_upload_request.dart';
+import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
 import 'package:apiraiser/src/helpers/state.dart';
 import 'package:apiraiser/src/models/api_result.dart';
@@ -9,61 +10,88 @@ import 'package:apiraiser/src/models/api_result.dart';
 /// Storage APIs
 class Storage {
   /// upload Storage
-  Future<APIResult> upload(StorageUploadRequest storageUploadRequest) async {
-    var request = http.MultipartRequest(
-      'POST',
-      Uri.parse('${State.endPoint}/API/Storage'),
-    );
-    request.headers.addAll(
-      Headers.getHeaders(),
-    );
-    request.fields.addEntries({
-      "StorageId": "${storageUploadRequest.storageId}",
-      "FileName": "${storageUploadRequest.fileName}",
-      "StorageSource": "${storageUploadRequest.storageSource}",
-      "Path": "${storageUploadRequest.path}"
-    }.entries);
-    if (storageUploadRequest.file != null &&
-        storageUploadRequest.file!.isNotEmpty) {
-      // single file
-      request.files.add(
-        http.MultipartFile.fromBytes("FormFile", storageUploadRequest.file!,
-            filename: storageUploadRequest.fileName),
-      );
-    } else if (storageUploadRequest.files != null &&
-        storageUploadRequest.files!.isNotEmpty) {
-      // multiple files
-      for (var file in storageUploadRequest.files!) {
-        request.files.add(
-          http.MultipartFile.fromBytes("FormFile", file,
-              filename: storageUploadRequest.fileName),
-        );
+  Future<APIResult?> upload(StorageUploadRequest request) async {
+    try {
+      final dio = Dio();
+      dio.options.headers['content-Type'] = 'application/json';
+      if (State.jwt?.isNotEmpty ?? false) {
+        dio.options.headers["authorization"] = "Bearer ${State.jwt}";
       }
-    }
-    var res = await request.send();
+      FormData formData = FormData.fromMap({});
 
-    return APIResult.fromJson(
-      json.decode(
-        await res.stream.bytesToString(),
-      ),
-    );
+      // single file
+      if (request.file != null && request.file!.isNotEmpty) {
+        formData = FormData.fromMap({
+          "FormFile": MultipartFile.fromBytes(
+            request.file!,
+            filename: request.fileName ?? "image",
+          ),
+          "FileName": request.fileName ?? "image",
+          "Path": request.path,
+          "StorageSource": request.storageSource
+        });
+      }
+      var response =
+          await dio.post('${State.endPoint}/API/Storage', data: formData);
+      return APIResult.fromJson(response.data);
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<APIResult?> update(
+      String storageId, StorageUploadRequest request) async {
+    try {
+      final dio = Dio();
+      dio.options.headers['content-Type'] = 'application/json';
+      if (State.jwt?.isNotEmpty ?? false) {
+        dio.options.headers["authorization"] = "Bearer ${State.jwt}";
+      }
+      FormData formData = FormData.fromMap({});
+
+      // single file
+      if (request.file != null && request.file!.isNotEmpty) {
+        formData = FormData.fromMap({
+          "FormFile": MultipartFile.fromBytes(
+            request.file!,
+            filename: request.fileName,
+          ),
+          "FileName": request.fileName,
+          "Path": request.path,
+          "StorageSource": request.storageSource
+        });
+      }
+      var response = await dio.put('${State.endPoint}/API/Storage/$storageId',
+          data: formData);
+      return APIResult.fromJson(response.data);
+    } catch (e) {
+      return null;
+    }
   }
 
   /// Delete Storage
   Future<APIResult> delete(String storageId) async {
-    var res = await http.delete(
-      Uri.parse('${State.endPoint}/API/Storage/$storageId'),
-      headers: Headers.getHeaders(),
-    );
-    return APIResult.fromJson(json.decode(res.body));
+    try {
+      var res = await http.delete(
+        Uri.parse('${State.endPoint}/API/Storage/$storageId'),
+        headers: headers.Headers.getHeaders(),
+      );
+      return APIResult.fromJson(json.decode(res.body));
+    } catch (e) {
+      return APIResult(message: e.toString(), success: false);
+    }
   }
 
   /// Download Storage
   Future<Uint8List> download(String storageId) async {
-    var res = await http.get(
-      Uri.parse('${State.endPoint}/API/Storage/download/$storageId'),
-      headers: Headers.getHeaders(),
-    );
-    return res.bodyBytes;
+    try {
+      var res = await http.get(
+        Uri.parse('${State.endPoint}/API/Storage/download/$storageId'),
+        headers: headers.Headers.getHeaders(),
+      );
+      return res.bodyBytes;
+    } catch (e) {
+      rethrow;
+    }
   }
 }

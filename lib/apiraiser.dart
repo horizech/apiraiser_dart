@@ -16,8 +16,8 @@ export 'src/models/query_search_item.dart';
 export 'src/models/signup_request.dart';
 export 'src/models/user.dart';
 export 'src/models/create_table_using_definition_file_request.dart';
-export 'src/models/import_request.dart';
 export 'src/models/media_upload_request.dart';
+export 'src/models/sorage_upload_request.dart';
 
 
 

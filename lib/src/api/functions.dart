@@ -18,7 +18,7 @@ class Functions {
       );
       return APIResult.fromJson(json.decode(res.body));
     } catch (e) {
-      rethrow;
+      return APIResult(message: e.toString(), success: false);
     }
   }
 }

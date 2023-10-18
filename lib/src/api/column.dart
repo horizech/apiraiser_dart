@@ -16,7 +16,7 @@ class Column {
           headers: Headers.getHeaders());
       return APIResult.fromJson(json.decode(res.body));
     } catch (e) {
-      rethrow;
+      return APIResult(message: e.toString(), success: false);
     }
   }
 
@@ -28,7 +28,7 @@ class Column {
           headers: Headers.getHeaders());
       return APIResult.fromJson(json.decode(res.body));
     } catch (e) {
-      rethrow;
+      return APIResult(message: e.toString(), success: false);
     }
   }
 
@@ -43,7 +43,7 @@ class Column {
       );
       return APIResult.fromJson(json.decode(res.body));
     } catch (e) {
-      rethrow;
+      return APIResult(message: e.toString(), success: false);
     }
   }
 
@@ -56,7 +56,7 @@ class Column {
       );
       return APIResult.fromJson(json.decode(res.body));
     } catch (e) {
-      rethrow;
+      return APIResult(message: e.toString(), success: false);
     }
   }
 }

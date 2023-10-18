@@ -29,7 +29,7 @@ class APIResult {
       );
       return apiResult;
     } catch (e) {
-      rethrow;
+      return APIResult(message: e.toString(), success: false);
     }
   }
 

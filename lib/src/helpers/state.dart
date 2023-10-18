@@ -37,11 +37,16 @@ class State {
   /// Process authentication result from [auth] as current user and returns [auth] back
   ///
   /// Loads user and jwt if successful, otherwise clears the jwt and current user.
-  static Future<APIResult> processAuthenticationResult(APIResult auth) async {
+  static Future<APIResult> processAuthenticationResult(APIResult auth,
+      {String? jwt}) async {
     if (auth.success) {
       /// The result seems good, load the user and jwt from it
       State.user = User.fromJson(auth.data);
-      State.jwt = auth.data['AccessToken'];
+      if (jwt != null) {
+        State.jwt = jwt;
+      } else {
+        State.jwt = auth.data['AccessToken'];
+      }
       await storeJwt(State.jwt);
     } else {
       /// The result was unsuccessful, clear the session if exists

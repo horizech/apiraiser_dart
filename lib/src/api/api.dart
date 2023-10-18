@@ -68,10 +68,11 @@ class Apiraiser {
   /// Initialize the library with provided [endpoint]
   ///
   /// Loads and performs Authentication using jwt if exists
-  static init(String endpoint, {String? jwt}) async {
+  static init(String endpoint) async {
     State.endPoint = endpoint;
-    if (jwt != null && jwt.isNotEmpty) {
-      return await Apiraiser.authentication.loadSessionUsingJwt(jwt);
+    String jwt = await State.loadJwt() ?? "";
+    if (jwt.isNotEmpty) {
+      await Apiraiser.authentication.loadSessionUsingJwt(jwt);
     } else {
       return true;
     }

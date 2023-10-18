@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:apiraiser/src/helpers/headers.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:apiraiser/src/models/api_result.dart';
@@ -47,7 +48,8 @@ class Authentication {
         },
       );
       return await State.processAuthenticationResult(
-          APIResult.fromJson(json.decode(res.body)));
+          APIResult.fromJson(json.decode(res.body)),
+          jwt: jwt);
     } else {
       return APIResult(
         success: false,
@@ -55,6 +57,26 @@ class Authentication {
         message: 'Please provide JWT token!',
       );
     }
+  }
+
+  /// Forgot Password
+  Future<APIResult> forgotPassword(String email) async {
+    var res = await http.post(
+      Uri.parse('${State.endPoint}/API/Authentication/ForgotPassword'),
+      headers: {"Content-Type": "application/json"},
+      body: email,
+    );
+    return APIResult.fromJson(json.decode(res.body));
+  }
+
+  /// Verify
+  Future<APIResult> verify(String token) async {
+    var res = await http.post(
+      Uri.parse('${State.endPoint}/API/Authentication/Verify'),
+      headers: {"Content-Type": "application/json"},
+      body: token,
+    );
+    return APIResult.fromJson(json.decode(res.body));
   }
 
   /// Whether the user is signed in
@@ -70,5 +92,9 @@ class Authentication {
   /// Signout user by clearing session
   void signOut() async {
     await State.clearSession();
+    await http.get(
+      Uri.parse('${State.endPoint}/API/Authentication/Logout'),
+      headers: Headers.getHeaders(),
+    );
   }
 }
