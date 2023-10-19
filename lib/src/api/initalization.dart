@@ -11,7 +11,7 @@ class Initialization {
   /// Is Apiraiser Initialized
   static Future<APIResult> isInitialized() async {
     var res = await http.get(
-        Uri.parse('${State.endPoint}/API/Apiraiser/IsInitialized'),
+        Uri.parse('${State.endPoint}/API/v1/API/v1raiser/IsInitialized'),
         headers: Headers.getHeaders());
     return APIResult.fromJson(json.decode(res.body));
   }
@@ -22,7 +22,7 @@ class Initialization {
     Map<String, dynamic> data = initializeRequest.toJson(initializeRequest);
     try {
       var res = await http.post(
-        Uri.parse('${State.endPoint}/API/Apiraiser/Initialize'),
+        Uri.parse('${State.endPoint}/API/v1/API/v1raiser/Initialize'),
         headers: Headers.getHeaders(),
         body: jsonEncode(data),
       );

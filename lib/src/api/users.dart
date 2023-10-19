@@ -11,7 +11,7 @@ class Users {
   /// Get user roles by [userId]
   Future<APIResult> getUserRoles(String userId) async {
     var res = await http.get(
-        Uri.parse('${State.endPoint}/API/Users/GetUserRoles/$userId'),
+        Uri.parse('${State.endPoint}/API/v1/Users/GetUserRoles/$userId'),
         headers: Headers.getHeaders());
     return APIResult.fromJson(json.decode(res.body));
   }
@@ -19,14 +19,15 @@ class Users {
   /// Get user by [id]
   Future<APIResult> get(String id) async {
     var res = await http.get(
-        Uri.parse('${State.endPoint}/API/Users/GetUser/$id'),
+        Uri.parse('${State.endPoint}/API/v1/Users/GetUser/$id'),
         headers: Headers.getHeaders());
     return APIResult.fromJson(json.decode(res.body));
   }
 
   /// Get all users
   Future<APIResult> getAll() async {
-    var res = await http.get(Uri.parse('${State.endPoint}/API/Users/GetUsers'),
+    var res = await http.get(
+        Uri.parse('${State.endPoint}/API/v1/Users/GetUsers'),
         headers: Headers.getHeaders());
     return APIResult.fromJson(json.decode(res.body));
   }
@@ -34,7 +35,8 @@ class Users {
   /// Check if username is available
   Future<APIResult> isUsernameAvailable(String username) async {
     var res = await http.get(
-        Uri.parse('${State.endPoint}/API/Users/IsUsernameAvailable/$username'),
+        Uri.parse(
+            '${State.endPoint}/API/v1/Users/IsUsernameAvailable/$username'),
         headers: Headers.getHeaders());
     return APIResult.fromJson(json.decode(res.body));
   }
@@ -42,7 +44,7 @@ class Users {
   /// Check if email is available
   Future<APIResult> isEmailAvailable(String email) async {
     var res = await http.get(
-        Uri.parse('${State.endPoint}/API/Users/IsEmailAvailable/$email'),
+        Uri.parse('${State.endPoint}/API/v1/Users/IsEmailAvailable/$email'),
         headers: Headers.getHeaders());
     return APIResult.fromJson(json.decode(res.body));
   }
@@ -60,7 +62,7 @@ class Users {
     };
     try {
       var res = await http.post(
-        Uri.parse('${State.endPoint}/API/Users/AddUser'),
+        Uri.parse('${State.endPoint}/API/v1/Users/AddUser'),
         headers: Headers.getHeaders(),
         body: jsonEncode(data),
       );
@@ -91,7 +93,7 @@ class Users {
         data["Role"] = jsonEncode(user.roleIds!);
       }
       var res = await http.put(
-        Uri.parse('${State.endPoint}/API/Users/UpdateUser?Id=$id'),
+        Uri.parse('${State.endPoint}/API/v1/Users/UpdateUser?Id=$id'),
         headers: Headers.getHeaders(),
         body: jsonEncode(data),
       );
@@ -105,7 +107,7 @@ class Users {
   Future<APIResult> delete(String id) async {
     try {
       var res = await http.delete(
-          Uri.parse('${State.endPoint}/API/Users/DeleteUser?Id=$id'),
+          Uri.parse('${State.endPoint}/API/v1/Users/DeleteUser?Id=$id'),
           headers: Headers.getHeaders());
       return APIResult.fromJson(json.decode(res.body));
     } catch (e) {

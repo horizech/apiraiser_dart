@@ -15,7 +15,7 @@ class Authentication {
     Map<String, dynamic> loginData = loginRequest.toJson(loginRequest);
 
     var res = await http.post(
-      Uri.parse('${State.endPoint}/API/Authentication/Login'),
+      Uri.parse('${State.endPoint}/API/v1/Authentication/Login'),
       headers: {"Content-Type": "application/json"},
       body: jsonEncode(loginData),
     );
@@ -28,7 +28,7 @@ class Authentication {
     Map<String, dynamic> signupData = signupRequest.toJson(signupRequest);
 
     var res = await http.post(
-      Uri.parse('${State.endPoint}/API/Authentication/Signup'),
+      Uri.parse('${State.endPoint}/API/v1/Authentication/Signup'),
       headers: {"Content-Type": "application/json"},
       body: jsonEncode(signupData),
     );
@@ -41,7 +41,8 @@ class Authentication {
     if (jwt != null && jwt.isNotEmpty) {
       State.jwt = jwt;
       var res = await http.get(
-        Uri.parse('${State.endPoint}/API/Authentication/LoadSessionUsingJwt'),
+        Uri.parse(
+            '${State.endPoint}/API/v1/Authentication/LoadSessionUsingJwt'),
         headers: {
           "Content-Type": "application/json",
           "Authorization": "Bearer $jwt",
@@ -59,10 +60,46 @@ class Authentication {
     }
   }
 
+  /// Refresh token
+  Future<APIResult> refreshToken(String jwt) async {
+    if (jwt.isNotEmpty) {
+      var res = await http.get(
+        Uri.parse('${State.endPoint}/API/v1/Authentication/RefreshToken'),
+        headers: {"Content-Type": "application/json"},
+      );
+      return await State.processAuthenticationResult(
+        APIResult.fromJson(json.decode(res.body)),
+      );
+    } else {
+      return APIResult(
+        success: false,
+        errorCode: null,
+        message: 'Please provide JWT token!',
+        data: null,
+      );
+    }
+  }
+
+  /// Reset Password
+  Future<APIResult> resetPassword(
+      String token, String password, String confirmPassword) async {
+    Map<String, dynamic> data = {
+      "Token": token,
+      "Password": password,
+      "ConfirmPassword": confirmPassword,
+    };
+    var res = await http.post(
+      Uri.parse('${State.endPoint}/API/v1/Authentication/ResetPassword'),
+      headers: {"Content-Type": "application/json"},
+      body: jsonEncode(data),
+    );
+    return APIResult.fromJson(json.decode(res.body));
+  }
+
   /// Forgot Password
   Future<APIResult> forgotPassword(String email) async {
     var res = await http.post(
-      Uri.parse('${State.endPoint}/API/Authentication/ForgotPassword'),
+      Uri.parse('${State.endPoint}/API/v1/Authentication/ForgotPassword'),
       headers: {"Content-Type": "application/json"},
       body: email,
     );
@@ -72,7 +109,7 @@ class Authentication {
   /// Verify
   Future<APIResult> verify(String token) async {
     var res = await http.post(
-      Uri.parse('${State.endPoint}/API/Authentication/Verify'),
+      Uri.parse('${State.endPoint}/API/v1/Authentication/Verify'),
       headers: {"Content-Type": "application/json"},
       body: token,
     );
@@ -93,7 +130,7 @@ class Authentication {
   void signOut() async {
     await State.clearSession();
     await http.get(
-      Uri.parse('${State.endPoint}/API/Authentication/Logout'),
+      Uri.parse('${State.endPoint}/API/v1/Authentication/Logout'),
       headers: Headers.getHeaders(),
     );
   }

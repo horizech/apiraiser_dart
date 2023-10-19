@@ -32,7 +32,7 @@ class Storage {
         });
       }
       var response =
-          await dio.post('${State.endPoint}/API/Storage', data: formData);
+          await dio.post('${State.endPoint}/API/v1/Storage', data: formData);
       return APIResult.fromJson(response.data);
     } catch (e) {
       return null;
@@ -61,8 +61,8 @@ class Storage {
           "StorageSource": request.storageSource
         });
       }
-      var response = await dio.put('${State.endPoint}/API/Storage/$storageId',
-          data: formData);
+      var response = await dio
+          .put('${State.endPoint}/API/v1/Storage/$storageId', data: formData);
       return APIResult.fromJson(response.data);
     } catch (e) {
       return null;
@@ -73,7 +73,7 @@ class Storage {
   Future<APIResult> delete(String storageId) async {
     try {
       var res = await http.delete(
-        Uri.parse('${State.endPoint}/API/Storage/$storageId'),
+        Uri.parse('${State.endPoint}/API/v1/Storage/$storageId'),
         headers: headers.Headers.getHeaders(),
       );
       return APIResult.fromJson(json.decode(res.body));
@@ -86,7 +86,7 @@ class Storage {
   Future<Uint8List> download(String storageId) async {
     try {
       var res = await http.get(
-        Uri.parse('${State.endPoint}/API/Storage/download/$storageId'),
+        Uri.parse('${State.endPoint}/API/v1/Storage/download/$storageId'),
         headers: headers.Headers.getHeaders(),
       );
       return res.bodyBytes;

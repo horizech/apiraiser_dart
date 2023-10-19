@@ -13,7 +13,7 @@ class Data {
     try {
       var res = await http.get(
           Uri.parse(
-              '${State.endPoint}/API/table/$table${limit > 0 ? '?limit=$limit' : ''}'),
+              '${State.endPoint}/API/v1/table/$table${limit > 0 ? '?limit=$limit' : ''}'),
           headers: Headers.getHeaders());
       return APIResult.fromJson(json.decode(res.body));
     } catch (e) {
@@ -25,7 +25,7 @@ class Data {
   Future<APIResult> insert(String table, Map<String, dynamic> data) async {
     try {
       var res = await http.post(
-        Uri.parse('${State.endPoint}/API/table/$table'),
+        Uri.parse('${State.endPoint}/API/v1/table/$table'),
         headers: Headers.getHeaders(),
         body: jsonEncode(data),
       );
@@ -39,7 +39,7 @@ class Data {
   Future<APIResult> getById(String table, String id) async {
     try {
       var res = await http.get(
-          Uri.parse('${State.endPoint}/API/table/$table/$id'),
+          Uri.parse('${State.endPoint}/API/v1/table/$table/$id'),
           headers: Headers.getHeaders());
       return APIResult.fromJson(json.decode(res.body));
     } catch (e) {
@@ -52,7 +52,7 @@ class Data {
       String table, String id, Map<String, dynamic> data) async {
     try {
       var res = await http.put(
-        Uri.parse('${State.endPoint}/API/table/$table/$id'),
+        Uri.parse('${State.endPoint}/API/v1/table/$table/$id'),
         headers: Headers.getHeaders(),
         body: jsonEncode(data),
       );
@@ -66,7 +66,7 @@ class Data {
   Future<APIResult> delete(String table, String id) async {
     try {
       var res = await http.delete(
-          Uri.parse('${State.endPoint}/API/table/$table/$id'),
+          Uri.parse('${State.endPoint}/API/v1/table/$table/$id'),
           headers: Headers.getHeaders());
       return APIResult.fromJson(json.decode(res.body));
     } catch (e) {
@@ -81,7 +81,7 @@ class Data {
   ) async {
     try {
       var res = await http.post(
-        Uri.parse('${State.endPoint}/API/table/$table/GetRowsByConditions'),
+        Uri.parse('${State.endPoint}/API/v1/table/$table/GetRowsByConditions'),
         headers: Headers.getHeaders(),
         body: QuerySearchItem.toJsonList(conditions),
       );
@@ -96,7 +96,7 @@ class Data {
       String table, List<Map<String, dynamic>> data) async {
     try {
       var res = await http.post(
-        Uri.parse('${State.endPoint}/API/table/$table/InsertRows'),
+        Uri.parse('${State.endPoint}/API/v1/table/$table/InsertRows'),
         headers: Headers.getHeaders(),
         body: jsonEncode(data),
       );
@@ -115,7 +115,7 @@ class Data {
     };
     try {
       var res = await http.put(
-        Uri.parse('${State.endPoint}/API/table/$table/UpdateRows'),
+        Uri.parse('${State.endPoint}/API/v1/table/$table/UpdateRows'),
         headers: Headers.getHeaders(),
         body: jsonEncode(dataMap),
       );
@@ -132,7 +132,7 @@ class Data {
   ) async {
     try {
       var res = await http.delete(
-        Uri.parse('${State.endPoint}/API/table/$table/DeleteRows'),
+        Uri.parse('${State.endPoint}/API/v1/table/$table/DeleteRows'),
         headers: Headers.getHeaders(),
         body: QuerySearchItem.toJsonList(conditions),
       );

@@ -10,7 +10,7 @@ class Encryption {
   Future<APIResult> generateAESRSAPair(String password) async {
     try {
       var res = await http.post(
-        Uri.parse('${State.endPoint}/API/Encryption/GenerateAESRSAPair'),
+        Uri.parse('${State.endPoint}/API/v1/Encryption/GenerateAESRSAPair'),
         headers: Headers.getHeaders(),
         body: jsonEncode(password),
       );
@@ -26,7 +26,7 @@ class Encryption {
   ) async {
     try {
       var res = await http.post(
-        Uri.parse('${State.endPoint}/API/Encryption/GetEncryptionKeys'),
+        Uri.parse('${State.endPoint}/API/v1/Encryption/GetEncryptionKeys'),
         headers: Headers.getHeaders(),
         body: jsonEncode(password),
       );
@@ -41,7 +41,7 @@ class Encryption {
     try {
       Map<String, String> map = {"Password": password, "Data": data};
       var res = await http.post(
-        Uri.parse('${State.endPoint}/API/Encryption/EncryptData'),
+        Uri.parse('${State.endPoint}/API/v1/Encryption/EncryptData'),
         headers: Headers.getHeaders(),
         body: jsonEncode(map),
       );
@@ -56,7 +56,7 @@ class Encryption {
     try {
       Map<String, String> map = {"Password": password, "Data": data};
       var res = await http.post(
-        Uri.parse('${State.endPoint}/API/Encryption/DecryptData'),
+        Uri.parse('${State.endPoint}/API/v1/Encryption/DecryptData'),
         headers: Headers.getHeaders(),
         body: jsonEncode(map),
       );

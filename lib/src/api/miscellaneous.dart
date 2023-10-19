@@ -10,7 +10,7 @@ class Miscellaneous {
   /// Get list of all actions
   Future<APIResult> getAllActions() async {
     var res = await http.get(
-        Uri.parse('${State.endPoint}/API/Apiraiser/GetAllActions'),
+        Uri.parse('${State.endPoint}/API/v1/API/v1raiser/GetAllActions'),
         headers: Headers.getHeaders());
     return APIResult.fromJson(json.decode(res.body));
   }
@@ -18,7 +18,7 @@ class Miscellaneous {
   /// Get Apiraiser information
   Future<APIResult> getInfo() async {
     var res = await http.get(
-        Uri.parse('${State.endPoint}/API/Apiraiser/GetInfo'),
+        Uri.parse('${State.endPoint}/API/v1/API/v1raiser/GetInfo'),
         headers: Headers.getHeaders());
     return APIResult.fromJson(json.decode(res.body));
   }

@@ -12,7 +12,7 @@ class Functions {
       String id, Map<String, dynamic> jsonQuery) async {
     try {
       var res = await http.post(
-        Uri.parse('${State.endPoint}/API/function/Execute/$id'),
+        Uri.parse('${State.endPoint}/API/v1/function/Execute/$id'),
         headers: Headers.getHeaders(),
         body: jsonEncode(jsonQuery),
       );

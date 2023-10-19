@@ -16,7 +16,8 @@ class Table {
       List<Map<String, dynamic>> data =
           columns.map((e) => e.toJson(e)).toList();
       var res = await http.post(
-        Uri.parse('${State.endPoint}/API/CreateTable?table=$table&tags=$tags'),
+        Uri.parse(
+            '${State.endPoint}/API/v1/CreateTable?table=$table&tags=$tags'),
         headers: helper.Headers.getHeaders(),
         body: jsonEncode(data),
       );
@@ -47,7 +48,7 @@ class Table {
         "Tags": request.tags
       });
       var response = await dio.post(
-          '${State.endPoint}/API/CreateTableUsingDefinitionFile',
+          '${State.endPoint}/API/v1/CreateTableUsingDefinitionFile',
           data: formData);
       return APIResult.fromJson(response.data);
     } catch (e) {
@@ -58,7 +59,8 @@ class Table {
   /// Get all tables
   Future<APIResult> getList() async {
     try {
-      var res = await http.get(Uri.parse('${State.endPoint}/API/GetTablesList'),
+      var res = await http.get(
+          Uri.parse('${State.endPoint}/API/v1/GetTablesList'),
           headers: helper.Headers.getHeaders());
       return APIResult.fromJson(json.decode(res.body));
     } catch (e) {
@@ -70,7 +72,8 @@ class Table {
   Future<Uint8List> downloadDefinitionFile(String table) async {
     try {
       var res = await http.get(
-        Uri.parse('${State.endPoint}/API/DownloadTableDefinitionFile/$table'),
+        Uri.parse(
+            '${State.endPoint}/API/v1/DownloadTableDefinitionFile/$table'),
         headers: helper.Headers.getHeaders(),
       );
       return res.bodyBytes;
@@ -83,7 +86,7 @@ class Table {
   Future<APIResult> delete(String table) async {
     try {
       var res = await http.delete(
-        Uri.parse('${State.endPoint}/API/DeleteTable?table=$table'),
+        Uri.parse('${State.endPoint}/API/v1/DeleteTable?table=$table'),
         headers: helper.Headers.getHeaders(),
       );
       return APIResult.fromJson(json.decode(res.body));

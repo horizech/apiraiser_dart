@@ -44,7 +44,7 @@ class State {
       State.user = User.fromJson(auth.data);
       if (jwt != null) {
         State.jwt = jwt;
-      } else {
+      } else if (auth.data['AccessToken'] != null) {
         State.jwt = auth.data['AccessToken'];
       }
       await storeJwt(State.jwt);

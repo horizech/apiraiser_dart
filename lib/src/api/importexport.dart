@@ -13,7 +13,7 @@ class ImportExport {
       String table, List<QuerySearchItem> conditions) async {
     try {
       var res = await http.post(
-        Uri.parse('${State.endPoint}/API/ImportExport/ExportExcel/$table'),
+        Uri.parse('${State.endPoint}/API/v1/ImportExport/ExportExcel/$table'),
         headers: headers.Headers.getHeaders(),
         body: QuerySearchItem.toJsonList(conditions),
       );
@@ -40,7 +40,7 @@ class ImportExport {
         ),
       });
       var response = await dio.post(
-          '${State.endPoint}/API/ImportExport/ImportExcel/$table',
+          '${State.endPoint}/API/v1/ImportExport/ImportExcel/$table',
           data: formData);
       return APIResult.fromJson(response.data);
     } catch (e) {

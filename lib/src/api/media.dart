@@ -42,7 +42,7 @@ class Media {
       //   }
       // }
       var response =
-          await dio.post('${State.endPoint}/API/Media', data: formData);
+          await dio.post('${State.endPoint}/API/v1/Media', data: formData);
       return APIResult.fromJson(response.data);
     } catch (e) {
       return null;
@@ -71,8 +71,8 @@ class Media {
           "MediaSource": request.mediaSource
         });
       }
-      var response =
-          await dio.put('${State.endPoint}/API/Media/$mediaId', data: formData);
+      var response = await dio.put('${State.endPoint}/API/v1/Media/$mediaId',
+          data: formData);
       return APIResult.fromJson(response.data);
     } catch (e) {
       return null;
@@ -83,7 +83,7 @@ class Media {
   Future<APIResult> delete(String mediaId) async {
     try {
       var res = await http.delete(
-        Uri.parse('${State.endPoint}/API/Media/$mediaId'),
+        Uri.parse('${State.endPoint}/API/v1/Media/$mediaId'),
         headers: headers.Headers.getHeaders(),
       );
       return APIResult.fromJson(json.decode(res.body));
@@ -96,7 +96,7 @@ class Media {
   Future<Uint8List?> download(String mediaId) async {
     try {
       var res = await http.get(
-        Uri.parse('${State.endPoint}/API/Media/Download/$mediaId'),
+        Uri.parse('${State.endPoint}/API/v1/Media/Download/$mediaId'),
         headers: headers.Headers.getHeaders(),
       );
       return res.bodyBytes;

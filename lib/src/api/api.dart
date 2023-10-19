@@ -13,6 +13,7 @@ import 'package:apiraiser/src/api/column.dart';
 import 'package:apiraiser/src/api/data.dart';
 import 'package:apiraiser/src/api/authentication.dart';
 import 'package:apiraiser/src/api/users.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 
 /// Apiraiser class
 class Apiraiser {
@@ -70,9 +71,14 @@ class Apiraiser {
   /// Loads and performs Authentication using jwt if exists
   static init(String endpoint) async {
     State.endPoint = endpoint;
-    String jwt = await State.loadJwt() ?? "";
-    if (jwt.isNotEmpty) {
-      await Apiraiser.authentication.loadSessionUsingJwt(jwt);
+    String? jwt = await State.loadJwt();
+    if (jwt != null && jwt.isNotEmpty) {
+      bool hasExpired = JwtDecoder.isExpired(jwt);
+      if (hasExpired) {
+        await Apiraiser.authentication.refreshToken(jwt);
+      } else {
+        await Apiraiser.authentication.loadSessionUsingJwt(jwt);
+      }
     } else {
       return true;
     }
