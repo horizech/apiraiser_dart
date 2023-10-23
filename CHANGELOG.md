@@ -1,3 +1,19 @@
+## Unreleased
+
+- Added RefreshToken API.
+- Added ResetPassword API.
+- Added ForgotPassword API.
+- Added Verify API.
+- Added Update Media API.
+- Added Download Media API.
+- Added Upload Storage API.
+- Added Update Storage API.
+- Added Download Storage API.
+- Added Delete Storage API.
+- Added OAuth2 APIs.
+- Added Feature APIs.
+- Added Encryptrion APIs.
+
 ## 0.2.3
 
 - Updated isSignedIn function.

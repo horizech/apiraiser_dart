@@ -27,6 +27,18 @@ class State {
     return await storage.read(key: "jwt");
   }
 
+  /// store provided RefreshToken in  Secure storage for future use
+  static storeRefreshToken(String? token) async {
+    const storage = FlutterSecureStorage();
+    await storage.write(key: "refresh_token", value: token);
+  }
+
+  /// Load jwt from Secure storage
+  static Future<String?> loadRefreshToken() async {
+    const storage = FlutterSecureStorage();
+    return await storage.read(key: "refresh_token");
+  }
+
   /// Clear jwt
   static Future clearJwt() async {
     State.jwt = null;
@@ -46,6 +58,9 @@ class State {
         State.jwt = jwt;
       } else if (auth.data['AccessToken'] != null) {
         State.jwt = auth.data['AccessToken'];
+      }
+      if (auth.data['RefreshToken'] != null) {
+        await storeRefreshToken(auth.data['RefreshToken']);
       }
       await storeJwt(State.jwt);
     } else {

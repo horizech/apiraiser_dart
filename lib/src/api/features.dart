@@ -1,19 +1,18 @@
-import 'dart:convert';
-import 'package:http/http.dart' as http;
-import 'package:apiraiser/src/helpers/state.dart';
-import 'package:apiraiser/src/helpers/headers.dart';
+import 'package:apiraiser/src/api/rest.dart';
 import 'package:apiraiser/src/models/api_result.dart';
+import 'package:apiraiser/src/models/rest_params.dart';
 
 /// Feature APIs
 class Feature {
   /// Install a new Feature
   Future<APIResult> install(String feature) async {
     try {
-      var res = await http.post(
-        Uri.parse('${State.endPoint}/API/v1/Feature/Install?feature=$feature'),
-        headers: Headers.getHeaders(),
+      var res = await Rest.post(
+        RestParams('/API/v1/Feature/Install', params: {
+          "feature": feature,
+        }),
       );
-      return APIResult.fromJson(json.decode(res.body));
+      return APIResult.fromJson(res);
     } catch (e) {
       return APIResult(message: e.toString(), success: false);
     }
@@ -22,11 +21,10 @@ class Feature {
   /// Get Features List
   Future<APIResult> getList() async {
     try {
-      var res = await http.get(
-        Uri.parse('${State.endPoint}/API/v1/Feature/GetList'),
-        headers: Headers.getHeaders(),
+      var res = await Rest.get(
+        RestParams('/API/v1/Feature/GetList'),
       );
-      return APIResult.fromJson(json.decode(res.body));
+      return APIResult.fromJson(res);
     } catch (e) {
       return APIResult(message: e.toString(), success: false);
     }
@@ -35,11 +33,12 @@ class Feature {
   /// Delete a new Feature
   Future<APIResult> delete(String feature) async {
     try {
-      var res = await http.delete(
-        Uri.parse('${State.endPoint}/API/v1/Feature/Delete?feature=$feature'),
-        headers: Headers.getHeaders(),
+      var res = await Rest.delete(
+        RestParams('/API/v1/Feature/Delete', params: {
+          "feature": feature,
+        }),
       );
-      return APIResult.fromJson(json.decode(res.body));
+      return APIResult.fromJson(res);
     } catch (e) {
       return APIResult(message: e.toString(), success: false);
     }

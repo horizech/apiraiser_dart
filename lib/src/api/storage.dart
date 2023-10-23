@@ -1,9 +1,8 @@
-import 'dart:convert';
 import 'dart:typed_data';
-import 'package:apiraiser/src/helpers/headers.dart' as headers;
+import 'package:apiraiser/src/api/rest.dart';
+import 'package:apiraiser/src/models/rest_params.dart';
 import 'package:apiraiser/src/models/sorage_upload_request.dart';
 import 'package:dio/dio.dart';
-import 'package:http/http.dart' as http;
 import 'package:apiraiser/src/helpers/state.dart';
 import 'package:apiraiser/src/models/api_result.dart';
 
@@ -72,11 +71,10 @@ class Storage {
   /// Delete Storage
   Future<APIResult> delete(String storageId) async {
     try {
-      var res = await http.delete(
-        Uri.parse('${State.endPoint}/API/v1/Storage/$storageId'),
-        headers: headers.Headers.getHeaders(),
+      var res = await Rest.delete(
+        RestParams('/API/v1/Storage/$storageId'),
       );
-      return APIResult.fromJson(json.decode(res.body));
+      return APIResult.fromJson(res);
     } catch (e) {
       return APIResult(message: e.toString(), success: false);
     }
@@ -85,11 +83,13 @@ class Storage {
   /// Download Storage
   Future<Uint8List> download(String storageId) async {
     try {
-      var res = await http.get(
-        Uri.parse('${State.endPoint}/API/v1/Storage/download/$storageId'),
-        headers: headers.Headers.getHeaders(),
+      var res = await Rest.get(
+        RestParams(
+          '/API/v1/Storage/download/$storageId',
+          responseType: ResponseType.stream,
+        ),
       );
-      return res.bodyBytes;
+      return res;
     } catch (e) {
       rethrow;
     }

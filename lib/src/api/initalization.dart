@@ -1,8 +1,5 @@
-import 'dart:convert';
-import 'package:http/http.dart' as http;
-
-import 'package:apiraiser/src/helpers/state.dart';
-import 'package:apiraiser/src/helpers/headers.dart';
+import 'package:apiraiser/src/api/rest.dart';
+import 'package:apiraiser/src/models/rest_params.dart';
 import 'package:apiraiser/src/models/api_result.dart';
 import 'package:apiraiser/src/models/initialize_request.dart';
 
@@ -10,10 +7,10 @@ import 'package:apiraiser/src/models/initialize_request.dart';
 class Initialization {
   /// Is Apiraiser Initialized
   static Future<APIResult> isInitialized() async {
-    var res = await http.get(
-        Uri.parse('${State.endPoint}/API/v1/API/v1raiser/IsInitialized'),
-        headers: Headers.getHeaders());
-    return APIResult.fromJson(json.decode(res.body));
+    var res = await Rest.get(
+      RestParams('/API/v1/Apiraiser/IsInitialized'),
+    );
+    return APIResult.fromJson(res);
   }
 
   /// Initialize Apiraiser CMS
@@ -21,12 +18,13 @@ class Initialization {
       InitializeRequest initializeRequest) async {
     Map<String, dynamic> data = initializeRequest.toJson(initializeRequest);
     try {
-      var res = await http.post(
-        Uri.parse('${State.endPoint}/API/v1/API/v1raiser/Initialize'),
-        headers: Headers.getHeaders(),
-        body: jsonEncode(data),
+      var res = await Rest.post(
+        RestParams(
+          '/API/v1/Apiraiser/Initialize',
+          data: data,
+        ),
       );
-      return APIResult.fromJson(json.decode(res.body));
+      return APIResult.fromJson(res);
     } catch (e) {
       return APIResult(message: e.toString(), success: false);
     }

@@ -1,21 +1,22 @@
-import 'dart:convert';
-import 'package:http/http.dart' as http;
-
 import 'package:apiraiser/src/models/api_result.dart';
 import 'package:apiraiser/src/models/query_search_item.dart';
-import 'package:apiraiser/src/helpers/headers.dart';
+
 import 'package:apiraiser/src/helpers/state.dart';
+import 'package:apiraiser/src/api/rest.dart';
+import 'package:apiraiser/src/models/rest_params.dart';
 
 /// Data APIs
 class Data {
   /// Get table rows
   Future<APIResult> get(String table, int limit) async {
     try {
-      var res = await http.get(
-          Uri.parse(
-              '${State.endPoint}/API/v1/table/$table${limit > 0 ? '?limit=$limit' : ''}'),
-          headers: Headers.getHeaders());
-      return APIResult.fromJson(json.decode(res.body));
+      var res = await Rest.get(
+        RestParams(
+          "/API/v1/table/$table",
+          params: limit > 0 ? {"limit": limit} : null,
+        ),
+      );
+      return APIResult.fromJson(res);
     } catch (e) {
       return APIResult(message: e.toString(), success: false);
     }
@@ -24,12 +25,13 @@ class Data {
   /// Insert a new row
   Future<APIResult> insert(String table, Map<String, dynamic> data) async {
     try {
-      var res = await http.post(
-        Uri.parse('${State.endPoint}/API/v1/table/$table'),
-        headers: Headers.getHeaders(),
-        body: jsonEncode(data),
+      var res = await Rest.post(
+        RestParams(
+          "/API/v1/table/$table",
+          data: data,
+        ),
       );
-      return APIResult.fromJson(json.decode(res.body));
+      return APIResult.fromJson(res);
     } catch (e) {
       return APIResult(message: e.toString(), success: false);
     }
@@ -38,10 +40,10 @@ class Data {
   /// Get row
   Future<APIResult> getById(String table, String id) async {
     try {
-      var res = await http.get(
-          Uri.parse('${State.endPoint}/API/v1/table/$table/$id'),
-          headers: Headers.getHeaders());
-      return APIResult.fromJson(json.decode(res.body));
+      var res = await Rest.get(
+        RestParams('/API/v1/table/$table/$id'),
+      );
+      return APIResult.fromJson(res);
     } catch (e) {
       return APIResult(message: e.toString(), success: false);
     }
@@ -51,12 +53,13 @@ class Data {
   Future<APIResult> update(
       String table, String id, Map<String, dynamic> data) async {
     try {
-      var res = await http.put(
-        Uri.parse('${State.endPoint}/API/v1/table/$table/$id'),
-        headers: Headers.getHeaders(),
-        body: jsonEncode(data),
+      var res = await Rest.put(
+        RestParams(
+          '/API/v1/table/$table/$id',
+          data: data,
+        ),
       );
-      return APIResult.fromJson(json.decode(res.body));
+      return APIResult.fromJson(res);
     } catch (e) {
       return APIResult(message: e.toString(), success: false);
     }
@@ -65,10 +68,12 @@ class Data {
   /// Delete row
   Future<APIResult> delete(String table, String id) async {
     try {
-      var res = await http.delete(
-          Uri.parse('${State.endPoint}/API/v1/table/$table/$id'),
-          headers: Headers.getHeaders());
-      return APIResult.fromJson(json.decode(res.body));
+      var res = await Rest.delete(
+        RestParams(
+          '${State.endPoint}/API/v1/table/$table/$id',
+        ),
+      );
+      return APIResult.fromJson(res);
     } catch (e) {
       return APIResult(message: e.toString(), success: false);
     }
@@ -80,12 +85,13 @@ class Data {
     List<QuerySearchItem> conditions,
   ) async {
     try {
-      var res = await http.post(
-        Uri.parse('${State.endPoint}/API/v1/table/$table/GetRowsByConditions'),
-        headers: Headers.getHeaders(),
-        body: QuerySearchItem.toJsonList(conditions),
+      var res = await Rest.post(
+        RestParams(
+          '/API/v1/table/$table/GetRowsByConditions',
+          data: QuerySearchItem.toJsonList(conditions),
+        ),
       );
-      return APIResult.fromJson(json.decode(res.body));
+      return APIResult.fromJson(res);
     } catch (e) {
       return APIResult(message: e.toString());
     }
@@ -95,12 +101,13 @@ class Data {
   Future<APIResult> insertList(
       String table, List<Map<String, dynamic>> data) async {
     try {
-      var res = await http.post(
-        Uri.parse('${State.endPoint}/API/v1/table/$table/InsertRows'),
-        headers: Headers.getHeaders(),
-        body: jsonEncode(data),
+      var res = await Rest.post(
+        RestParams(
+          '/API/v1/table/$table/InsertRows',
+          data: data,
+        ),
       );
-      return APIResult.fromJson(json.decode(res.body));
+      return APIResult.fromJson(res);
     } catch (e) {
       return APIResult(message: e.toString(), success: false);
     }
@@ -114,12 +121,13 @@ class Data {
       "Parameters": conditions.map((e) => e.toJson(e)).toList()
     };
     try {
-      var res = await http.put(
-        Uri.parse('${State.endPoint}/API/v1/table/$table/UpdateRows'),
-        headers: Headers.getHeaders(),
-        body: jsonEncode(dataMap),
+      var res = await Rest.put(
+        RestParams(
+          '/API/v1/table/$table/UpdateRows',
+          data: dataMap,
+        ),
       );
-      return APIResult.fromJson(json.decode(res.body));
+      return APIResult.fromJson(res);
     } catch (e) {
       return APIResult(message: e.toString(), success: false);
     }
@@ -131,12 +139,13 @@ class Data {
     List<QuerySearchItem> conditions,
   ) async {
     try {
-      var res = await http.delete(
-        Uri.parse('${State.endPoint}/API/v1/table/$table/DeleteRows'),
-        headers: Headers.getHeaders(),
-        body: QuerySearchItem.toJsonList(conditions),
+      var res = await Rest.delete(
+        RestParams(
+          '/API/v1/table/$table/DeleteRows',
+          data: QuerySearchItem.toJsonList(conditions),
+        ),
       );
-      return APIResult.fromJson(json.decode(res.body));
+      return APIResult.fromJson(res);
     } catch (e) {
       return APIResult(message: e.toString(), success: false);
     }

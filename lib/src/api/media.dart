@@ -1,9 +1,8 @@
-import 'dart:convert';
 import 'dart:typed_data';
-import 'package:apiraiser/src/helpers/headers.dart' as headers;
+import 'package:apiraiser/src/api/rest.dart';
 import 'package:apiraiser/src/models/media_upload_request.dart';
+import 'package:apiraiser/src/models/rest_params.dart';
 import 'package:dio/dio.dart';
-import 'package:http/http.dart' as http;
 import 'package:apiraiser/src/helpers/state.dart';
 import 'package:apiraiser/src/models/api_result.dart';
 
@@ -31,16 +30,6 @@ class Media {
           "MediaSource": request.mediaSource
         });
       }
-      // else if (mediaUploadRequest.files != null &&
-      //     mediaUploadRequest.files!.isNotEmpty) {
-      //   // multiple files
-      //   for (var file in mediaUploadRequest.files!) {
-      //     request.files.add(
-      //       http.MultipartFile.fromBytes("FormFile", file,
-      //           filename: mediaUploadRequest.fileName ?? "image.jpg"),
-      //     );
-      //   }
-      // }
       var response =
           await dio.post('${State.endPoint}/API/v1/Media', data: formData);
       return APIResult.fromJson(response.data);
@@ -82,11 +71,10 @@ class Media {
   /// Delete a media
   Future<APIResult> delete(String mediaId) async {
     try {
-      var res = await http.delete(
-        Uri.parse('${State.endPoint}/API/v1/Media/$mediaId'),
-        headers: headers.Headers.getHeaders(),
+      var res = await Rest.delete(
+        RestParams('/API/v1/Media/$mediaId'),
       );
-      return APIResult.fromJson(json.decode(res.body));
+      return APIResult.fromJson(res);
     } catch (e) {
       return APIResult(message: e.toString(), success: false);
     }
@@ -95,11 +83,13 @@ class Media {
   /// Download a media
   Future<Uint8List?> download(String mediaId) async {
     try {
-      var res = await http.get(
-        Uri.parse('${State.endPoint}/API/v1/Media/Download/$mediaId'),
-        headers: headers.Headers.getHeaders(),
+      var res = await Rest.get(
+        RestParams(
+          '${State.endPoint}/API/v1/Media/Download/$mediaId',
+          responseType: ResponseType.stream,
+        ),
       );
-      return res.bodyBytes;
+      return res;
     } catch (e) {
       rethrow;
     }

@@ -1,20 +1,19 @@
-import 'dart:convert';
-import 'package:http/http.dart' as http;
-import 'package:apiraiser/src/helpers/state.dart';
-import 'package:apiraiser/src/helpers/headers.dart';
+import 'package:apiraiser/src/api/rest.dart';
 import 'package:apiraiser/src/models/api_result.dart';
+import 'package:apiraiser/src/models/rest_params.dart';
 
 /// Encryption APIs
 class Encryption {
   /// Generate AES RSA Pair
   Future<APIResult> generateAESRSAPair(String password) async {
     try {
-      var res = await http.post(
-        Uri.parse('${State.endPoint}/API/v1/Encryption/GenerateAESRSAPair'),
-        headers: Headers.getHeaders(),
-        body: jsonEncode(password),
+      var res = await Rest.post(
+        RestParams(
+          '/API/v1/Encryption/GenerateAESRSAPair',
+          data: password,
+        ),
       );
-      return APIResult.fromJson(json.decode(res.body));
+      return APIResult.fromJson(res);
     } catch (e) {
       return APIResult(message: e.toString(), success: false);
     }
@@ -25,12 +24,13 @@ class Encryption {
     String password,
   ) async {
     try {
-      var res = await http.post(
-        Uri.parse('${State.endPoint}/API/v1/Encryption/GetEncryptionKeys'),
-        headers: Headers.getHeaders(),
-        body: jsonEncode(password),
+      var res = await Rest.post(
+        RestParams(
+          '/API/v1/Encryption/GetEncryptionKeys',
+          data: password,
+        ),
       );
-      return APIResult.fromJson(json.decode(res.body));
+      return APIResult.fromJson(res);
     } catch (e) {
       return APIResult(message: e.toString(), success: false);
     }
@@ -40,12 +40,13 @@ class Encryption {
   Future<APIResult> encryptData(String password, String data) async {
     try {
       Map<String, String> map = {"Password": password, "Data": data};
-      var res = await http.post(
-        Uri.parse('${State.endPoint}/API/v1/Encryption/EncryptData'),
-        headers: Headers.getHeaders(),
-        body: jsonEncode(map),
+      var res = await Rest.post(
+        RestParams(
+          '/API/v1/Encryption/EncryptData',
+          data: map,
+        ),
       );
-      return APIResult.fromJson(json.decode(res.body));
+      return APIResult.fromJson(res);
     } catch (e) {
       return APIResult(message: e.toString(), success: false);
     }
@@ -55,12 +56,13 @@ class Encryption {
   Future<APIResult> decryptData(String password, String data) async {
     try {
       Map<String, String> map = {"Password": password, "Data": data};
-      var res = await http.post(
-        Uri.parse('${State.endPoint}/API/v1/Encryption/DecryptData'),
-        headers: Headers.getHeaders(),
-        body: jsonEncode(map),
+      var res = await Rest.post(
+        RestParams(
+          '/API/v1/Encryption/DecryptData',
+          data: map,
+        ),
       );
-      return APIResult.fromJson(json.decode(res.body));
+      return APIResult.fromJson(res);
     } catch (e) {
       return APIResult(message: e.toString(), success: false);
     }

@@ -1,130 +1,114 @@
-import 'dart:convert';
-import 'package:apiraiser/src/helpers/headers.dart';
+import 'package:apiraiser/src/api/rest.dart';
 import 'package:apiraiser/src/models/oauth2_authentication_request.dart';
 import 'package:apiraiser/src/models/oauth2_authorize_request.dart';
 import 'package:apiraiser/src/models/oauth2_token_request.dart';
-import 'package:http/http.dart' as http;
-
-import 'package:apiraiser/src/helpers/state.dart';
 import 'package:apiraiser/src/models/api_result.dart';
+import 'package:apiraiser/src/models/rest_params.dart';
 
 /// OAuth2 APIs
 class OAuth2 {
   /// Logout
   Future<APIResult> logout() async {
-    var res = await http.get(
-      Uri.parse('${State.endPoint}/OAuth2/Logout'),
-      headers: Headers.getHeaders(),
+    var res = await Rest.get(
+      RestParams('/API/v1/OAuth2/Logout'),
     );
-    return APIResult.fromJson(json.decode(res.body));
+    return APIResult.fromJson(res);
   }
 
   /// Authorize
   Future<APIResult> authorize(OAuth2AuthorizeRequest request) async {
-    var res = await http.get(
-      Uri.parse(
-          '${State.endPoint}/OAuth2/Authorize?client_id=${request.clientId}&redirect_uri=${request.redirectUri}&scope=${request.scope}&response_type=${request.responseType}&state=${request.state}&access_type=${request.accessType}'),
-      headers: Headers.getHeaders(),
+    var res = await Rest.get(
+      RestParams(
+          '/API/v1/OAuth2/Authorize?client_id=${request.clientId}&redirect_uri=${request.redirectUri}&scope=${request.scope}&response_type=${request.responseType}&state=${request.state}&access_type=${request.accessType}'),
     );
-    return APIResult.fromJson(json.decode(res.body));
+    return APIResult.fromJson(res);
   }
 
   /// Login
   Future<APIResult> login(OAuth2AuthorizeRequest request) async {
-    var res = await http.get(
-      Uri.parse(
-          '${State.endPoint}/OAuth2/Login?client_id=${request.clientId}&redirect_uri=${request.redirectUri}&scope=${request.scope}&response_type=${request.responseType}&state=${request.state}&access_type=${request.accessType}'),
-      headers: Headers.getHeaders(),
+    var res = await Rest.get(
+      RestParams(
+          '/API/v1/OAuth2/Login?client_id=${request.clientId}&redirect_uri=${request.redirectUri}&scope=${request.scope}&response_type=${request.responseType}&state=${request.state}&access_type=${request.accessType}'),
     );
-    return APIResult.fromJson(json.decode(res.body));
+    return APIResult.fromJson(res);
   }
 
   /// Signup
   Future<APIResult> signup(OAuth2AuthorizeRequest request) async {
-    var res = await http.get(
-      Uri.parse(
-          '${State.endPoint}/OAuth2/Signup?client_id=${request.clientId}&redirect_uri=${request.redirectUri}&scope=${request.scope}&response_type=${request.responseType}&state=${request.state}&access_type=${request.accessType}'),
-      headers: Headers.getHeaders(),
+    var res = await Rest.get(
+      RestParams(
+          '/API/v1/OAuth2/Signup?client_id=${request.clientId}&redirect_uri=${request.redirectUri}&scope=${request.scope}&response_type=${request.responseType}&state=${request.state}&access_type=${request.accessType}'),
     );
-    return APIResult.fromJson(json.decode(res.body));
+    return APIResult.fromJson(res);
   }
 
   /// Consent
   Future<APIResult> consent(OAuth2AuthenticateRequest request) async {
-    var res = await http.get(
-      Uri.parse(
-          '${State.endPoint}/OAuth2/Consent?client_id=${request.clientId}&redirect_uri=${request.redirectUri}&scope=${request.scope}&response_type=${request.responseType}&state=${request.state}&access_type=${request.accessType}&request_token=${request.requestToken}'),
-      headers: Headers.getHeaders(),
+    var res = await Rest.get(
+      RestParams(
+          '/API/v1/OAuth2/Consent?client_id=${request.clientId}&redirect_uri=${request.redirectUri}&scope=${request.scope}&response_type=${request.responseType}&state=${request.state}&access_type=${request.accessType}&request_token=${request.requestToken}'),
     );
-    return APIResult.fromJson(json.decode(res.body));
+    return APIResult.fromJson(res);
   }
 
   /// Authenticate
   Future<APIResult> authenticate(OAuth2AuthenticateRequest request) async {
-    var res = await http.get(
-      Uri.parse(
-          '${State.endPoint}/OAuth2/Authenticate?client_id=${request.clientId}&redirect_uri=${request.redirectUri}&scope=${request.scope}&response_type=${request.responseType}&state=${request.state}&access_type=${request.accessType}&request_token=${request.requestToken}'),
-      headers: Headers.getHeaders(),
+    var res = await Rest.get(
+      RestParams(
+          '/API/v1/OAuth2/Authenticate?client_id=${request.clientId}&redirect_uri=${request.redirectUri}&scope=${request.scope}&response_type=${request.responseType}&state=${request.state}&access_type=${request.accessType}&request_token=${request.requestToken}'),
     );
-    return APIResult.fromJson(json.decode(res.body));
+    return APIResult.fromJson(res);
   }
 
   /// Token
   Future<APIResult> token(OAuth2TokenRequest request) async {
-    var res = await http.post(
-      Uri.parse('${State.endPoint}/OAuth2/Token'),
-      headers: Headers.getHeaders(),
-      body: jsonEncode(request),
-    );
-    return APIResult.fromJson(json.decode(res.body));
+    var res = await Rest.post(RestParams(
+      '/API/v1/OAuth2/Token',
+      data: request,
+    ));
+    return APIResult.fromJson(res);
   }
 
   /// Get UserInfo
   Future<APIResult> getUserInfo() async {
-    var res = await http.get(
-      Uri.parse('${State.endPoint}/OAuth2/UserInfo'),
-      headers: Headers.getHeaders(),
+    var res = await Rest.get(
+      RestParams('/API/v1/OAuth2/UserInfo'),
     );
-    return APIResult.fromJson(json.decode(res.body));
+    return APIResult.fromJson(res);
   }
 
   /// Add a client
   Future<APIResult> addClient(String name, String displayname) async {
     Map<String, dynamic> data = {"Name": name, "DisplayName": displayname};
-    var res = await http.post(
-      Uri.parse('${State.endPoint}/OAuth2/Client'),
-      headers: Headers.getHeaders(),
-      body: jsonEncode(data),
-    );
-    return APIResult.fromJson(json.decode(res.body));
+    var res = await Rest.post(RestParams(
+      '/API/v1/OAuth2/Client',
+      data: data,
+    ));
+    return APIResult.fromJson(res);
   }
 
   /// Get client
   Future<APIResult> getClient(String clientId) async {
-    var res = await http.get(
-      Uri.parse('${State.endPoint}/OAuth2/Client?client_id=$clientId'),
-      headers: Headers.getHeaders(),
+    var res = await Rest.get(
+      RestParams('/API/v1/OAuth2/Client?client_id=$clientId'),
     );
-    return APIResult.fromJson(json.decode(res.body));
+    return APIResult.fromJson(res);
   }
 
   /// Update client
   Future<APIResult> updateClient(
       String clientId, String name, String displayname) async {
     Map<String, dynamic> data = {"Name": name, "DisplayName": displayname};
-    var res = await http.put(
-        Uri.parse('${State.endPoint}/OAuth2/Client?client_id=$clientId'),
-        headers: Headers.getHeaders(),
-        body: jsonEncode(data));
-    return APIResult.fromJson(json.decode(res.body));
+    var res = await Rest.put(
+        RestParams('/API/v1/OAuth2/Client?client_id=$clientId', data: data));
+    return APIResult.fromJson(res);
   }
 
   /// Delete client
   Future<APIResult> deleteClient(String clientId) async {
-    var res = await http.delete(
-      Uri.parse('${State.endPoint}/OAuth2/Client?client_id=$clientId'),
-      headers: Headers.getHeaders(),
+    var res = await Rest.delete(
+      RestParams('/API/v1/OAuth2/Client?client_id=$clientId'),
     );
-    return APIResult.fromJson(json.decode(res.body));
+    return APIResult.fromJson(res);
   }
 }

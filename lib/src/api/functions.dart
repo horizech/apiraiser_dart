@@ -1,9 +1,6 @@
-import 'dart:convert';
-import 'package:http/http.dart' as http;
-
+import 'package:apiraiser/src/api/rest.dart';
+import 'package:apiraiser/src/models/rest_params.dart';
 import 'package:apiraiser/src/models/api_result.dart';
-import 'package:apiraiser/src/helpers/state.dart';
-import 'package:apiraiser/src/helpers/headers.dart';
 
 /// Function APIs
 class Functions {
@@ -11,12 +8,13 @@ class Functions {
   Future<APIResult> excuteFunction(
       String id, Map<String, dynamic> jsonQuery) async {
     try {
-      var res = await http.post(
-        Uri.parse('${State.endPoint}/API/v1/function/Execute/$id'),
-        headers: Headers.getHeaders(),
-        body: jsonEncode(jsonQuery),
+      var res = await Rest.post(
+        RestParams(
+          '/API/v1/function/Execute/$id',
+          data: jsonQuery,
+        ),
       );
-      return APIResult.fromJson(json.decode(res.body));
+      return APIResult.fromJson(res);
     } catch (e) {
       return APIResult(message: e.toString(), success: false);
     }

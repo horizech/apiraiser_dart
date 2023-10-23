@@ -72,6 +72,7 @@ class Apiraiser {
   static init(String endpoint) async {
     State.endPoint = endpoint;
     String? jwt = await State.loadJwt();
+
     if (jwt != null && jwt.isNotEmpty) {
       bool hasExpired = JwtDecoder.isExpired(jwt);
       if (hasExpired) {

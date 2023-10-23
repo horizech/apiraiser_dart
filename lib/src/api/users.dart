@@ -1,8 +1,6 @@
 import 'dart:convert';
-import 'package:http/http.dart' as http;
-
-import 'package:apiraiser/src/helpers/state.dart';
-import 'package:apiraiser/src/helpers/headers.dart';
+import 'package:apiraiser/src/api/rest.dart';
+import 'package:apiraiser/src/models/rest_params.dart';
 import 'package:apiraiser/src/models/user.dart';
 import 'package:apiraiser/src/models/api_result.dart';
 
@@ -10,43 +8,42 @@ import 'package:apiraiser/src/models/api_result.dart';
 class Users {
   /// Get user roles by [userId]
   Future<APIResult> getUserRoles(String userId) async {
-    var res = await http.get(
-        Uri.parse('${State.endPoint}/API/v1/Users/GetUserRoles/$userId'),
-        headers: Headers.getHeaders());
-    return APIResult.fromJson(json.decode(res.body));
+    var res = await Rest.get(
+      RestParams('/API/v1/Users/GetUserRoles/$userId'),
+    );
+    return APIResult.fromJson(res);
   }
 
   /// Get user by [id]
   Future<APIResult> get(String id) async {
-    var res = await http.get(
-        Uri.parse('${State.endPoint}/API/v1/Users/GetUser/$id'),
-        headers: Headers.getHeaders());
-    return APIResult.fromJson(json.decode(res.body));
+    var res = await Rest.get(
+      RestParams('/API/v1/Users/GetUser/$id'),
+    );
+    return APIResult.fromJson(res);
   }
 
   /// Get all users
   Future<APIResult> getAll() async {
-    var res = await http.get(
-        Uri.parse('${State.endPoint}/API/v1/Users/GetUsers'),
-        headers: Headers.getHeaders());
-    return APIResult.fromJson(json.decode(res.body));
+    var res = await Rest.get(
+      RestParams('/API/v1/Users/GetUsers'),
+    );
+    return APIResult.fromJson(res);
   }
 
   /// Check if username is available
   Future<APIResult> isUsernameAvailable(String username) async {
-    var res = await http.get(
-        Uri.parse(
-            '${State.endPoint}/API/v1/Users/IsUsernameAvailable/$username'),
-        headers: Headers.getHeaders());
-    return APIResult.fromJson(json.decode(res.body));
+    var res = await Rest.get(
+      RestParams('/API/v1/Users/IsUsernameAvailable/$username'),
+    );
+    return APIResult.fromJson(res);
   }
 
   /// Check if email is available
   Future<APIResult> isEmailAvailable(String email) async {
-    var res = await http.get(
-        Uri.parse('${State.endPoint}/API/v1/Users/IsEmailAvailable/$email'),
-        headers: Headers.getHeaders());
-    return APIResult.fromJson(json.decode(res.body));
+    var res = await Rest.get(
+      RestParams('/API/v1/Users/IsEmailAvailable/$email'),
+    );
+    return APIResult.fromJson(res);
   }
 
   /// Add a new user
@@ -61,12 +58,13 @@ class Users {
           : null,
     };
     try {
-      var res = await http.post(
-        Uri.parse('${State.endPoint}/API/v1/Users/AddUser'),
-        headers: Headers.getHeaders(),
-        body: jsonEncode(data),
+      var res = await Rest.post(
+        RestParams(
+          '/API/v1/Users/AddUser',
+          data: data,
+        ),
       );
-      return APIResult.fromJson(json.decode(res.body));
+      return APIResult.fromJson(res);
     } catch (e) {
       return APIResult(message: e.toString(), success: false);
     }
@@ -92,12 +90,13 @@ class Users {
       if (user.roleIds != null && user.roleIds!.isNotEmpty) {
         data["Role"] = jsonEncode(user.roleIds!);
       }
-      var res = await http.put(
-        Uri.parse('${State.endPoint}/API/v1/Users/UpdateUser?Id=$id'),
-        headers: Headers.getHeaders(),
-        body: jsonEncode(data),
+      var res = await Rest.put(
+        RestParams(
+          '/API/v1/Users/UpdateUser?Id=$id',
+          data: data,
+        ),
       );
-      return APIResult.fromJson(json.decode(res.body));
+      return APIResult.fromJson(res);
     } catch (e) {
       return APIResult(message: e.toString(), success: false);
     }
@@ -106,10 +105,10 @@ class Users {
   /// Delete user by [id]
   Future<APIResult> delete(String id) async {
     try {
-      var res = await http.delete(
-          Uri.parse('${State.endPoint}/API/v1/Users/DeleteUser?Id=$id'),
-          headers: Headers.getHeaders());
-      return APIResult.fromJson(json.decode(res.body));
+      var res = await Rest.delete(
+        RestParams('/API/v1/Users/DeleteUser?Id=$id'),
+      );
+      return APIResult.fromJson(res);
     } catch (e) {
       return APIResult(message: e.toString(), success: false);
     }

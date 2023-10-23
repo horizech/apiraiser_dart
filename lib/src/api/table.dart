@@ -1,11 +1,9 @@
-import 'dart:convert';
 import 'dart:typed_data';
 import 'package:apiraiser/apiraiser.dart';
+import 'package:apiraiser/src/api/rest.dart';
+import 'package:apiraiser/src/models/rest_params.dart';
 import 'package:dio/dio.dart';
-import 'package:http/http.dart' as http;
-
 import 'package:apiraiser/src/helpers/state.dart';
-import 'package:apiraiser/src/helpers/headers.dart' as helper;
 
 /// Table APIs
 class Table {
@@ -15,13 +13,10 @@ class Table {
     try {
       List<Map<String, dynamic>> data =
           columns.map((e) => e.toJson(e)).toList();
-      var res = await http.post(
-        Uri.parse(
-            '${State.endPoint}/API/v1/CreateTable?table=$table&tags=$tags'),
-        headers: helper.Headers.getHeaders(),
-        body: jsonEncode(data),
+      var res = await Rest.post(
+        RestParams('/API/v1/CreateTable?table=$table&tags=$tags', data: data),
       );
-      return APIResult.fromJson(json.decode(res.body));
+      return APIResult.fromJson(res);
     } catch (e) {
       return APIResult(message: e.toString(), success: false);
     }
@@ -47,8 +42,7 @@ class Table {
         ),
         "Tags": request.tags
       });
-      var response = await dio.post(
-          '${State.endPoint}/API/v1/CreateTableUsingDefinitionFile',
+      var response = await dio.post('/API/v1/CreateTableUsingDefinitionFile',
           data: formData);
       return APIResult.fromJson(response.data);
     } catch (e) {
@@ -59,10 +53,10 @@ class Table {
   /// Get all tables
   Future<APIResult> getList() async {
     try {
-      var res = await http.get(
-          Uri.parse('${State.endPoint}/API/v1/GetTablesList'),
-          headers: helper.Headers.getHeaders());
-      return APIResult.fromJson(json.decode(res.body));
+      var res = await Rest.get(
+        RestParams('/API/v1/GetTablesList'),
+      );
+      return APIResult.fromJson(res);
     } catch (e) {
       return APIResult(message: e.toString(), success: false);
     }
@@ -71,12 +65,13 @@ class Table {
   /// Download table Definition File
   Future<Uint8List> downloadDefinitionFile(String table) async {
     try {
-      var res = await http.get(
-        Uri.parse(
-            '${State.endPoint}/API/v1/DownloadTableDefinitionFile/$table'),
-        headers: helper.Headers.getHeaders(),
+      var res = await Rest.get(
+        RestParams(
+          '/API/v1/DownloadTableDefinitionFile/$table',
+          responseType: ResponseType.stream,
+        ),
       );
-      return res.bodyBytes;
+      return res;
     } catch (e) {
       rethrow;
     }
@@ -85,11 +80,10 @@ class Table {
   /// Delete a table
   Future<APIResult> delete(String table) async {
     try {
-      var res = await http.delete(
-        Uri.parse('${State.endPoint}/API/v1/DeleteTable?table=$table'),
-        headers: helper.Headers.getHeaders(),
+      var res = await Rest.delete(
+        RestParams('/API/v1/DeleteTable?table=$table'),
       );
-      return APIResult.fromJson(json.decode(res.body));
+      return APIResult.fromJson(res);
     } catch (e) {
       return APIResult(message: e.toString(), success: false);
     }
