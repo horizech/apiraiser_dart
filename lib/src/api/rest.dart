@@ -15,7 +15,7 @@ class Rest {
       BaseOptions options = BaseOptions(
         baseUrl: State.endPoint ?? "",
         method: "GET",
-        headers: helper.Headers.getHeaders(),
+        headers: helper.Headers.getHeaders(jwt: jwt),
         responseType: restParams.responseType,
       );
       dio = Dio(options);
@@ -67,7 +67,7 @@ class Rest {
       BaseOptions options = BaseOptions(
         baseUrl: '${State.endPoint}',
         method: "POST",
-        headers: helper.Headers.getHeaders(),
+        headers: helper.Headers.getHeaders(jwt: jwt),
         responseType: restParams.responseType,
       );
       dio = Dio(options);
@@ -86,7 +86,7 @@ class Rest {
     try {
       BaseOptions options = BaseOptions(
         baseUrl: '${State.endPoint}',
-        headers: helper.Headers.getHeaders(),
+        headers: helper.Headers.getHeaders(jwt: jwt),
         method: "PUT",
         responseType: restParams.responseType,
       );
@@ -106,7 +106,7 @@ class Rest {
     try {
       BaseOptions options = BaseOptions(
         baseUrl: '${State.endPoint}',
-        headers: helper.Headers.getHeaders(),
+        headers: helper.Headers.getHeaders(jwt: jwt),
         responseType: restParams.responseType,
         method: "DELETE",
       );
