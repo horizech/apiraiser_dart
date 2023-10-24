@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:typed_data';
 import 'package:apiraiser/apiraiser.dart';
 import 'package:apiraiser/src/api/rest.dart';
@@ -14,7 +15,10 @@ class Table {
       List<Map<String, dynamic>> data =
           columns.map((e) => e.toJson(e)).toList();
       var res = await Rest.post(
-        RestParams('/API/v1/CreateTable?table=$table&tags=$tags', data: data),
+        RestParams(
+          '/API/v1/CreateTable?table=$table&tags=$tags',
+          data: jsonEncode(data),
+        ),
       );
       return APIResult.fromJson(res);
     } catch (e) {
@@ -42,8 +46,10 @@ class Table {
         ),
         "Tags": request.tags
       });
-      var response = await dio.post('/API/v1/CreateTableUsingDefinitionFile',
-          data: formData);
+      var response = await dio.post(
+        '/API/v1/CreateTableUsingDefinitionFile',
+        data: formData,
+      );
       return APIResult.fromJson(response.data);
     } catch (e) {
       return APIResult(message: e.toString(), success: false);

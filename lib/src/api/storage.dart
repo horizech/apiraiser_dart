@@ -30,8 +30,10 @@ class Storage {
           "StorageSource": request.storageSource
         });
       }
-      var response =
-          await dio.post('${State.endPoint}/API/v1/Storage', data: formData);
+      var response = await dio.post(
+        '${State.endPoint}/API/v1/Storage',
+        data: formData,
+      );
       return APIResult.fromJson(response.data);
     } catch (e) {
       return null;
@@ -60,8 +62,10 @@ class Storage {
           "StorageSource": request.storageSource
         });
       }
-      var response = await dio
-          .put('${State.endPoint}/API/v1/Storage/$storageId', data: formData);
+      var response = await dio.put(
+        '${State.endPoint}/API/v1/Storage/$storageId',
+        data: formData,
+      );
       return APIResult.fromJson(response.data);
     } catch (e) {
       return null;

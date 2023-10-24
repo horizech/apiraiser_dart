@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:apiraiser/src/helpers/state.dart';
 import 'package:apiraiser/src/models/rest_params.dart';
 import 'package:dio/browser.dart';
@@ -74,7 +72,7 @@ class Rest {
       Response<dynamic> response = await dio.post(
         restParams.url,
         queryParameters: restParams.params,
-        data: jsonEncode(restParams.data),
+        data: restParams.data,
       );
       return response.data;
     } catch (e) {
@@ -94,7 +92,7 @@ class Rest {
       Response<dynamic> res = await dio.put(
         restParams.url,
         queryParameters: restParams.params,
-        data: jsonEncode(restParams.data),
+        data: restParams.data,
       );
       return res.data;
     } catch (e) {
@@ -114,7 +112,7 @@ class Rest {
       Response<dynamic> res = await dio.delete(
         restParams.url,
         queryParameters: restParams.params,
-        data: jsonEncode(restParams.data),
+        data: restParams.data,
       );
       return res.data;
     } catch (e) {

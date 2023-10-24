@@ -1,26 +1,22 @@
+import 'dart:convert';
+
 import 'package:apiraiser/src/api/rest.dart';
 import 'package:apiraiser/src/models/rest_params.dart';
-
-import 'package:dio/dio.dart';
-
 import 'package:apiraiser/src/models/api_result.dart';
 import 'package:apiraiser/src/models/login_request.dart';
 import 'package:apiraiser/src/models/signup_request.dart';
 import 'package:apiraiser/src/models/user.dart';
 import 'package:apiraiser/src/helpers/state.dart';
 
-var dio = Dio();
-
 /// Authentication APIs
 class Authentication {
   /// Login
-
   Future<APIResult> login(LoginRequest loginRequest) async {
     Map<String, dynamic> loginData = loginRequest.toJson(loginRequest);
     dynamic res = await Rest.post(
       RestParams(
         "/API/v1/Authentication/Login",
-        data: loginData,
+        data: jsonEncode(loginData),
       ),
     );
     return await State.processAuthenticationResult(
@@ -35,7 +31,7 @@ class Authentication {
     var res = await Rest.post(
       RestParams(
         "/API/v1/Authentication/Signup",
-        data: signupData,
+        data: jsonEncode(signupData),
       ),
     );
     return await State.processAuthenticationResult(APIResult.fromJson(res));
@@ -96,7 +92,7 @@ class Authentication {
     };
     var res = await Rest.post(RestParams(
       '/API/v1/Authentication/ResetPassword',
-      data: data,
+      data: jsonEncode(data),
     ));
     return APIResult.fromJson(res);
   }
@@ -105,7 +101,7 @@ class Authentication {
   Future<APIResult> forgotPassword(String email) async {
     var res = await Rest.post(RestParams(
       '/API/v1/Authentication/ForgotPassword',
-      data: email,
+      data: jsonEncode(email),
     ));
     return APIResult.fromJson(res);
   }
@@ -114,7 +110,7 @@ class Authentication {
   Future<APIResult> verify(String token) async {
     var res = await Rest.post(RestParams(
       '/API/v1/Authentication/Verify',
-      data: token,
+      data: jsonEncode(token),
     ));
     return APIResult.fromJson(res);
   }

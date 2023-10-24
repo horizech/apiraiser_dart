@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:apiraiser/src/api/rest.dart';
 import 'package:apiraiser/src/models/oauth2_authentication_request.dart';
 import 'package:apiraiser/src/models/oauth2_authorize_request.dart';
@@ -64,7 +66,7 @@ class OAuth2 {
   Future<APIResult> token(OAuth2TokenRequest request) async {
     var res = await Rest.post(RestParams(
       '/API/v1/OAuth2/Token',
-      data: request,
+      data: jsonEncode(request),
     ));
     return APIResult.fromJson(res);
   }
@@ -82,7 +84,7 @@ class OAuth2 {
     Map<String, dynamic> data = {"Name": name, "DisplayName": displayname};
     var res = await Rest.post(RestParams(
       '/API/v1/OAuth2/Client',
-      data: data,
+      data: jsonEncode(data),
     ));
     return APIResult.fromJson(res);
   }

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:apiraiser/src/api/rest.dart';
 import 'package:apiraiser/src/models/api_result.dart';
 import 'package:apiraiser/src/models/rest_params.dart';
@@ -10,7 +12,7 @@ class Encryption {
       var res = await Rest.post(
         RestParams(
           '/API/v1/Encryption/GenerateAESRSAPair',
-          data: password,
+          data: jsonEncode(password),
         ),
       );
       return APIResult.fromJson(res);
@@ -27,7 +29,7 @@ class Encryption {
       var res = await Rest.post(
         RestParams(
           '/API/v1/Encryption/GetEncryptionKeys',
-          data: password,
+          data: jsonEncode(password),
         ),
       );
       return APIResult.fromJson(res);
@@ -43,7 +45,7 @@ class Encryption {
       var res = await Rest.post(
         RestParams(
           '/API/v1/Encryption/EncryptData',
-          data: map,
+          data: jsonEncode(map),
         ),
       );
       return APIResult.fromJson(res);
@@ -59,7 +61,7 @@ class Encryption {
       var res = await Rest.post(
         RestParams(
           '/API/v1/Encryption/DecryptData',
-          data: map,
+          data: jsonEncode(map),
         ),
       );
       return APIResult.fromJson(res);

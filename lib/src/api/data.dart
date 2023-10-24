@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:apiraiser/src/models/api_result.dart';
 import 'package:apiraiser/src/models/query_search_item.dart';
 
@@ -28,7 +30,7 @@ class Data {
       var res = await Rest.post(
         RestParams(
           "/API/v1/table/$table",
-          data: data,
+          data: jsonEncode(data),
         ),
       );
       return APIResult.fromJson(res);
@@ -56,7 +58,7 @@ class Data {
       var res = await Rest.put(
         RestParams(
           '/API/v1/table/$table/$id',
-          data: data,
+          data: jsonEncode(data),
         ),
       );
       return APIResult.fromJson(res);
@@ -104,7 +106,7 @@ class Data {
       var res = await Rest.post(
         RestParams(
           '/API/v1/table/$table/InsertRows',
-          data: data,
+          data: jsonEncode(data),
         ),
       );
       return APIResult.fromJson(res);
@@ -124,7 +126,7 @@ class Data {
       var res = await Rest.put(
         RestParams(
           '/API/v1/table/$table/UpdateRows',
-          data: dataMap,
+          data: jsonEncode(dataMap),
         ),
       );
       return APIResult.fromJson(res);

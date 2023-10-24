@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:apiraiser/src/api/rest.dart';
 import 'package:apiraiser/src/models/rest_params.dart';
 import 'package:apiraiser/src/models/api_result.dart';
@@ -21,7 +23,7 @@ class Initialization {
       var res = await Rest.post(
         RestParams(
           '/API/v1/Apiraiser/Initialize',
-          data: data,
+          data: jsonEncode(data),
         ),
       );
       return APIResult.fromJson(res);

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:apiraiser/src/api/rest.dart';
 import 'package:apiraiser/src/models/column_info.dart';
 import 'package:apiraiser/src/models/api_result.dart';
@@ -39,7 +41,7 @@ class Column {
     try {
       var res = await Rest.post(RestParams(
         '/API/v1/$table/Column',
-        data: data,
+        data: jsonEncode(data),
       ));
       return APIResult.fromJson(res);
     } catch (e) {

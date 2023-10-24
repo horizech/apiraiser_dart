@@ -61,7 +61,7 @@ class Users {
       var res = await Rest.post(
         RestParams(
           '/API/v1/Users/AddUser',
-          data: data,
+          data: jsonEncode(data),
         ),
       );
       return APIResult.fromJson(res);
@@ -93,7 +93,7 @@ class Users {
       var res = await Rest.put(
         RestParams(
           '/API/v1/Users/UpdateUser?Id=$id',
-          data: data,
+          data: jsonEncode(data),
         ),
       );
       return APIResult.fromJson(res);

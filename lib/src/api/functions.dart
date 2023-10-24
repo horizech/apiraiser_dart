@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:apiraiser/src/api/rest.dart';
 import 'package:apiraiser/src/models/rest_params.dart';
 import 'package:apiraiser/src/models/api_result.dart';
@@ -11,7 +13,7 @@ class Functions {
       var res = await Rest.post(
         RestParams(
           '/API/v1/function/Execute/$id',
-          data: jsonQuery,
+          data: jsonEncode(jsonQuery),
         ),
       );
       return APIResult.fromJson(res);
