@@ -22,6 +22,14 @@ class Users {
     return APIResult.fromJson(res);
   }
 
+  /// Get user by [role]
+  Future<APIResult> getUserByRole(String role) async {
+    var res = await Rest.get(
+      RestParams('/API/v1/Users/GetUserByRole/$role'),
+    );
+    return APIResult.fromJson(res);
+  }
+
   /// Get all users
   Future<APIResult> getAll() async {
     var res = await Rest.get(

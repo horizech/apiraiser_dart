@@ -1,3 +1,4 @@
+import 'package:apiraiser/src/api/commerce.dart';
 import 'package:apiraiser/src/api/encryption.dart';
 import 'package:apiraiser/src/api/features.dart';
 import 'package:apiraiser/src/api/functions.dart';
@@ -58,6 +59,9 @@ class Apiraiser {
 
   /// Encryption APIs
   static Encryption encryption = Encryption();
+
+  /// Commerce APIs
+  static Commerce commerce = Commerce();
 
   /// Token Validation
   static void validateAuthentication() {

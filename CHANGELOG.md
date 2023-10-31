@@ -13,6 +13,8 @@
 - Added OAuth2 APIs.
 - Added Feature APIs.
 - Added Encryptrion APIs.
+- Added GetUserByRole API.
+- Added Commerce APIs.
 
 ## 0.2.3
 
