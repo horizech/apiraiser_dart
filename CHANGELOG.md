@@ -1,5 +1,7 @@
 ## Unreleased
 
+## 1.0.0
+
 - Added RefreshToken API.
 - Added ResetPassword API.
 - Added ForgotPassword API.

@@ -16,7 +16,7 @@ To use this library, you need to have Apiraiser healess CMS running at a public 
 
 ```dart
   /// Initialize the library
-  Apiraiser.init("https://API/v1raiser-api-endpoint.com");
+  Apiraiser.init("https://apiraiser-api-endpoint.com");
 
   /// Authentication
   Apiraiser.authentication
@@ -31,4 +31,4 @@ To use this library, you need to have Apiraiser healess CMS running at a public 
 
 ## Additional information
 
-To learn more: go to [https://API/v1raiser.com](https://API/v1raiser.com)
+To learn more: go to [https://apiraiser.com](https://apiraiser.com)

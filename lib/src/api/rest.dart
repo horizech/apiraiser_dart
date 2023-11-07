@@ -1,7 +1,6 @@
 import 'package:apiraiser/src/helpers/state.dart';
 import 'package:apiraiser/src/models/rest_params.dart';
 import 'package:dio/browser.dart';
-import 'package:flutter/foundation.dart';
 import 'package:apiraiser/src/helpers/headers.dart' as helper;
 import 'package:dio/dio.dart';
 
@@ -17,6 +16,7 @@ class Rest {
         responseType: restParams.responseType,
       );
       dio = Dio(options);
+      bool kIsWeb = bool.fromEnvironment('dart.library.js_util');
       if (kIsWeb) {
         dio.httpClientAdapter = BrowserHttpClientAdapter(withCredentials: true);
       }
