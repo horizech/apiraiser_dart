@@ -17,6 +17,14 @@ class OAuth2 {
     return APIResult.fromJson(res);
   }
 
+  /// Refresh token
+  Future<APIResult> refreshToken(String token) async {
+    var res = await Rest.get(
+      RestParams('/API/v1/OAuth2/Logout'),
+    );
+    return APIResult.fromJson(res);
+  }
+
   /// Authorize
   Future<APIResult> authorize(OAuth2AuthorizeRequest request) async {
     var res = await Rest.get(

@@ -16,7 +16,7 @@ class Rest {
         responseType: restParams.responseType,
       );
       dio = Dio(options);
-      bool kIsWeb = bool.fromEnvironment('dart.library.js_util');
+      const bool kIsWeb = bool.fromEnvironment('dart.library.js_util');
       if (kIsWeb) {
         dio.httpClientAdapter = BrowserHttpClientAdapter(withCredentials: true);
       }

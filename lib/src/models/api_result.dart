@@ -18,6 +18,11 @@ class APIResult {
     return const APIResult();
   }
 
+  /// Get  error APIResult model instance
+  static APIResult error(String message) {
+    return APIResult(data: null, message: message, success: false);
+  }
+
   /// Get model from Json
   factory APIResult.fromJson(Map<String, dynamic> json) {
     try {

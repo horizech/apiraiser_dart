@@ -84,8 +84,6 @@ class Apiraiser {
       } else {
         await Apiraiser.authentication.loadSessionUsingJwt(jwt);
       }
-    } else {
-      return true;
     }
   }
 }
