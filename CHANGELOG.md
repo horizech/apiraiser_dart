@@ -1,5 +1,7 @@
 ## Unreleased
 
+## 1.0.1
+
 - Implemented platform based Rest classes
 
 ## 1.0.0
