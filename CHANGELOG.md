@@ -1,5 +1,7 @@
 ## Unreleased
 
+- Implemented platform based Rest classes
+
 ## 1.0.0
 
 - Added RefreshToken API.
