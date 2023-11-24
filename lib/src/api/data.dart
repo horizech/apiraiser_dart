@@ -10,12 +10,37 @@ import 'package:apiraiser/src/models/rest_params.dart';
 /// Data APIs
 class Data {
   /// Get table rows
-  Future<APIResult> get(String table, int limit) async {
+  Future<APIResult> get(
+    String table, {
+    int limit = -1,
+    String? orderBy,
+    String? orderDescendingBy,
+    String? createdBy,
+    String? updatedBy,
+    int offset = -1,
+  }) async {
     try {
+      Map<String, dynamic> params = {};
+      params["limit"] = limit;
+      if (offset > 0) {
+        params["offset"] = offset;
+      }
+      if (orderBy != null && orderBy.isNotEmpty) {
+        params["orderBy"] = orderBy;
+      }
+      if (orderDescendingBy != null && orderDescendingBy.isNotEmpty) {
+        params["orderDescendingBy"] = orderDescendingBy;
+      }
+      if (createdBy != null && createdBy.isNotEmpty) {
+        params["createdBy"] = createdBy;
+      }
+      if (updatedBy != null && updatedBy.isNotEmpty) {
+        params["updatedBy"] = updatedBy;
+      }
       var res = await Rest.get(
         RestParams(
           "/API/v1/table/$table",
-          params: limit > 0 ? {"limit": limit} : null,
+          params: params,
         ),
       );
       return APIResult.fromJson(res);
@@ -84,12 +109,28 @@ class Data {
   /// Get row by conditions
   Future<APIResult> getByConditions(
     String table,
-    List<QuerySearchItem> conditions,
-  ) async {
+    List<QuerySearchItem> conditions, {
+    int limit = -1,
+    int offset = -1,
+    String? orderBy,
+    String? orderDescendingBy,
+  }) async {
     try {
+      Map<String, dynamic> params = {};
+      params["limit"] = limit;
+      if (orderBy != null && orderBy.isNotEmpty) {
+        params["orderBy"] = orderBy;
+      }
+      if (offset > 0) {
+        params["offset"] = offset;
+      }
+      if (orderDescendingBy != null && orderDescendingBy.isNotEmpty) {
+        params["orderDescendingBy"] = orderDescendingBy;
+      }
       var res = await Rest.post(
         RestParams(
           '/API/v1/table/$table/GetRowsByConditions',
+          params: params,
           data: QuerySearchItem.toJsonList(conditions),
         ),
       );

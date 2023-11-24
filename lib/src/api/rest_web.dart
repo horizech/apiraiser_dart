@@ -28,36 +28,6 @@ class RestPlatform {
     }
   }
 
-  Dio getClient(options) {
-    Dio dio = Dio(options);
-    dio.interceptors.add(InterceptorsWrapper(
-      onRequest: (options, handler) async {
-        // dio.interceptors.requestLock.lock();
-
-        options.headers['cookie'] = "accessToken=sdfsdf; refreshToken=dsfsdfsd";
-        // dio.interceptors.requestLock.unlock();
-
-        return handler.next(options);
-      },
-    ));
-    return dio;
-    // onResponse: (response, handler) {
-    //   response.headers.forEach((name, values) async {
-    //     if (name == HttpHeaders.setCookieHeader) {
-    //       final cookieMap = <String, String>{};
-    //       cookieMap
-    //           .forEach((key, value) => cookiesFormatted += '$key=$value; ');
-
-    //       await localData.write('cookie', cookiesFormatted);
-
-    //       return;
-    //     }
-    //   });
-
-    // return handler.next(response);
-    // },
-  }
-
   Future<dynamic> post(RestParams restParams, {String? jwt}) async {
     try {
       BaseOptions options = BaseOptions(
@@ -67,6 +37,7 @@ class RestPlatform {
         responseType: restParams.responseType,
       );
       _dio = Dio(options);
+      _dio.httpClientAdapter = BrowserHttpClientAdapter(withCredentials: true);
       Response<dynamic> response = await _dio.post(
         restParams.url,
         queryParameters: restParams.params,
@@ -87,6 +58,7 @@ class RestPlatform {
         responseType: restParams.responseType,
       );
       _dio = Dio(options);
+      _dio.httpClientAdapter = BrowserHttpClientAdapter(withCredentials: true);
       Response<dynamic> res = await _dio.put(
         restParams.url,
         queryParameters: restParams.params,
@@ -107,6 +79,7 @@ class RestPlatform {
         method: "DELETE",
       );
       _dio = Dio(options);
+      _dio.httpClientAdapter = BrowserHttpClientAdapter(withCredentials: true);
       Response<dynamic> res = await _dio.delete(
         restParams.url,
         queryParameters: restParams.params,

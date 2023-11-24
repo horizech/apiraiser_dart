@@ -13,5 +13,5 @@ void main() async {
       .login(LoginRequest(email: "test@example.com", password: "P@ssword1"));
 
   /// Get table rows
-  await Apiraiser.data.get("my-table", -1);
+  await Apiraiser.data.get("my-table");
 }

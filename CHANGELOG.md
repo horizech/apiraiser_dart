@@ -1,5 +1,7 @@
 ## Unreleased
 
+- Added limit, orderBy, orderDescendingBy, offset in get and getByConditions APIs
+
 ## 1.0.1
 
 - Implemented platform based Rest classes
