@@ -1,4 +1,4 @@
-## Unreleased
+## 1.0.2
 
 - Added limit, orderBy, orderDescendingBy, offset in get and getByConditions APIs
 
