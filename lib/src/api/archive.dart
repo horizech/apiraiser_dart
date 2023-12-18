@@ -6,6 +6,22 @@ import 'package:apiraiser/src/models/rest_params.dart';
 
 /// Archive APIs
 class Archive {
+  /// Create Archive
+  Future<APIResult> createArchive(String path, String fileName) async {
+    try {
+      Map<String, String> map = {"Path": path, "FileName": fileName};
+      var res = await Rest.post(
+        RestParams(
+          '/API/v1/CreateArchive',
+          data: jsonEncode(map),
+        ),
+      );
+      return APIResult.fromJson(res);
+    } catch (e) {
+      return APIResult(message: e.toString(), success: false);
+    }
+  }
+
   /// Extract By Path
   Future<APIResult> extractByPath(String path, String destination) async {
     try {
