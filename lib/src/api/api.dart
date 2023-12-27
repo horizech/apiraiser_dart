@@ -1,4 +1,5 @@
 import 'package:apiraiser/src/api/archive.dart';
+import 'package:apiraiser/src/api/awss3.dart';
 import 'package:apiraiser/src/api/commerce.dart';
 import 'package:apiraiser/src/api/encryption.dart';
 import 'package:apiraiser/src/api/features.dart';
@@ -66,6 +67,9 @@ class Apiraiser {
 
   /// Archive APIs
   static Archive archive = Archive();
+
+  /// AWSS3 APIs
+  static AWSS3 awss3 = AWSS3();
 
   /// Token Validation
   static void validateAuthentication() {

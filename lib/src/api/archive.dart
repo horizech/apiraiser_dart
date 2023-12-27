@@ -12,7 +12,7 @@ class Archive {
       Map<String, String> map = {"Path": path, "FileName": fileName};
       var res = await Rest.post(
         RestParams(
-          '/API/v1/CreateArchive',
+          '/API/v1/Archive/CreateArchive',
           data: jsonEncode(map),
         ),
       );
@@ -28,7 +28,7 @@ class Archive {
       Map<String, String> map = {"Path": path, "Destination": destination};
       var res = await Rest.post(
         RestParams(
-          '/API/v1/ExtractByPath',
+          '/API/v1/Archive/ExtractByPath',
           data: jsonEncode(map),
         ),
       );
@@ -44,7 +44,7 @@ class Archive {
       Map<String, String> map = {"Url": url, "Destination": destination};
       var res = await Rest.post(
         RestParams(
-          '/API/v1/ExtractByUrl',
+          '/API/v1/Archive/ExtractByUrl',
           data: jsonEncode(map),
         ),
       );
@@ -60,7 +60,7 @@ class Archive {
       Map<String, dynamic> map = {"Bytes": bytes, "Destination": destination};
       var res = await Rest.post(
         RestParams(
-          '/API/v1/ExtractByBytes',
+          '/API/v1/Archive/ExtractByBytes',
           data: jsonEncode(map),
         ),
       );
@@ -76,7 +76,7 @@ class Archive {
     try {
       var res = await Rest.post(
         RestParams(
-            '/API/v1/ExtractUsingStorage?storageId=$storage&destination=$destination'),
+            '/API/v1/Archive/ExtractUsingStorage?storageId=$storage&destination=$destination'),
       );
       return APIResult.fromJson(res);
     } catch (e) {

@@ -1,6 +1,7 @@
 ## Unreleased
 
-- Added Archive APIsAdded Archive APIs
+- Added Archive APIs
+- Added AWSS3 APIs
 
 ## 1.0.2
 
