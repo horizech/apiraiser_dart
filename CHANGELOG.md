@@ -1,4 +1,4 @@
-## Unreleased
+## 2.0.0
 
 - Added Archive APIs
 - Added AWSS3 APIs
