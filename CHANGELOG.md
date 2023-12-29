@@ -1,3 +1,7 @@
+## 2.0.1
+
+- Updated DeleteRow API
+
 ## 2.0.0
 
 - Added Archive APIs
