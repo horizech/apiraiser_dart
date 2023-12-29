@@ -97,7 +97,7 @@ class Data {
     try {
       var res = await Rest.delete(
         RestParams(
-          '${State.endPoint}/API/v1/table/$table/$id',
+          '/API/v1/table/$table/$id',
         ),
       );
       return APIResult.fromJson(res);

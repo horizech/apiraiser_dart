@@ -75,6 +75,7 @@ class RestPlatform {
       BaseOptions options = BaseOptions(
         baseUrl: '${State.endPoint}',
         headers: helper.Headers.getHeaders(jwt: jwt),
+        validateStatus: (status) => true,
         responseType: restParams.responseType,
         method: "DELETE",
       );

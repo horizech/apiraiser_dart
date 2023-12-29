@@ -101,6 +101,7 @@ class RestPlatform {
     try {
       BaseOptions options = BaseOptions(
         baseUrl: '${State.endPoint}',
+          validateStatus: (status) => true,
         headers: helper.Headers.getHeaders(jwt: jwt),
         responseType: restParams.responseType,
         method: "DELETE",
@@ -109,7 +110,7 @@ class RestPlatform {
       Response<dynamic> res = await _dio.delete(
         restParams.url,
         queryParameters: restParams.params,
-        data: restParams.data,
+              data: restParams.data,
       );
       return res.data;
     } catch (e) {
