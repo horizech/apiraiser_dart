@@ -1,3 +1,4 @@
+import 'package:apiraiser/constants.dart';
 import 'package:apiraiser/src/api/rest.dart';
 import 'package:apiraiser/src/models/api_result.dart';
 import 'package:apiraiser/src/models/rest_params.dart';
@@ -9,7 +10,7 @@ class AWSS3 {
     try {
       var res = await Rest.get(
         RestParams(
-          '/API/v1/AWSS3/DeleteByKey?key=$key',
+          '/API/${Constants.version}/AWSS3/DeleteByKey?key=$key',
         ),
       );
       return APIResult.fromJson(res);

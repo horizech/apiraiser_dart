@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:apiraiser/constants.dart';
 import 'package:apiraiser/src/models/api_result.dart';
 import 'package:apiraiser/src/models/query_search_item.dart';
 import 'package:apiraiser/src/api/rest.dart';
@@ -36,7 +37,7 @@ class Data {
       }
       var res = await Rest.get(
         RestParams(
-          "/API/v1/table/$table",
+          "/API/${Constants.version}/table/$table",
           params: params,
         ),
       );
@@ -51,7 +52,7 @@ class Data {
     try {
       var res = await Rest.post(
         RestParams(
-          "/API/v1/table/$table",
+          "/API/${Constants.version}/table/$table",
           data: jsonEncode(data),
         ),
       );
@@ -65,7 +66,7 @@ class Data {
   Future<APIResult> getById(String table, String id) async {
     try {
       var res = await Rest.get(
-        RestParams('/API/v1/table/$table/$id'),
+        RestParams('/API/${Constants.version}/table/$table/$id'),
       );
       return APIResult.fromJson(res);
     } catch (e) {
@@ -79,7 +80,7 @@ class Data {
     try {
       var res = await Rest.put(
         RestParams(
-          '/API/v1/table/$table/$id',
+          '/API/${Constants.version}/table/$table/$id',
           data: jsonEncode(data),
         ),
       );
@@ -94,7 +95,7 @@ class Data {
     try {
       var res = await Rest.delete(
         RestParams(
-          '/API/v1/table/$table/$id',
+          '/API/${Constants.version}/table/$table/$id',
         ),
       );
       return APIResult.fromJson(res);
@@ -126,7 +127,7 @@ class Data {
       }
       var res = await Rest.post(
         RestParams(
-          '/API/v1/table/$table/GetRowsByConditions',
+          '/API/${Constants.version}/table/$table/GetRowsByConditions',
           params: params,
           data: QuerySearchItem.toJsonList(conditions),
         ),
@@ -143,7 +144,7 @@ class Data {
     try {
       var res = await Rest.post(
         RestParams(
-          '/API/v1/table/$table/InsertRows',
+          '/API/${Constants.version}/table/$table/InsertRows',
           data: jsonEncode(data),
         ),
       );
@@ -163,7 +164,7 @@ class Data {
     try {
       var res = await Rest.put(
         RestParams(
-          '/API/v1/table/$table/UpdateRows',
+          '/API/${Constants.version}/table/$table/UpdateRows',
           data: jsonEncode(dataMap),
         ),
       );
@@ -181,7 +182,7 @@ class Data {
     try {
       var res = await Rest.delete(
         RestParams(
-          '/API/v1/table/$table/DeleteRows',
+          '/API/${Constants.version}/table/$table/DeleteRows',
           data: QuerySearchItem.toJsonList(conditions),
         ),
       );

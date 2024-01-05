@@ -1,3 +1,4 @@
+import 'package:apiraiser/constants.dart';
 import 'package:apiraiser/src/api/rest.dart';
 import 'package:apiraiser/src/models/api_result.dart';
 import 'package:apiraiser/src/models/rest_params.dart';
@@ -8,7 +9,7 @@ class Feature {
   Future<APIResult> install(String feature) async {
     try {
       var res = await Rest.post(
-        RestParams('/API/v1/Feature/Install', params: {
+        RestParams('/API/${Constants.version}/Feature/Install', params: {
           "feature": feature,
         }),
       );
@@ -22,7 +23,7 @@ class Feature {
   Future<APIResult> getList() async {
     try {
       var res = await Rest.get(
-        RestParams('/API/v1/Feature/GetList'),
+        RestParams('/API/${Constants.version}/Feature/GetList'),
       );
       return APIResult.fromJson(res);
     } catch (e) {
@@ -34,7 +35,7 @@ class Feature {
   Future<APIResult> delete(String feature) async {
     try {
       var res = await Rest.delete(
-        RestParams('/API/v1/Feature/Delete', params: {
+        RestParams('/API/${Constants.version}/Feature/Delete', params: {
           "feature": feature,
         }),
       );

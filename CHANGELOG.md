@@ -1,5 +1,6 @@
 ## 2.0.1
 
+- Updated apiraiser version from v1 to v2
 - Updated DeleteRow API
 
 ## 2.0.0

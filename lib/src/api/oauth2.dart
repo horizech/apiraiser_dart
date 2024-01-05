@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:apiraiser/constants.dart';
 import 'package:apiraiser/src/api/rest.dart';
 import 'package:apiraiser/src/models/oauth2_authentication_request.dart';
 import 'package:apiraiser/src/models/oauth2_authorize_request.dart';
@@ -12,7 +13,7 @@ class OAuth2 {
   /// Logout
   Future<APIResult> logout() async {
     var res = await Rest.get(
-      RestParams('/API/v1/OAuth2/Logout'),
+      RestParams('/API/${Constants.version}/OAuth2/Logout'),
     );
     return APIResult.fromJson(res);
   }
@@ -20,7 +21,7 @@ class OAuth2 {
   /// Refresh token
   Future<APIResult> refreshToken(String token) async {
     var res = await Rest.get(
-      RestParams('/API/v1/OAuth2/Logout'),
+      RestParams('/API/${Constants.version}/OAuth2/Logout'),
     );
     return APIResult.fromJson(res);
   }
@@ -29,7 +30,7 @@ class OAuth2 {
   Future<APIResult> authorize(OAuth2AuthorizeRequest request) async {
     var res = await Rest.get(
       RestParams(
-          '/API/v1/OAuth2/Authorize?client_id=${request.clientId}&redirect_uri=${request.redirectUri}&scope=${request.scope}&response_type=${request.responseType}&state=${request.state}&access_type=${request.accessType}'),
+          '/API/${Constants.version}/OAuth2/Authorize?client_id=${request.clientId}&redirect_uri=${request.redirectUri}&scope=${request.scope}&response_type=${request.responseType}&state=${request.state}&access_type=${request.accessType}'),
     );
     return APIResult.fromJson(res);
   }
@@ -38,7 +39,7 @@ class OAuth2 {
   Future<APIResult> login(OAuth2AuthorizeRequest request) async {
     var res = await Rest.get(
       RestParams(
-          '/API/v1/OAuth2/Login?client_id=${request.clientId}&redirect_uri=${request.redirectUri}&scope=${request.scope}&response_type=${request.responseType}&state=${request.state}&access_type=${request.accessType}'),
+          '/API/${Constants.version}/OAuth2/Login?client_id=${request.clientId}&redirect_uri=${request.redirectUri}&scope=${request.scope}&response_type=${request.responseType}&state=${request.state}&access_type=${request.accessType}'),
     );
     return APIResult.fromJson(res);
   }
@@ -47,7 +48,7 @@ class OAuth2 {
   Future<APIResult> signup(OAuth2AuthorizeRequest request) async {
     var res = await Rest.get(
       RestParams(
-          '/API/v1/OAuth2/Signup?client_id=${request.clientId}&redirect_uri=${request.redirectUri}&scope=${request.scope}&response_type=${request.responseType}&state=${request.state}&access_type=${request.accessType}'),
+          '/API/${Constants.version}/OAuth2/Signup?client_id=${request.clientId}&redirect_uri=${request.redirectUri}&scope=${request.scope}&response_type=${request.responseType}&state=${request.state}&access_type=${request.accessType}'),
     );
     return APIResult.fromJson(res);
   }
@@ -56,7 +57,7 @@ class OAuth2 {
   Future<APIResult> consent(OAuth2AuthenticateRequest request) async {
     var res = await Rest.get(
       RestParams(
-          '/API/v1/OAuth2/Consent?client_id=${request.clientId}&redirect_uri=${request.redirectUri}&scope=${request.scope}&response_type=${request.responseType}&state=${request.state}&access_type=${request.accessType}&request_token=${request.requestToken}'),
+          '/API/${Constants.version}/OAuth2/Consent?client_id=${request.clientId}&redirect_uri=${request.redirectUri}&scope=${request.scope}&response_type=${request.responseType}&state=${request.state}&access_type=${request.accessType}&request_token=${request.requestToken}'),
     );
     return APIResult.fromJson(res);
   }
@@ -65,7 +66,7 @@ class OAuth2 {
   Future<APIResult> authenticate(OAuth2AuthenticateRequest request) async {
     var res = await Rest.get(
       RestParams(
-          '/API/v1/OAuth2/Authenticate?client_id=${request.clientId}&redirect_uri=${request.redirectUri}&scope=${request.scope}&response_type=${request.responseType}&state=${request.state}&access_type=${request.accessType}&request_token=${request.requestToken}'),
+          '/API/${Constants.version}/OAuth2/Authenticate?client_id=${request.clientId}&redirect_uri=${request.redirectUri}&scope=${request.scope}&response_type=${request.responseType}&state=${request.state}&access_type=${request.accessType}&request_token=${request.requestToken}'),
     );
     return APIResult.fromJson(res);
   }
@@ -73,7 +74,7 @@ class OAuth2 {
   /// Token
   Future<APIResult> token(OAuth2TokenRequest request) async {
     var res = await Rest.post(RestParams(
-      '/API/v1/OAuth2/Token',
+      '/API/${Constants.version}/OAuth2/Token',
       data: jsonEncode(request),
     ));
     return APIResult.fromJson(res);
@@ -82,7 +83,7 @@ class OAuth2 {
   /// Get UserInfo
   Future<APIResult> getUserInfo() async {
     var res = await Rest.get(
-      RestParams('/API/v1/OAuth2/UserInfo'),
+      RestParams('/API/${Constants.version}/OAuth2/UserInfo'),
     );
     return APIResult.fromJson(res);
   }
@@ -91,7 +92,7 @@ class OAuth2 {
   Future<APIResult> addClient(String name, String displayname) async {
     Map<String, dynamic> data = {"Name": name, "DisplayName": displayname};
     var res = await Rest.post(RestParams(
-      '/API/v1/OAuth2/Client',
+      '/API/${Constants.version}/OAuth2/Client',
       data: jsonEncode(data),
     ));
     return APIResult.fromJson(res);
@@ -100,7 +101,7 @@ class OAuth2 {
   /// Get client
   Future<APIResult> getClient(String clientId) async {
     var res = await Rest.get(
-      RestParams('/API/v1/OAuth2/Client?client_id=$clientId'),
+      RestParams('/API/${Constants.version}/OAuth2/Client?client_id=$clientId'),
     );
     return APIResult.fromJson(res);
   }
@@ -109,15 +110,16 @@ class OAuth2 {
   Future<APIResult> updateClient(
       String clientId, String name, String displayname) async {
     Map<String, dynamic> data = {"Name": name, "DisplayName": displayname};
-    var res = await Rest.put(
-        RestParams('/API/v1/OAuth2/Client?client_id=$clientId', data: data));
+    var res = await Rest.put(RestParams(
+        '/API/${Constants.version}/OAuth2/Client?client_id=$clientId',
+        data: data));
     return APIResult.fromJson(res);
   }
 
   /// Delete client
   Future<APIResult> deleteClient(String clientId) async {
     var res = await Rest.delete(
-      RestParams('/API/v1/OAuth2/Client?client_id=$clientId'),
+      RestParams('/API/${Constants.version}/OAuth2/Client?client_id=$clientId'),
     );
     return APIResult.fromJson(res);
   }

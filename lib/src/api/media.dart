@@ -1,4 +1,5 @@
 import 'dart:typed_data';
+import 'package:apiraiser/constants.dart';
 import 'package:apiraiser/src/api/rest.dart';
 import 'package:apiraiser/src/models/media_upload_request.dart';
 import 'package:apiraiser/src/models/rest_params.dart';
@@ -30,8 +31,9 @@ class Media {
           "MediaSource": request.mediaSource
         });
       }
-      var response =
-          await dio.post('${State.endPoint}/API/v1/Media', data: formData);
+      var response = await dio.post(
+          '${State.endPoint}/API/${Constants.version}/Media',
+          data: formData);
       return APIResult.fromJson(response.data);
     } catch (e) {
       return null;
@@ -60,7 +62,8 @@ class Media {
           "MediaSource": request.mediaSource
         });
       }
-      var response = await dio.put('${State.endPoint}/API/v1/Media/$mediaId',
+      var response = await dio.put(
+          '${State.endPoint}/API/${Constants.version}/Media/$mediaId',
           data: formData);
       return APIResult.fromJson(response.data);
     } catch (e) {
@@ -72,7 +75,7 @@ class Media {
   Future<APIResult> delete(String mediaId) async {
     try {
       var res = await Rest.delete(
-        RestParams('/API/v1/Media/$mediaId'),
+        RestParams('/API/${Constants.version}/Media/$mediaId'),
       );
       return APIResult.fromJson(res);
     } catch (e) {
@@ -85,7 +88,7 @@ class Media {
     try {
       var res = await Rest.get(
         RestParams(
-          '${State.endPoint}/API/v1/Media/Download/$mediaId',
+          '${State.endPoint}/API/${Constants.version}/Media/Download/$mediaId',
           responseType: ResponseType.stream,
         ),
       );

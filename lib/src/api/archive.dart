@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:typed_data';
+import 'package:apiraiser/constants.dart';
 import 'package:apiraiser/src/api/rest.dart';
 import 'package:apiraiser/src/models/api_result.dart';
 import 'package:apiraiser/src/models/rest_params.dart';
@@ -12,7 +13,7 @@ class Archive {
       Map<String, String> map = {"Path": path, "FileName": fileName};
       var res = await Rest.post(
         RestParams(
-          '/API/v1/Archive/CreateArchive',
+          '/API/${Constants.version}/Archive/CreateArchive',
           data: jsonEncode(map),
         ),
       );
@@ -28,7 +29,7 @@ class Archive {
       Map<String, String> map = {"Path": path, "Destination": destination};
       var res = await Rest.post(
         RestParams(
-          '/API/v1/Archive/ExtractByPath',
+          '/API/${Constants.version}/Archive/ExtractByPath',
           data: jsonEncode(map),
         ),
       );
@@ -44,7 +45,7 @@ class Archive {
       Map<String, String> map = {"Url": url, "Destination": destination};
       var res = await Rest.post(
         RestParams(
-          '/API/v1/Archive/ExtractByUrl',
+          '/API/${Constants.version}/Archive/ExtractByUrl',
           data: jsonEncode(map),
         ),
       );
@@ -60,7 +61,7 @@ class Archive {
       Map<String, dynamic> map = {"Bytes": bytes, "Destination": destination};
       var res = await Rest.post(
         RestParams(
-          '/API/v1/Archive/ExtractByBytes',
+          '/API/${Constants.version}/Archive/ExtractByBytes',
           data: jsonEncode(map),
         ),
       );
@@ -76,7 +77,7 @@ class Archive {
     try {
       var res = await Rest.post(
         RestParams(
-            '/API/v1/Archive/ExtractUsingStorage?storageId=$storage&destination=$destination'),
+            '/API/${Constants.version}/Archive/ExtractUsingStorage?storageId=$storage&destination=$destination'),
       );
       return APIResult.fromJson(res);
     } catch (e) {

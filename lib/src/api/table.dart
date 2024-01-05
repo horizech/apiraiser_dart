@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:typed_data';
 import 'package:apiraiser/apiraiser.dart';
+import 'package:apiraiser/constants.dart';
 import 'package:apiraiser/src/api/rest.dart';
 import 'package:apiraiser/src/models/rest_params.dart';
 import 'package:dio/dio.dart';
@@ -16,7 +17,7 @@ class Table {
           columns.map((e) => e.toJson(e)).toList();
       var res = await Rest.post(
         RestParams(
-          '/API/v1/CreateTable?table=$table&tags=$tags',
+          '/API/${Constants.version}/CreateTable?table=$table&tags=$tags',
           data: jsonEncode(data),
         ),
       );
@@ -47,7 +48,7 @@ class Table {
         "Tags": request.tags
       });
       var response = await dio.post(
-        '/API/v1/CreateTableUsingDefinitionFile',
+        '/API/${Constants.version}/CreateTableUsingDefinitionFile',
         data: formData,
       );
       return APIResult.fromJson(response.data);
@@ -60,7 +61,7 @@ class Table {
   Future<APIResult> getList() async {
     try {
       var res = await Rest.get(
-        RestParams('/API/v1/GetTablesList'),
+        RestParams('/API/${Constants.version}/GetTablesList'),
       );
       return APIResult.fromJson(res);
     } catch (e) {
@@ -73,7 +74,7 @@ class Table {
     try {
       var res = await Rest.get(
         RestParams(
-          '/API/v1/DownloadTableDefinitionFile/$table',
+          '/API/${Constants.version}/DownloadTableDefinitionFile/$table',
           responseType: ResponseType.stream,
         ),
       );
@@ -87,7 +88,7 @@ class Table {
   Future<APIResult> delete(String table) async {
     try {
       var res = await Rest.delete(
-        RestParams('/API/v1/DeleteTable?table=$table'),
+        RestParams('/API/${Constants.version}/DeleteTable?table=$table'),
       );
       return APIResult.fromJson(res);
     } catch (e) {

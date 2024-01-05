@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 import 'package:apiraiser/apiraiser.dart';
+import 'package:apiraiser/constants.dart';
 import 'package:apiraiser/src/api/rest.dart';
 import 'package:apiraiser/src/helpers/state.dart';
 
@@ -13,7 +14,7 @@ class ImportExport {
       String table, List<QuerySearchItem> conditions) async {
     try {
       var res = await Rest.post(
-        RestParams('/API/v1/ImportExport/ExportExcel/$table',
+        RestParams('/API/${Constants.version}/ImportExport/ExportExcel/$table',
             data: QuerySearchItem.toJsonList(conditions),
             responseType: ResponseType.stream),
       );
@@ -40,7 +41,7 @@ class ImportExport {
         ),
       });
       var response = await dio.post(
-          '${State.endPoint}/API/v1/ImportExport/ImportExcel/$table',
+          '${State.endPoint}/API/${Constants.version}/ImportExport/ImportExcel/$table',
           data: formData);
       return APIResult.fromJson(response.data);
     } catch (e) {

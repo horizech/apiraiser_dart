@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:apiraiser/constants.dart';
 import 'package:apiraiser/src/api/rest.dart';
 import 'package:apiraiser/src/models/column_info.dart';
 import 'package:apiraiser/src/models/api_result.dart';
@@ -12,7 +13,7 @@ class Column {
     try {
       var res = await Rest.get(
         RestParams(
-          '/API/v1/GetPredefinedColumns',
+          '/API/${Constants.version}/GetPredefinedColumns',
         ),
       );
       return APIResult.fromJson(res);
@@ -26,7 +27,7 @@ class Column {
     try {
       var res = await Rest.get(
         RestParams(
-          '/API/v1/$table/Columns',
+          '/API/${Constants.version}/$table/Columns',
         ),
       );
       return APIResult.fromJson(res);
@@ -40,7 +41,7 @@ class Column {
     Map<String, dynamic> data = columnInfo.toJson(columnInfo);
     try {
       var res = await Rest.post(RestParams(
-        '/API/v1/$table/Column',
+        '/API/${Constants.version}/$table/Column',
         data: jsonEncode(data),
       ));
       return APIResult.fromJson(res);
@@ -53,7 +54,7 @@ class Column {
   Future<APIResult> delete(String table, String column) async {
     try {
       var res = await Rest.delete(
-        RestParams('/API/v1/$table/Column/$column'),
+        RestParams('/API/${Constants.version}/$table/Column/$column'),
       );
       return APIResult.fromJson(res);
     } catch (e) {

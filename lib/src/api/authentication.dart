@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:apiraiser/constants.dart';
 import 'package:apiraiser/src/api/rest.dart';
 import 'package:apiraiser/src/models/rest_params.dart';
 import 'package:apiraiser/src/models/api_result.dart';
@@ -15,7 +16,7 @@ class Authentication {
     Map<String, dynamic> loginData = loginRequest.toJson(loginRequest);
     dynamic res = await Rest.post(
       RestParams(
-        "/API/v1/Authentication/Login",
+        "/API/${Constants.version}/Authentication/Login",
         data: jsonEncode(loginData),
       ),
     );
@@ -30,7 +31,7 @@ class Authentication {
 
     var res = await Rest.post(
       RestParams(
-        "/API/v1/Authentication/Signup",
+        "/API/${Constants.version}/Authentication/Signup",
         data: jsonEncode(signupData),
       ),
     );
@@ -44,7 +45,7 @@ class Authentication {
         State.jwt = jwt;
         var res = await Rest.get(
           RestParams(
-            "/API/v1/Authentication/LoadSessionUsingJwt",
+            "/API/${Constants.version}/Authentication/LoadSessionUsingJwt",
           ),
         );
         return await State.processAuthenticationResult(APIResult.fromJson(res),
@@ -66,7 +67,7 @@ class Authentication {
     if (jwt.isNotEmpty) {
       var res = await Rest.get(
         RestParams(
-          "/API/v1/Authentication/RefreshToken",
+          "/API/${Constants.version}/Authentication/RefreshToken",
         ),
       );
       return await State.processAuthenticationResult(
@@ -91,7 +92,7 @@ class Authentication {
       "ConfirmPassword": confirmPassword,
     };
     var res = await Rest.post(RestParams(
-      '/API/v1/Authentication/ResetPassword',
+      '/API/${Constants.version}/Authentication/ResetPassword',
       data: jsonEncode(data),
     ));
     return APIResult.fromJson(res);
@@ -100,7 +101,7 @@ class Authentication {
   /// Forgot Password
   Future<APIResult> forgotPassword(String email) async {
     var res = await Rest.post(RestParams(
-      '/API/v1/Authentication/ForgotPassword',
+      '/API/${Constants.version}/Authentication/ForgotPassword',
       data: jsonEncode(email),
     ));
     return APIResult.fromJson(res);
@@ -109,7 +110,7 @@ class Authentication {
   /// Verify
   Future<APIResult> verify(String token) async {
     var res = await Rest.post(RestParams(
-      '/API/v1/Authentication/Verify',
+      '/API/${Constants.version}/Authentication/Verify',
       data: jsonEncode(token),
     ));
     return APIResult.fromJson(res);
@@ -129,7 +130,7 @@ class Authentication {
   void signOut() async {
     await State.clearSession();
     await Rest.get(
-      RestParams('/API/v1/Authentication/Logout'),
+      RestParams('/API/${Constants.version}/Authentication/Logout'),
     );
   }
 }

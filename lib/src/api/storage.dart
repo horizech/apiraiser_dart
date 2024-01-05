@@ -1,4 +1,5 @@
 import 'dart:typed_data';
+import 'package:apiraiser/constants.dart';
 import 'package:apiraiser/src/api/rest.dart';
 import 'package:apiraiser/src/models/rest_params.dart';
 import 'package:apiraiser/src/models/sorage_upload_request.dart';
@@ -31,7 +32,7 @@ class Storage {
         });
       }
       var response = await dio.post(
-        '${State.endPoint}/API/v1/Storage',
+        '${State.endPoint}/API/${Constants.version}/Storage',
         data: formData,
       );
       return APIResult.fromJson(response.data);
@@ -63,7 +64,7 @@ class Storage {
         });
       }
       var response = await dio.put(
-        '${State.endPoint}/API/v1/Storage/$storageId',
+        '${State.endPoint}/API/${Constants.version}/Storage/$storageId',
         data: formData,
       );
       return APIResult.fromJson(response.data);
@@ -76,7 +77,7 @@ class Storage {
   Future<APIResult> delete(String storageId) async {
     try {
       var res = await Rest.delete(
-        RestParams('/API/v1/Storage/$storageId'),
+        RestParams('/API/${Constants.version}/Storage/$storageId'),
       );
       return APIResult.fromJson(res);
     } catch (e) {
@@ -89,7 +90,7 @@ class Storage {
     try {
       var res = await Rest.get(
         RestParams(
-          '/API/v1/Storage/download/$storageId',
+          '/API/${Constants.version}/Storage/download/$storageId',
           responseType: ResponseType.stream,
         ),
       );

@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:apiraiser/constants.dart';
 import 'package:apiraiser/src/api/rest.dart';
 import 'package:apiraiser/src/models/rest_params.dart';
 import 'package:apiraiser/src/models/api_result.dart';
@@ -10,7 +11,7 @@ class Initialization {
   /// Is Apiraiser Initialized
   static Future<APIResult> isInitialized() async {
     var res = await Rest.get(
-      RestParams('/API/v1/Apiraiser/IsInitialized'),
+      RestParams('/API/${Constants.version}/Apiraiser/IsInitialized'),
     );
     return APIResult.fromJson(res);
   }
@@ -22,7 +23,7 @@ class Initialization {
     try {
       var res = await Rest.post(
         RestParams(
-          '/API/v1/Apiraiser/Initialize',
+          '/API/${Constants.version}/Apiraiser/Initialize',
           data: jsonEncode(data),
         ),
       );

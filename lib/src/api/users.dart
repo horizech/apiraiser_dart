@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:apiraiser/constants.dart';
 import 'package:apiraiser/src/api/rest.dart';
 import 'package:apiraiser/src/models/rest_params.dart';
 import 'package:apiraiser/src/models/user.dart';
@@ -9,7 +10,7 @@ class Users {
   /// Get user roles by [userId]
   Future<APIResult> getUserRoles(String userId) async {
     var res = await Rest.get(
-      RestParams('/API/v1/Users/GetUserRoles/$userId'),
+      RestParams('/API/${Constants.version}/Users/GetUserRoles/$userId'),
     );
     return APIResult.fromJson(res);
   }
@@ -17,7 +18,7 @@ class Users {
   /// Get user by [id]
   Future<APIResult> get(String id) async {
     var res = await Rest.get(
-      RestParams('/API/v1/Users/GetUser/$id'),
+      RestParams('/API/${Constants.version}/Users/GetUser/$id'),
     );
     return APIResult.fromJson(res);
   }
@@ -25,7 +26,7 @@ class Users {
   /// Get user by [role]
   Future<APIResult> getUserByRole(String role) async {
     var res = await Rest.get(
-      RestParams('/API/v1/Users/GetUserByRole/$role'),
+      RestParams('/API/${Constants.version}/Users/GetUserByRole/$role'),
     );
     return APIResult.fromJson(res);
   }
@@ -33,7 +34,7 @@ class Users {
   /// Get all users
   Future<APIResult> getAll() async {
     var res = await Rest.get(
-      RestParams('/API/v1/Users/GetUsers'),
+      RestParams('/API/${Constants.version}/Users/GetUsers'),
     );
     return APIResult.fromJson(res);
   }
@@ -41,7 +42,8 @@ class Users {
   /// Check if username is available
   Future<APIResult> isUsernameAvailable(String username) async {
     var res = await Rest.get(
-      RestParams('/API/v1/Users/IsUsernameAvailable/$username'),
+      RestParams(
+          '/API/${Constants.version}/Users/IsUsernameAvailable/$username'),
     );
     return APIResult.fromJson(res);
   }
@@ -49,7 +51,7 @@ class Users {
   /// Check if email is available
   Future<APIResult> isEmailAvailable(String email) async {
     var res = await Rest.get(
-      RestParams('/API/v1/Users/IsEmailAvailable/$email'),
+      RestParams('/API/${Constants.version}/Users/IsEmailAvailable/$email'),
     );
     return APIResult.fromJson(res);
   }
@@ -68,7 +70,7 @@ class Users {
     try {
       var res = await Rest.post(
         RestParams(
-          '/API/v1/Users/AddUser',
+          '/API/${Constants.version}/Users/AddUser',
           data: jsonEncode(data),
         ),
       );
@@ -100,7 +102,7 @@ class Users {
       }
       var res = await Rest.put(
         RestParams(
-          '/API/v1/Users/UpdateUser?Id=$id',
+          '/API/${Constants.version}/Users/UpdateUser?Id=$id',
           data: jsonEncode(data),
         ),
       );
@@ -114,7 +116,7 @@ class Users {
   Future<APIResult> delete(String id) async {
     try {
       var res = await Rest.delete(
-        RestParams('/API/v1/Users/DeleteUser?Id=$id'),
+        RestParams('/API/${Constants.version}/Users/DeleteUser?Id=$id'),
       );
       return APIResult.fromJson(res);
     } catch (e) {

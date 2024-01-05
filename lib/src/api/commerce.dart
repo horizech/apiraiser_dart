@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:apiraiser/constants.dart';
 import 'package:apiraiser/src/api/rest.dart';
 import 'package:apiraiser/src/models/find_product_request.dart';
 import 'package:apiraiser/src/models/rest_params.dart';
@@ -12,7 +13,7 @@ class Commerce {
     try {
       var res = await Rest.get(
         RestParams(
-            '/API/v1/Commerce/FindAttributeValues?collection=$collection'),
+            '/API/${Constants.version}/Commerce/FindAttributeValues?collection=$collection'),
       );
       return APIResult.fromJson(res);
     } catch (e) {
@@ -24,7 +25,7 @@ class Commerce {
   Future<APIResult> findProducts(FindProductRequest request) async {
     try {
       var res = await Rest.post(
-        RestParams('/API/v1/Commerce/FindProducts',
+        RestParams('/API/${Constants.version}/Commerce/FindProducts',
             data: jsonEncode(request.toJson(request))),
       );
       return APIResult.fromJson(res);
