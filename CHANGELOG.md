@@ -1,11 +1,12 @@
-## 2.0.1
+## 3.0.0 (unrelaesed)
 
-- Updated apiraiser version from v1 to v2
+- Updated apiraiser version from v2 to v3
 - Updated DeleteRow API
 - Updated Table, Column, Data APIs
 
 ## 2.0.0
 
+- Updated apiraiser version from v1 to v2
 - Added Archive APIs
 - Added AWSS3 APIs
 
