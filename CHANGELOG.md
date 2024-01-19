@@ -2,6 +2,7 @@
 
 - Updated apiraiser version from v1 to v2
 - Updated DeleteRow API
+- Updated Table, Column, Data APIs
 
 ## 2.0.0
 

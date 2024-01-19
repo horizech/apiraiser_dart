@@ -13,7 +13,7 @@ class Column {
     try {
       var res = await Rest.get(
         RestParams(
-          '/API/${Constants.version}/GetPredefinedColumns',
+          '/API/${Constants.version}/Column/GetPredefinedColumns',
         ),
       );
       return APIResult.fromJson(res);
@@ -27,7 +27,7 @@ class Column {
     try {
       var res = await Rest.get(
         RestParams(
-          '/API/${Constants.version}/$table/Columns',
+          '/API/${Constants.version}/Column/$table',
         ),
       );
       return APIResult.fromJson(res);
@@ -41,7 +41,7 @@ class Column {
     Map<String, dynamic> data = columnInfo.toJson(columnInfo);
     try {
       var res = await Rest.post(RestParams(
-        '/API/${Constants.version}/$table/Column',
+        '/API/${Constants.version}/Column/$table',
         data: jsonEncode(data),
       ));
       return APIResult.fromJson(res);
@@ -54,7 +54,7 @@ class Column {
   Future<APIResult> delete(String table, String column) async {
     try {
       var res = await Rest.delete(
-        RestParams('/API/${Constants.version}/$table/Column/$column'),
+        RestParams('/API/${Constants.version}/Column/$table/$column'),
       );
       return APIResult.fromJson(res);
     } catch (e) {

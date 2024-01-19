@@ -17,7 +17,7 @@ class Table {
           columns.map((e) => e.toJson(e)).toList();
       var res = await Rest.post(
         RestParams(
-          '/API/${Constants.version}/CreateTable?table=$table&tags=$tags',
+          '/API/${Constants.version}/Table?table=$table&tags=$tags',
           data: jsonEncode(data),
         ),
       );
@@ -48,7 +48,7 @@ class Table {
         "Tags": request.tags
       });
       var response = await dio.post(
-        '/API/${Constants.version}/CreateTableUsingDefinitionFile',
+        '/API/${Constants.version}/Table/CreateTableUsingDefinitionFile',
         data: formData,
       );
       return APIResult.fromJson(response.data);
@@ -61,7 +61,7 @@ class Table {
   Future<APIResult> getList() async {
     try {
       var res = await Rest.get(
-        RestParams('/API/${Constants.version}/GetTablesList'),
+        RestParams('/API/${Constants.version}/Table'),
       );
       return APIResult.fromJson(res);
     } catch (e) {
@@ -74,7 +74,7 @@ class Table {
     try {
       var res = await Rest.get(
         RestParams(
-          '/API/${Constants.version}/DownloadTableDefinitionFile/$table',
+          '/API/${Constants.version}/Table/DownloadTableDefinitionFile/$table',
           responseType: ResponseType.stream,
         ),
       );
@@ -88,7 +88,7 @@ class Table {
   Future<APIResult> delete(String table) async {
     try {
       var res = await Rest.delete(
-        RestParams('/API/${Constants.version}/DeleteTable?table=$table'),
+        RestParams('/API/${Constants.version}/Table?table=$table'),
       );
       return APIResult.fromJson(res);
     } catch (e) {

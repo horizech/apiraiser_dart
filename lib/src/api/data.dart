@@ -37,7 +37,7 @@ class Data {
       }
       var res = await Rest.get(
         RestParams(
-          "/API/${Constants.version}/table/$table",
+          "/API/${Constants.version}/Data/$table",
           params: params,
         ),
       );
@@ -52,7 +52,7 @@ class Data {
     try {
       var res = await Rest.post(
         RestParams(
-          "/API/${Constants.version}/table/$table",
+          "/API/${Constants.version}/Data/$table",
           data: jsonEncode(data),
         ),
       );
@@ -66,7 +66,7 @@ class Data {
   Future<APIResult> getById(String table, String id) async {
     try {
       var res = await Rest.get(
-        RestParams('/API/${Constants.version}/table/$table/$id'),
+        RestParams('/API/${Constants.version}/Data/$table/$id'),
       );
       return APIResult.fromJson(res);
     } catch (e) {
@@ -80,7 +80,7 @@ class Data {
     try {
       var res = await Rest.put(
         RestParams(
-          '/API/${Constants.version}/table/$table/$id',
+          '/API/${Constants.version}/Data/$table/$id',
           data: jsonEncode(data),
         ),
       );
@@ -95,7 +95,7 @@ class Data {
     try {
       var res = await Rest.delete(
         RestParams(
-          '/API/${Constants.version}/table/$table/$id',
+          '/API/${Constants.version}/Data/$table/$id',
         ),
       );
       return APIResult.fromJson(res);
@@ -127,7 +127,7 @@ class Data {
       }
       var res = await Rest.post(
         RestParams(
-          '/API/${Constants.version}/table/$table/GetRowsByConditions',
+          '/API/${Constants.version}/Data/$table/GetRowsByConditions',
           params: params,
           data: QuerySearchItem.toJsonList(conditions),
         ),
@@ -144,7 +144,7 @@ class Data {
     try {
       var res = await Rest.post(
         RestParams(
-          '/API/${Constants.version}/table/$table/InsertRows',
+          '/API/${Constants.version}/Data/$table/InsertRows',
           data: jsonEncode(data),
         ),
       );
@@ -164,7 +164,7 @@ class Data {
     try {
       var res = await Rest.put(
         RestParams(
-          '/API/${Constants.version}/table/$table/UpdateRows',
+          '/API/${Constants.version}/Data/$table/UpdateRows',
           data: jsonEncode(dataMap),
         ),
       );
@@ -182,7 +182,7 @@ class Data {
     try {
       var res = await Rest.delete(
         RestParams(
-          '/API/${Constants.version}/table/$table/DeleteRows',
+          '/API/${Constants.version}/Data/$table/DeleteRows',
           data: QuerySearchItem.toJsonList(conditions),
         ),
       );
