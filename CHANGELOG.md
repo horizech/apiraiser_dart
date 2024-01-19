@@ -3,6 +3,7 @@
 - Updated apiraiser version from v2 to v3
 - Updated DeleteRow API
 - Updated Table, Column, Data APIs
+- Added AWSS3 upload folder api
 
 ## 2.0.0
 
