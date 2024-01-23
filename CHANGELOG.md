@@ -1,4 +1,4 @@
-## 3.0.0.RC1
+## 3.0.0.rc1
 
 - Updated apiraiser version from v2 to v3
 - Updated DeleteRow API
