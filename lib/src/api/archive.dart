@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:typed_data';
 import 'package:apiraiser/constants.dart';
 import 'package:apiraiser/src/api/rest.dart';
+import 'package:apiraiser/src/enums/output_path_prefix.dart';
 import 'package:apiraiser/src/models/api_result.dart';
 import 'package:apiraiser/src/models/rest_params.dart';
 
@@ -24,9 +25,17 @@ class Archive {
   }
 
   /// Extract By Path
-  Future<APIResult> extractByPath(String path, String destination) async {
+  Future<APIResult> extractByPath(
+    String archivePath,
+    String outputPath,
+    OutputPathPrefix outputPathPrefix,
+  ) async {
     try {
-      Map<String, String> map = {"Path": path, "Destination": destination};
+      Map<String, String> map = {
+        "ArchivePath": archivePath,
+        "OutputPath": outputPath,
+        "OutputPathPrefix": outputPathPrefix.index.toString()
+      };
       var res = await Rest.post(
         RestParams(
           '/API/${Constants.version}/Archive/ExtractByPath',
@@ -40,9 +49,14 @@ class Archive {
   }
 
   /// Extract By Url
-  Future<APIResult> extractByUrl(String url, String destination) async {
+  Future<APIResult> extractByUrl(
+      String url, String outputPath, OutputPathPrefix outputPathPrefix) async {
     try {
-      Map<String, String> map = {"Url": url, "Destination": destination};
+      Map<String, String> map = {
+        "Url": url,
+        "OutputPath": outputPath,
+        "OutputPathPrefix": outputPathPrefix.index.toString()
+      };
       var res = await Rest.post(
         RestParams(
           '/API/${Constants.version}/Archive/ExtractByUrl',
@@ -56,9 +70,14 @@ class Archive {
   }
 
   /// Extract By Bytes
-  Future<APIResult> extractByBytes(Uint8List bytes, String destination) async {
+  Future<APIResult> extractByBytes(Uint8List bytes, String outputPath,
+      OutputPathPrefix outputPathPrefix) async {
     try {
-      Map<String, dynamic> map = {"Bytes": bytes, "Destination": destination};
+      Map<String, dynamic> map = {
+        "Bytes": bytes,
+        "OutputPath": outputPath,
+        "OutputPathPrefix": outputPathPrefix.index.toString()
+      };
       var res = await Rest.post(
         RestParams(
           '/API/${Constants.version}/Archive/ExtractByBytes',
@@ -73,11 +92,21 @@ class Archive {
 
   /// Extract Using Storage
   Future<APIResult> extractUsingStorage(
-      String storage, String destination) async {
+    String storage,
+    String outputPath,
+    OutputPathPrefix outputPathPrefix,
+  ) async {
+    Map<String, dynamic> map = {
+      "OutputPath": outputPath,
+      "OutputPathPrefix": outputPathPrefix.index.toString()
+    };
+
     try {
       var res = await Rest.post(
         RestParams(
-            '/API/${Constants.version}/Archive/ExtractUsingStorage?storageId=$storage&destination=$destination'),
+          '/API/${Constants.version}/Archive/ExtractUsingStorage?storageId=$storage',
+          data: jsonEncode(map),
+        ),
       );
       return APIResult.fromJson(res);
     } catch (e) {
