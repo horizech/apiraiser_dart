@@ -31,10 +31,10 @@ class Archive {
     OutputPathPrefix outputPathPrefix,
   ) async {
     try {
-      Map<String, String> map = {
+      Map<String, dynamic> map = {
         "ArchivePath": archivePath,
         "OutputPath": outputPath,
-        "OutputPathPrefix": outputPathPrefix.index.toString()
+        "OutputPathPrefix": outputPathPrefix.index
       };
       var res = await Rest.post(
         RestParams(
@@ -52,10 +52,10 @@ class Archive {
   Future<APIResult> extractByUrl(
       String url, String outputPath, OutputPathPrefix outputPathPrefix) async {
     try {
-      Map<String, String> map = {
+      Map<String, dynamic> map = {
         "Url": url,
         "OutputPath": outputPath,
-        "OutputPathPrefix": outputPathPrefix.index.toString()
+        "OutputPathPrefix": outputPathPrefix.index
       };
       var res = await Rest.post(
         RestParams(
@@ -76,7 +76,7 @@ class Archive {
       Map<String, dynamic> map = {
         "Bytes": bytes,
         "OutputPath": outputPath,
-        "OutputPathPrefix": outputPathPrefix.index.toString()
+        "OutputPathPrefix": outputPathPrefix.index
       };
       var res = await Rest.post(
         RestParams(
@@ -98,7 +98,7 @@ class Archive {
   ) async {
     Map<String, dynamic> map = {
       "OutputPath": outputPath,
-      "OutputPathPrefix": outputPathPrefix.index.toString()
+      "OutputPathPrefix": outputPathPrefix.index
     };
 
     try {
