@@ -22,11 +22,12 @@ class AWSS3 {
   }
 
   /// Upload folder
-  Future<APIResult> uploadFolder(String key, String folder) async {
+  Future<APIResult> uploadFolder(String key, String folder,
+      {bool deleteSourceFolderAfterUpload = false}) async {
     try {
       var res = await Rest.post(
         RestParams(
-          '/API/${Constants.version}/AWSS3/UploadFolder?key=$key',
+          '/API/${Constants.version}/AWSS3/UploadFolder?key=$key&deleteSourceFolderAfterUpload=$deleteSourceFolderAfterUpload',
           data: jsonEncode(folder),
         ),
       );

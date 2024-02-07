@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:ffi';
 import 'dart:typed_data';
 import 'package:apiraiser/constants.dart';
 import 'package:apiraiser/src/api/rest.dart';
@@ -26,16 +27,17 @@ class Archive {
 
   /// Extract By Path
   Future<APIResult> extractByPath(
-    String archivePath,
-    String outputPath,
-    OutputPathPrefix outputPathPrefix,
-  ) async {
+      String archivePath, String outputPath, OutputPathPrefix outputPathPrefix,
+      {bool? overwriteFiles}) async {
     try {
       Map<String, dynamic> map = {
         "ArchivePath": archivePath,
         "OutputPath": outputPath,
         "OutputPathPrefix": outputPathPrefix.index
       };
+      if (overwriteFiles != null) {
+        map["OverwriteFiles"] = overwriteFiles;
+      }
       var res = await Rest.post(
         RestParams(
           '/API/${Constants.version}/Archive/ExtractByPath',
@@ -50,13 +52,17 @@ class Archive {
 
   /// Extract By Url
   Future<APIResult> extractByUrl(
-      String url, String outputPath, OutputPathPrefix outputPathPrefix) async {
+      String url, String outputPath, OutputPathPrefix outputPathPrefix,
+      {bool? overwriteFiles}) async {
     try {
       Map<String, dynamic> map = {
         "Url": url,
         "OutputPath": outputPath,
         "OutputPathPrefix": outputPathPrefix.index
       };
+      if (overwriteFiles != null) {
+        map["OverwriteFiles"] = overwriteFiles;
+      }
       var res = await Rest.post(
         RestParams(
           '/API/${Constants.version}/Archive/ExtractByUrl',
@@ -70,14 +76,18 @@ class Archive {
   }
 
   /// Extract By Bytes
-  Future<APIResult> extractByBytes(Uint8List bytes, String outputPath,
-      OutputPathPrefix outputPathPrefix) async {
+  Future<APIResult> extractByBytes(
+      Uint8List bytes, String outputPath, OutputPathPrefix outputPathPrefix,
+      {bool? overwriteFiles}) async {
     try {
       Map<String, dynamic> map = {
         "Bytes": bytes,
         "OutputPath": outputPath,
         "OutputPathPrefix": outputPathPrefix.index
       };
+      if (overwriteFiles != null) {
+        map["OverwriteFiles"] = overwriteFiles;
+      }
       var res = await Rest.post(
         RestParams(
           '/API/${Constants.version}/Archive/ExtractByBytes',
@@ -92,15 +102,15 @@ class Archive {
 
   /// Extract Using Storage
   Future<APIResult> extractUsingStorage(
-    String storage,
-    String outputPath,
-    OutputPathPrefix outputPathPrefix,
-  ) async {
+      String storage, String outputPath, OutputPathPrefix outputPathPrefix,
+      {bool? overwriteFiles}) async {
     Map<String, dynamic> map = {
       "OutputPath": outputPath,
       "OutputPathPrefix": outputPathPrefix.index
     };
-
+    if (overwriteFiles != null) {
+      map["OverwriteFiles"] = overwriteFiles;
+    }
     try {
       var res = await Rest.post(
         RestParams(
