@@ -18,6 +18,7 @@ export 'src/models/user.dart';
 export 'src/models/create_table_using_definition_file_request.dart';
 export 'src/models/media_upload_request.dart';
 export 'src/models/sorage_upload_request.dart';
+export 'src/models/email_request.dart';
 export 'src/models/find_product_request.dart';
 
 

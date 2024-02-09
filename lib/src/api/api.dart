@@ -9,6 +9,7 @@ import 'package:apiraiser/src/api/initalization.dart';
 import 'package:apiraiser/src/api/media.dart';
 import 'package:apiraiser/src/api/miscellaneous.dart';
 import 'package:apiraiser/src/api/oauth2.dart';
+import 'package:apiraiser/src/api/smtp.dart';
 import 'package:apiraiser/src/api/storage.dart';
 import 'package:apiraiser/src/api/table.dart';
 import 'package:apiraiser/src/helpers/state.dart';
@@ -70,6 +71,9 @@ class Apiraiser {
 
   /// AWSS3 APIs
   static AWSS3 awss3 = AWSS3();
+
+  /// SMTP APIs
+  static SMTP smtp = SMTP();
 
   /// Token Validation
   static void validateAuthentication() {
