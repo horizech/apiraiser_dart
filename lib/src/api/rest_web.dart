@@ -12,6 +12,7 @@ class RestPlatform {
     try {
       BaseOptions options = BaseOptions(
         baseUrl: State.endPoint ?? "",
+        validateStatus: (_) => true,
         method: "GET",
         headers: helper.Headers.getHeaders(jwt: jwt),
         responseType: restParams.responseType,
@@ -32,6 +33,7 @@ class RestPlatform {
     try {
       BaseOptions options = BaseOptions(
         baseUrl: '${State.endPoint}',
+        validateStatus: (_) => true,
         method: "POST",
         headers: helper.Headers.getHeaders(jwt: jwt),
         responseType: restParams.responseType,
@@ -53,6 +55,7 @@ class RestPlatform {
     try {
       BaseOptions options = BaseOptions(
         baseUrl: '${State.endPoint}',
+        validateStatus: (_) => true,
         headers: helper.Headers.getHeaders(jwt: jwt),
         method: "PUT",
         responseType: restParams.responseType,

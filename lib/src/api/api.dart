@@ -90,11 +90,12 @@ class Apiraiser {
     String? jwt = await State.loadJwt();
 
     if (jwt != null && jwt.isNotEmpty) {
+      State.jwt = jwt;
       bool hasExpired = JwtDecoder.isExpired(jwt);
       if (hasExpired) {
-        await Apiraiser.authentication.refreshToken(jwt);
+        await Apiraiser.authentication.refreshToken();
       } else {
-        await Apiraiser.authentication.loadSessionUsingJwt(jwt);
+        await Apiraiser.authentication.loadSessionUsingJwt();
       }
     }
   }

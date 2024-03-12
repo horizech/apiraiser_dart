@@ -11,6 +11,15 @@ import 'package:apiraiser/src/helpers/state.dart';
 
 /// Authentication APIs
 class Authentication {
+  Future<bool> init() async {
+    String? jwt = await State.loadJwt();
+    if (jwt != null) {
+      State.jwt = jwt;
+    }
+    await loadSessionUsingJwt();
+    return true;
+  }
+
   /// Login
   Future<APIResult> login(LoginRequest loginRequest) async {
     Map<String, dynamic> loginData = loginRequest.toJson(loginRequest);
@@ -39,48 +48,27 @@ class Authentication {
   }
 
   /// Load last session
-  Future<APIResult> loadSessionUsingJwt(String? jwt) async {
+  Future<APIResult> loadSessionUsingJwt() async {
     try {
-      if (jwt != null && jwt.isNotEmpty) {
-        State.jwt = jwt;
-        var res = await Rest.get(
-          RestParams(
-            "/API/${Constants.version}/Authentication/LoadSessionUsingJwt",
-          ),
-        );
-        return await State.processAuthenticationResult(APIResult.fromJson(res),
-            jwt: jwt);
-      } else {
-        return APIResult(
-          success: false,
-          data: null,
-          message: 'Please provide JWT token!',
-        );
-      }
+      var res = await Rest.get(
+        RestParams(
+          "/API/${Constants.version}/Authentication/LoadSessionUsingJwt",
+        ),
+      );
+      return await State.processAuthenticationResult(APIResult.fromJson(res));
     } catch (e) {
-      rethrow;
+      return APIResult(message: e.toString());
     }
   }
 
   /// Refresh token
-  Future<APIResult> refreshToken(String jwt) async {
-    if (jwt.isNotEmpty) {
-      var res = await Rest.get(
-        RestParams(
-          "/API/${Constants.version}/Authentication/RefreshToken",
-        ),
-      );
-      return await State.processAuthenticationResult(
-        APIResult.fromJson(res),
-      );
-    } else {
-      return APIResult(
-        success: false,
-        errorCode: null,
-        message: 'Please provide JWT token!',
-        data: null,
-      );
-    }
+  Future<APIResult> refreshToken() async {
+    var res = await Rest.get(
+      RestParams(
+        "/API/${Constants.version}/Authentication/RefreshToken",
+      ),
+    );
+    return await State.processAuthenticationResult(APIResult.fromJson(res));
   }
 
   /// Reset Password
