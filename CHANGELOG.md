@@ -1,3 +1,9 @@
+## 3.0.0-rc.3
+
+- Added init function in authentication
+- Added sender name in SMTP Controller
+- Added validateStatus in ALL APIs
+
 ## 3.0.0-rc.2
 
 - Added overwriteFiles(boolean), OutputPathPrefix(enum) in Archive APIs
