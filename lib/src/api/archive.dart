@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:typed_data';
 import 'package:apiraiser/constants.dart';
-import 'package:apiraiser/src/api/rest.dart';
+import 'package:apiraiser/src/helpers/rest.dart';
 import 'package:apiraiser/src/enums/output_path_prefix.dart';
 import 'package:apiraiser/src/models/api_result.dart';
 import 'package:apiraiser/src/models/rest_params.dart';

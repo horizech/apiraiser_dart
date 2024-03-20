@@ -12,12 +12,12 @@ import 'package:apiraiser/src/api/oauth2.dart';
 import 'package:apiraiser/src/api/smtp.dart';
 import 'package:apiraiser/src/api/storage.dart';
 import 'package:apiraiser/src/api/table.dart';
+import 'package:apiraiser/src/helpers/interceptor.dart';
 import 'package:apiraiser/src/helpers/state.dart';
 import 'package:apiraiser/src/api/column.dart';
 import 'package:apiraiser/src/api/data.dart';
 import 'package:apiraiser/src/api/authentication.dart';
 import 'package:apiraiser/src/api/users.dart';
-import 'package:jwt_decoder/jwt_decoder.dart';
 
 /// Apiraiser class
 class Apiraiser {
@@ -75,28 +75,12 @@ class Apiraiser {
   /// SMTP APIs
   static SMTP smtp = SMTP();
 
-  /// Token Validation
-  static void validateAuthentication() {
-    // if (token == null || token!.isEmpty) {
-    //   throw ("Unauthorized!");
-    // }
-  }
-
   /// Initialize the library with provided [endpoint]
   ///
   /// Loads and performs Authentication using jwt if exists
-  static init(String endpoint) async {
+  static init(String endpoint, {Function? onUnauthenticated}) {
     State.endPoint = endpoint;
-    String? jwt = await State.loadJwt();
-
-    if (jwt != null && jwt.isNotEmpty) {
-      State.jwt = jwt;
-      bool hasExpired = JwtDecoder.isExpired(jwt);
-      if (hasExpired) {
-        await Apiraiser.authentication.refreshToken();
-      } else {
-        await Apiraiser.authentication.loadSessionUsingJwt();
-      }
-    }
+    setupDioInterceptors(onUnauthenticated);
+    return true;
   }
 }

@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:apiraiser/constants.dart';
-import 'package:apiraiser/src/api/rest.dart';
+import 'package:apiraiser/src/helpers/rest.dart';
 import 'package:apiraiser/src/models/oauth2_authentication_request.dart';
 import 'package:apiraiser/src/models/oauth2_authorize_request.dart';
 import 'package:apiraiser/src/models/oauth2_token_request.dart';

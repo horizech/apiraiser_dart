@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:apiraiser/constants.dart';
 import 'package:apiraiser/src/models/api_result.dart';
 import 'package:apiraiser/src/models/query_search_item.dart';
-import 'package:apiraiser/src/api/rest.dart';
+import 'package:apiraiser/src/helpers/rest.dart';
 import 'package:apiraiser/src/models/rest_params.dart';
 
 /// Data APIs

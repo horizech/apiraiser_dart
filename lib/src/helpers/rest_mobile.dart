@@ -1,13 +1,10 @@
+import 'package:apiraiser/src/helpers/rest.dart';
 import 'package:apiraiser/src/helpers/state.dart';
 import 'package:apiraiser/src/models/rest_params.dart';
-
 import 'package:apiraiser/src/helpers/headers.dart' as helper;
 import 'package:dio/dio.dart';
-import 'package:dio/browser.dart';
 
-Dio _dio = Dio();
-
-class RestPlatform {
+class RestPlatform extends Interceptor {
   Future<dynamic> get(RestParams restParams, {String? jwt}) async {
     try {
       BaseOptions options = BaseOptions(
@@ -17,14 +14,14 @@ class RestPlatform {
         headers: helper.Headers.getHeaders(jwt: jwt),
         responseType: restParams.responseType,
       );
-      _dio = Dio(options);
-      _dio.httpClientAdapter = BrowserHttpClientAdapter(withCredentials: true);
-      Response<dynamic> res = await _dio.get(
+      dio.options = options;
+
+      Response<dynamic> res = await dio.get(
         restParams.url,
         queryParameters: restParams.params,
       );
       return res.data;
-    } catch (e) {
+    } on DioException catch (e) {
       return e;
     }
   }
@@ -33,20 +30,20 @@ class RestPlatform {
     try {
       BaseOptions options = BaseOptions(
         baseUrl: '${State.endPoint}',
-        validateStatus: (_) => true,
         method: "POST",
+        validateStatus: (_) => true,
         headers: helper.Headers.getHeaders(jwt: jwt),
         responseType: restParams.responseType,
       );
-      _dio = Dio(options);
-      _dio.httpClientAdapter = BrowserHttpClientAdapter(withCredentials: true);
-      Response<dynamic> response = await _dio.post(
+      dio.options = options;
+
+      Response<dynamic> response = await dio.post(
         restParams.url,
         queryParameters: restParams.params,
         data: restParams.data,
       );
       return response.data;
-    } catch (e) {
+    } on DioException catch (e) {
       return e;
     }
   }
@@ -60,15 +57,15 @@ class RestPlatform {
         method: "PUT",
         responseType: restParams.responseType,
       );
-      _dio = Dio(options);
-      _dio.httpClientAdapter = BrowserHttpClientAdapter(withCredentials: true);
-      Response<dynamic> res = await _dio.put(
+      dio.options = options;
+
+      Response<dynamic> res = await dio.put(
         restParams.url,
         queryParameters: restParams.params,
         data: restParams.data,
       );
       return res.data;
-    } catch (e) {
+    } on DioException catch (e) {
       return e;
     }
   }
@@ -77,20 +74,19 @@ class RestPlatform {
     try {
       BaseOptions options = BaseOptions(
         baseUrl: '${State.endPoint}',
-        headers: helper.Headers.getHeaders(jwt: jwt),
         validateStatus: (status) => true,
+        headers: helper.Headers.getHeaders(jwt: jwt),
         responseType: restParams.responseType,
         method: "DELETE",
       );
-      _dio = Dio(options);
-      _dio.httpClientAdapter = BrowserHttpClientAdapter(withCredentials: true);
-      Response<dynamic> res = await _dio.delete(
+      dio.options = options;
+      Response<dynamic> res = await dio.delete(
         restParams.url,
         queryParameters: restParams.params,
         data: restParams.data,
       );
       return res.data;
-    } catch (e) {
+    } on DioException catch (e) {
       return e;
     }
   }

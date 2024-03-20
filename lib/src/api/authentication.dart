@@ -1,23 +1,41 @@
+import 'dart:async';
 import 'dart:convert';
-
+import 'package:apiraiser/apiraiser.dart';
 import 'package:apiraiser/constants.dart';
-import 'package:apiraiser/src/api/rest.dart';
+import 'package:apiraiser/src/helpers/rest.dart';
 import 'package:apiraiser/src/models/rest_params.dart';
-import 'package:apiraiser/src/models/api_result.dart';
-import 'package:apiraiser/src/models/login_request.dart';
-import 'package:apiraiser/src/models/signup_request.dart';
-import 'package:apiraiser/src/models/user.dart';
 import 'package:apiraiser/src/helpers/state.dart';
 
 /// Authentication APIs
 class Authentication {
-  Future<bool> init() async {
-    String? jwt = await State.loadJwt();
-    if (jwt != null) {
-      State.jwt = jwt;
+  Timer? _timer;
+  Future<APIResult> loadPreviousSession() async {
+    await State.loadSessionFromSecureStorage();
+    APIResult result = await Apiraiser.authentication
+        .loadSessionUsingJwt(accessToken: State.accessToken);
+    if (!result.success) {
+      return await Apiraiser.authentication.refreshToken(
+          accessToken: State.accessToken, refreshToken: State.refreshToken);
+    } else {
+      return result;
     }
-    await loadSessionUsingJwt();
-    return true;
+  }
+
+  /// Start Refresh Token Timer
+  startRefreshTokenTimer() {
+    _timer = Timer.periodic(const Duration(minutes: 5), (timer) async {
+      print("Timer is running");
+      await State.loadSessionFromSecureStorage();
+      await Apiraiser.authentication.refreshToken(
+          accessToken: State.accessToken, refreshToken: State.refreshToken);
+    });
+  }
+
+  /// Stop Refresh Token Timer
+  stopRefreshTokenTimer() {
+    if (_timer != null) {
+      _timer!.cancel();
+    }
   }
 
   /// Login
@@ -48,27 +66,46 @@ class Authentication {
   }
 
   /// Load last session
-  Future<APIResult> loadSessionUsingJwt() async {
+  Future<APIResult> loadSessionUsingJwt({String? accessToken}) async {
     try {
-      var res = await Rest.get(
-        RestParams(
-          "/API/${Constants.version}/Authentication/LoadSessionUsingJwt",
-        ),
-      );
-      return await State.processAuthenticationResult(APIResult.fromJson(res));
+      if (accessToken != null) {
+        var res = await Rest.get(
+            RestParams(
+              "/API/${Constants.version}/Authentication/LoadSessionUsingJwt",
+            ),
+            jwt: accessToken);
+        return await State.processAuthenticationResult(APIResult.fromJson(res));
+      } else {
+        var res = await Rest.get(
+          RestParams(
+            "/API/${Constants.version}/Authentication/LoadSessionUsingJwt",
+          ),
+        );
+        return await State.processAuthenticationResult(APIResult.fromJson(res));
+      }
     } catch (e) {
       return APIResult(message: e.toString());
     }
   }
 
   /// Refresh token
-  Future<APIResult> refreshToken() async {
-    var res = await Rest.get(
-      RestParams(
-        "/API/${Constants.version}/Authentication/RefreshToken",
-      ),
-    );
-    return await State.processAuthenticationResult(APIResult.fromJson(res));
+  Future<APIResult> refreshToken(
+      {String? accessToken, String? refreshToken}) async {
+    try {
+      Map<String, dynamic> data = {};
+      if (accessToken != null && refreshToken != null) {
+        data = {"AccessToken": accessToken, "RefreshToken": refreshToken};
+      }
+      var res = await Rest.post(
+        RestParams(
+          "/API/${Constants.version}/Authentication/RefreshToken",
+          data: jsonEncode(data),
+        ),
+      );
+      return await State.processAuthenticationResult(APIResult.fromJson(res));
+    } catch (e) {
+      return APIResult.error(e.toString());
+    }
   }
 
   /// Reset Password
@@ -106,7 +143,7 @@ class Authentication {
 
   /// Whether the user is signed in
   bool isSignedIn() {
-    return State.jwt?.isNotEmpty ?? false;
+    return State.accessToken?.isNotEmpty ?? false;
   }
 
   /// Get current signed in user
@@ -116,7 +153,8 @@ class Authentication {
 
   /// Signout user by clearing session
   void signOut() async {
-    await State.clearSession();
+    stopRefreshTokenTimer();
+    State.clearSession();
     await Rest.get(
       RestParams('/API/${Constants.version}/Authentication/Logout'),
     );

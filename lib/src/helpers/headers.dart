@@ -8,10 +8,11 @@ class Headers {
       "Content-Type": "application/json",
     };
 
-    if ((jwt?.isNotEmpty ?? false) || (State.jwt?.isNotEmpty ?? false)) {
+    if ((jwt?.isNotEmpty ?? false) ||
+        (State.accessToken?.isNotEmpty ?? false)) {
       headers.addAll(
         {
-          "Authorization": "Bearer ${jwt ?? State.jwt}",
+          "Authorization": "Bearer ${jwt ?? State.accessToken}",
         },
       );
     }

@@ -1,6 +1,6 @@
 import 'dart:typed_data';
 import 'package:apiraiser/constants.dart';
-import 'package:apiraiser/src/api/rest.dart';
+import 'package:apiraiser/src/helpers/rest.dart';
 import 'package:apiraiser/src/models/media_upload_request.dart';
 import 'package:apiraiser/src/models/rest_params.dart';
 import 'package:dio/dio.dart';
@@ -14,8 +14,8 @@ class Media {
     try {
       final dio = Dio();
       dio.options.headers['content-Type'] = 'application/json';
-      if (State.jwt?.isNotEmpty ?? false) {
-        dio.options.headers["authorization"] = "Bearer ${State.jwt}";
+      if (State.accessToken?.isNotEmpty ?? false) {
+        dio.options.headers["authorization"] = "Bearer ${State.accessToken}";
       }
       FormData formData = FormData.fromMap({});
 
@@ -45,8 +45,8 @@ class Media {
     try {
       final dio = Dio();
       dio.options.headers['content-Type'] = 'application/json';
-      if (State.jwt?.isNotEmpty ?? false) {
-        dio.options.headers["authorization"] = "Bearer ${State.jwt}";
+      if (State.accessToken?.isNotEmpty ?? false) {
+        dio.options.headers["authorization"] = "Bearer ${State.accessToken}";
       }
       FormData formData = FormData.fromMap({});
 

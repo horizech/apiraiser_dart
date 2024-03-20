@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:apiraiser/constants.dart';
-import 'package:apiraiser/src/api/rest.dart';
+import 'package:apiraiser/src/helpers/rest.dart';
 import 'package:apiraiser/src/models/rest_params.dart';
 import 'package:apiraiser/src/models/user.dart';
 import 'package:apiraiser/src/models/api_result.dart';
