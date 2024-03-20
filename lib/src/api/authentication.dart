@@ -24,7 +24,6 @@ class Authentication {
   /// Start Refresh Token Timer
   startRefreshTokenTimer() {
     _timer = Timer.periodic(const Duration(minutes: 5), (timer) async {
-      print("Timer is running");
       await State.loadSessionFromSecureStorage();
       await Apiraiser.authentication.refreshToken(
           accessToken: State.accessToken, refreshToken: State.refreshToken);
