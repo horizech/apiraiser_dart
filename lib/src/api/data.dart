@@ -138,6 +138,28 @@ class Data {
     }
   }
 
+  /// Get count
+  Future<APIResult> getCount(String table,
+      {List<QuerySearchItem>? conditions}) async {
+    String data = "";
+    try {
+      if (conditions != null && conditions.isNotEmpty) {
+        data = QuerySearchItem.toJsonList(conditions);
+      } else {
+        data = QuerySearchItem.toJsonList([]);
+      }
+      var res = await Rest.post(
+        RestParams(
+          '/API/${Constants.version}/Data/$table/GetCount',
+          data: data,
+        ),
+      );
+      return APIResult.fromJson(res);
+    } catch (e) {
+      return APIResult(message: e.toString());
+    }
+  }
+
   /// Insert a list of rows
   Future<APIResult> insertList(
       String table, List<Map<String, dynamic>> data) async {

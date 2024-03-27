@@ -1,3 +1,8 @@
+## 3.0.0-rc.7
+
+- Added getCount API
+- Compatable with Apiraiser v3.0.0-rc.7.
+
 ## 3.0.0-rc.5
 
 - Added interceptors for unauthorized access
