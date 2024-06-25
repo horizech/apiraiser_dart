@@ -1,3 +1,8 @@
+## 3.0.0
+
+- Created final v3 release
+- Compatable with Apiraiser v3.0.0.
+
 ## 3.0.0-rc.7
 
 - Added getCount API
