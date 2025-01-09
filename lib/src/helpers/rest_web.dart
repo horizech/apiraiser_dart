@@ -5,6 +5,12 @@ import 'package:apiraiser/src/helpers/headers.dart' as helper;
 import 'package:dio/dio.dart';
 import 'package:dio/browser.dart';
 
+HttpClientAdapter makeHttpClientAdapter() {
+  final adapter = HttpClientAdapter() as BrowserHttpClientAdapter;
+  adapter.withCredentials = true;
+  return adapter;
+}
+
 class RestPlatform extends Interceptor {
   Future<dynamic> get(RestParams restParams, {String? jwt}) async {
     try {
@@ -16,7 +22,7 @@ class RestPlatform extends Interceptor {
         responseType: restParams.responseType,
       );
       dio.options = options;
-      dio.httpClientAdapter = BrowserHttpClientAdapter(withCredentials: true);
+      dio.httpClientAdapter = makeHttpClientAdapter();
       Response<dynamic> res = await dio.get(
         restParams.url,
         queryParameters: restParams.params,
@@ -37,7 +43,7 @@ class RestPlatform extends Interceptor {
         responseType: restParams.responseType,
       );
       dio.options = options;
-      dio.httpClientAdapter = BrowserHttpClientAdapter(withCredentials: true);
+      dio.httpClientAdapter = makeHttpClientAdapter();
       Response<dynamic> response = await dio.post(
         restParams.url,
         queryParameters: restParams.params,
@@ -59,7 +65,7 @@ class RestPlatform extends Interceptor {
         responseType: restParams.responseType,
       );
       dio.options = options;
-      dio.httpClientAdapter = BrowserHttpClientAdapter(withCredentials: true);
+      dio.httpClientAdapter = makeHttpClientAdapter();
       Response<dynamic> res = await dio.put(
         restParams.url,
         queryParameters: restParams.params,
@@ -81,7 +87,7 @@ class RestPlatform extends Interceptor {
         method: "DELETE",
       );
       dio.options = options;
-      dio.httpClientAdapter = BrowserHttpClientAdapter(withCredentials: true);
+      dio.httpClientAdapter = makeHttpClientAdapter();
       Response<dynamic> res = await dio.delete(
         restParams.url,
         queryParameters: restParams.params,
