@@ -2,17 +2,22 @@ import 'dart:convert';
 
 import 'package:apiraiser/constants.dart';
 import 'package:apiraiser/src/helpers/rest.dart';
+import 'package:apiraiser/src/interfaces/encryption_request.dart';
 import 'package:apiraiser/src/models/api_result.dart';
 import 'package:apiraiser/src/models/rest_params.dart';
 
 /// Encryption APIs
-class Encryption {
+class EncryptionProvider {
+  static const String apiraiser = Constants.apiraiser;
+  static const String version = Constants.version;
+  static const String provider = Constants.provider;
+
   /// Generate AES RSA Pair
   Future<APIResult> generateAESRSAPair(String password) async {
     try {
       var res = await Rest.post(
         RestParams(
-          '/API/${Constants.version}/Encryption/GenerateAESRSAPair',
+          '/$apiraiser/$version/$provider/Encryption/GenerateAESRSAPair',
           data: jsonEncode(password),
         ),
       );
@@ -29,7 +34,7 @@ class Encryption {
     try {
       var res = await Rest.post(
         RestParams(
-          '/API/${Constants.version}/Encryption/GetEncryptionKeys',
+          '/$apiraiser/$version/$provider/Encryption/GetEncryptionKeys',
           data: jsonEncode(password),
         ),
       );
@@ -40,13 +45,12 @@ class Encryption {
   }
 
   /// Encrypt Data
-  Future<APIResult> encryptData(String password, String data) async {
+  Future<APIResult> encryptData(EncryptionRequest data) async {
     try {
-      Map<String, String> map = {"Password": password, "Data": data};
       var res = await Rest.post(
         RestParams(
-          '/API/${Constants.version}/Encryption/EncryptData',
-          data: jsonEncode(map),
+          '/$apiraiser/$version/$provider/Encryption/EncryptData',
+          data: data,
         ),
       );
       return APIResult.fromJson(res);
@@ -56,13 +60,26 @@ class Encryption {
   }
 
   /// Decrypt Data
-  Future<APIResult> decryptData(String password, String data) async {
+  Future<APIResult> decryptData(EncryptionRequest data) async {
     try {
-      Map<String, String> map = {"Password": password, "Data": data};
       var res = await Rest.post(
         RestParams(
-          '/API/${Constants.version}/Encryption/DecryptData',
-          data: jsonEncode(map),
+          '/$apiraiser/$version/$provider/Encryption/DecryptData',
+          data: data,
+        ),
+      );
+      return APIResult.fromJson(res);
+    } catch (e) {
+      return APIResult(message: e.toString(), success: false);
+    }
+  }
+
+  /// Get Plugin
+  Future<APIResult> getPlugins() async {
+    try {
+      var res = await Rest.get(
+        RestParams(
+          '/$apiraiser/$version/$provider/Encryption/GetPlugins',
         ),
       );
       return APIResult.fromJson(res);

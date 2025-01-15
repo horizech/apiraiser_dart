@@ -1,3 +1,4 @@
+import 'package:apiraiser/src/helpers/websocket_helper.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:apiraiser/src/models/api_result.dart';
 import 'package:apiraiser/src/models/user.dart';
@@ -12,6 +13,12 @@ class State {
 
   /// Endpoint
   static String? endPoint;
+
+  static String? webSocketEndpoint;
+
+  static dynamic webSocketServer;
+
+  static WebSocketHelper? webSocketHelper;
 
   /// User
   static User? user;

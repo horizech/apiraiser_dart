@@ -6,10 +6,10 @@ void main() async {
   await Apiraiser.init("https://apiraiser-api-endpoint.com");
 
   /// Authentication
-  await Apiraiser.authentication
+  await Apiraiser.provider.authentication
       .login(LoginRequest(username: "test", password: "P@ssword1"));
   // or
-  await Apiraiser.authentication
+  await Apiraiser.provider.authentication
       .login(LoginRequest(email: "test@example.com", password: "P@ssword1"));
 
   /// Get table rows

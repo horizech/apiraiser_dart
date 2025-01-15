@@ -9,12 +9,17 @@ import 'package:dio/dio.dart';
 
 /// ImportExport APIs
 class ImportExport {
+  static const String apiraiser = Constants.apiraiser;
+  static const String version = Constants.version;
+  static const String app = Constants.app;
+
   /// Export Excel
   Future<Uint8List?> exportExcel(
-      String table, List<QuerySearchItem> conditions) async {
+      String collection, List<QuerySearchItem> conditions) async {
     try {
       var res = await Rest.post(
-        RestParams('/API/${Constants.version}/ImportExport/ExportExcel/$table',
+        RestParams(
+            '/$apiraiser/$version/$app/ImportExport/ExportExcel/$collection',
             data: QuerySearchItem.toJsonList(conditions),
             responseType: ResponseType.stream),
       );
@@ -41,7 +46,7 @@ class ImportExport {
         ),
       });
       var response = await dio.post(
-          '${State.endPoint}/API/${Constants.version}/ImportExport/ImportExcel/$table',
+          '/$apiraiser/$version/$app/ImportExport/ImportExcel/$table',
           data: formData);
       return APIResult.fromJson(response.data);
     } catch (e) {

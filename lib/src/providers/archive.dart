@@ -7,14 +7,18 @@ import 'package:apiraiser/src/models/api_result.dart';
 import 'package:apiraiser/src/models/rest_params.dart';
 
 /// Archive APIs
-class Archive {
+class ArchiveProvider {
+  static const String apiraiser = Constants.apiraiser;
+  static const String version = Constants.version;
+  static const String provider = Constants.provider;
+
   /// Create Archive
   Future<APIResult> createArchive(String path, String fileName) async {
     try {
       Map<String, String> map = {"Path": path, "FileName": fileName};
       var res = await Rest.post(
         RestParams(
-          '/API/${Constants.version}/Archive/CreateArchive',
+          '/$apiraiser/$version/$provider/Archive/CreateArchive',
           data: jsonEncode(map),
         ),
       );
@@ -39,7 +43,7 @@ class Archive {
       }
       var res = await Rest.post(
         RestParams(
-          '/API/${Constants.version}/Archive/ExtractByPath',
+          '/$apiraiser/$version/$provider/Archive/ExtractByPath',
           data: jsonEncode(map),
         ),
       );
@@ -64,7 +68,7 @@ class Archive {
       }
       var res = await Rest.post(
         RestParams(
-          '/API/${Constants.version}/Archive/ExtractByUrl',
+          '/$apiraiser/$version/$provider/Archive/ExtractByUrl',
           data: jsonEncode(map),
         ),
       );
@@ -89,7 +93,7 @@ class Archive {
       }
       var res = await Rest.post(
         RestParams(
-          '/API/${Constants.version}/Archive/ExtractByBytes',
+          '/$apiraiser/$version/$provider/Archive/ExtractByBytes',
           data: jsonEncode(map),
         ),
       );
@@ -113,8 +117,22 @@ class Archive {
     try {
       var res = await Rest.post(
         RestParams(
-          '/API/${Constants.version}/Archive/ExtractUsingStorage?storageId=$storage',
+          '/$apiraiser/$version/$provider/Archive/ExtractUsingStorage?storageId=$storage',
           data: jsonEncode(map),
+        ),
+      );
+      return APIResult.fromJson(res);
+    } catch (e) {
+      return APIResult(message: e.toString(), success: false);
+    }
+  }
+
+  /// Get Plugins
+  Future<APIResult> getPlugins() async {
+    try {
+      var res = await Rest.get(
+        RestParams(
+          '/$apiraiser/$version/$provider/Archive/GetPlugins',
         ),
       );
       return APIResult.fromJson(res);

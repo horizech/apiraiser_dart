@@ -7,25 +7,37 @@ import 'package:apiraiser/src/models/rest_params.dart';
 import 'package:apiraiser/src/helpers/state.dart';
 
 /// Authentication APIs
-class Authentication {
+class AuthenticationProvider {
+  static const String apiraiser = Constants.apiraiser;
+  static const String version = Constants.version;
+  static const String provider = Constants.provider;
+
   Timer? _timer;
   Future<APIResult> loadPreviousSession() async {
     await State.loadSessionFromSecureStorage();
-    APIResult result = await Apiraiser.authentication
+    APIResult result = await Apiraiser.provider.authentication
         .loadSessionUsingJwt(accessToken: State.accessToken);
     if (!result.success) {
-      return await Apiraiser.authentication.refreshToken(
+      return await Apiraiser.provider.authentication.refreshToken(
           accessToken: State.accessToken, refreshToken: State.refreshToken);
     } else {
       return result;
     }
   }
 
+  /// Resume last session
+  Future<void> resumeLastSession() async {
+    final result = await Rest.get(RestParams(
+      '/$apiraiser/$version/$provider/Authentication/ResumeLastSession',
+    ));
+    await State.processAuthenticationResult(result);
+  }
+
   /// Start Refresh Token Timer
   startRefreshTokenTimer() {
     _timer = Timer.periodic(const Duration(minutes: 5), (timer) async {
       await State.loadSessionFromSecureStorage();
-      await Apiraiser.authentication.refreshToken(
+      await Apiraiser.provider.authentication.refreshToken(
           accessToken: State.accessToken, refreshToken: State.refreshToken);
     });
   }
@@ -42,7 +54,7 @@ class Authentication {
     Map<String, dynamic> loginData = loginRequest.toJson(loginRequest);
     dynamic res = await Rest.post(
       RestParams(
-        "/API/${Constants.version}/Authentication/Login",
+        "/$apiraiser/$version/$provider/Authentication/Login",
         data: jsonEncode(loginData),
       ),
     );
@@ -57,7 +69,7 @@ class Authentication {
 
     var res = await Rest.post(
       RestParams(
-        "/API/${Constants.version}/Authentication/Signup",
+        "/$apiraiser/$version/$provider/Authentication/Signup",
         data: jsonEncode(signupData),
       ),
     );
@@ -70,14 +82,14 @@ class Authentication {
       if (accessToken != null) {
         var res = await Rest.get(
             RestParams(
-              "/API/${Constants.version}/Authentication/LoadSessionUsingJwt",
+              "/$apiraiser/$version/$provider/Authentication/LoadSessionUsingJwt",
             ),
             jwt: accessToken);
         return await State.processAuthenticationResult(APIResult.fromJson(res));
       } else {
         var res = await Rest.get(
           RestParams(
-            "/API/${Constants.version}/Authentication/LoadSessionUsingJwt",
+            "/$apiraiser/$version/$provider/Authentication/LoadSessionUsingJwt",
           ),
         );
         return await State.processAuthenticationResult(APIResult.fromJson(res));
@@ -97,7 +109,7 @@ class Authentication {
       }
       var res = await Rest.post(
         RestParams(
-          "/API/${Constants.version}/Authentication/RefreshToken",
+          "/$apiraiser/$version/$provider/Authentication/RefreshToken",
           data: jsonEncode(data),
         ),
       );
@@ -116,7 +128,22 @@ class Authentication {
       "ConfirmPassword": confirmPassword,
     };
     var res = await Rest.post(RestParams(
-      '/API/${Constants.version}/Authentication/ResetPassword',
+      '/$apiraiser/$version/$provider/Authentication/ResetPassword',
+      data: jsonEncode(data),
+    ));
+    return APIResult.fromJson(res);
+  }
+
+  // Reset Email
+  Future<APIResult> resetEmail(
+      String token, String email, String confirmEmail) async {
+    Map<String, dynamic> data = {
+      "Token": token,
+      "Email": email,
+      "ConfirmEmail": confirmEmail,
+    };
+    var res = await Rest.post(RestParams(
+      '/$apiraiser/$version/$provider/Authentication/ResetEmail',
       data: jsonEncode(data),
     ));
     return APIResult.fromJson(res);
@@ -125,16 +152,25 @@ class Authentication {
   /// Forgot Password
   Future<APIResult> forgotPassword(String email) async {
     var res = await Rest.post(RestParams(
-      '/API/${Constants.version}/Authentication/ForgotPassword',
+      '/$apiraiser/$version/$provider/Authentication/ForgotPassword',
       data: jsonEncode(email),
     ));
     return APIResult.fromJson(res);
   }
 
+  /// Change Email
+  Future<APIResult> changeEmail(String email) async {
+    final result = await Rest.post(RestParams(
+      '/$apiraiser/$version/$provider/Authentication/ChangeEmail',
+      data: email,
+    ));
+    return result;
+  }
+
   /// Verify
   Future<APIResult> verify(String token) async {
     var res = await Rest.post(RestParams(
-      '/API/${Constants.version}/Authentication/Verify',
+      '/$apiraiser/$version/$provider/Authentication/Verify',
       data: jsonEncode(token),
     ));
     return APIResult.fromJson(res);
@@ -155,7 +191,27 @@ class Authentication {
     stopRefreshTokenTimer();
     State.clearSession();
     await Rest.get(
-      RestParams('/API/${Constants.version}/Authentication/Logout'),
+      RestParams('/$apiraiser/$version/$provider/Authentication/Logout'),
     );
+  }
+
+  /// Get User Profile
+  Future<dynamic> getUserProfile(String email) async {
+    final result = await Rest.get(
+      RestParams(
+        '/$apiraiser/$version/$provider/Authentication/GetUserProfile',
+      ),
+    );
+    return result;
+  }
+
+  /// Get Plugins
+  Future<dynamic> getPlugins(String email) async {
+    final result = await Rest.get(
+      RestParams(
+        '/$apiraiser/$version/$provider/Authentication/GetPlugins',
+      ),
+    );
+    return result;
   }
 }

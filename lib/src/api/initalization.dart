@@ -7,7 +7,7 @@ import 'package:apiraiser/src/models/api_result.dart';
 import 'package:apiraiser/src/models/initialize_request.dart';
 
 /// Initialization APIs
-class Initialization {
+class InitializationProvider {
   /// Is Apiraiser Initialized
   static Future<APIResult> isInitialized() async {
     var res = await Rest.get(
