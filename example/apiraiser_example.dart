@@ -11,7 +11,4 @@ void main() async {
   // or
   await Apiraiser.provider.authentication
       .login(LoginRequest(email: "test@example.com", password: "P@ssword1"));
-
-  /// Get table rows
-  await Apiraiser.data.get("my-table");
 }

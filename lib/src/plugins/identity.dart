@@ -122,4 +122,17 @@ class IdentityPlugin {
       return APIResult(message: e.toString(), success: false);
     }
   }
+
+  Future<APIResult> getUserByRole(String role) async {
+    try {
+      var res = await Rest.get(
+        RestParams(
+          '/$apiraiser/$version/$plugin/Identity/GetUserByRole/$role',
+        ),
+      );
+      return APIResult.fromJson(res);
+    } catch (e) {
+      return APIResult(message: e.toString(), success: false);
+    }
+  }
 }

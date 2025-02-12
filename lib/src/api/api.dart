@@ -21,22 +21,13 @@ import 'package:apiraiser/src/plugins/commerce.dart';
 import 'package:apiraiser/src/providers/database.dart';
 import 'package:apiraiser/src/providers/email.dart';
 import 'package:apiraiser/src/providers/encryption.dart';
-import 'package:apiraiser/src/api/features.dart';
 import 'package:apiraiser/src/apps/functions.dart';
 import 'package:apiraiser/src/apps/importexport.dart';
-import 'package:apiraiser/src/api/initalization.dart';
 import 'package:apiraiser/src/providers/media.dart';
-import 'package:apiraiser/src/api/miscellaneous.dart';
-import 'package:apiraiser/src/api/oauth2.dart';
-import 'package:apiraiser/src/providers/s3.dart';
 import 'package:apiraiser/src/providers/storage.dart';
-import 'package:apiraiser/src/api/table.dart';
 import 'package:apiraiser/src/helpers/interceptor.dart';
 import 'package:apiraiser/src/helpers/state.dart';
-import 'package:apiraiser/src/api/column.dart';
-import 'package:apiraiser/src/api/data.dart';
 import 'package:apiraiser/src/providers/authentication.dart';
-import 'package:apiraiser/src/api/users.dart';
 
 /// Apiraiser class
 class Apiraiser {
@@ -49,27 +40,6 @@ class Apiraiser {
   static final apiraiser = ApiraiserClass();
 
   static final webSockets = WebSockets();
-
-  /// Column APIs
-  static Column column = Column();
-
-  /// Data APIs
-  static Data data = Data();
-
-  /// Miscellaneous APIs
-  static Miscellaneous miscellaneous = Miscellaneous();
-
-  /// Table APIs
-  static Table table = Table();
-
-  /// Users APIs
-  static Users users = Users();
-
-  /// Feature APIs
-  static Feature feature = Feature();
-
-  /// OAuth2 APIs
-  static OAuth2 oAuth2 = OAuth2();
 
   /// AWSS3 APIs
   static AWSS3 awss3 = AWSS3();
@@ -126,14 +96,8 @@ class _Provider {
   /// Encryption APIs
   final encryption = EncryptionProvider();
 
-  /// Initialization APIs
-  final initialization = InitializationProvider();
-
   /// Media APIs
   final media = MediaProvider();
-
-  /// S3 APIs
-  final s3 = S3Provider();
 
   /// Storage APIs
   final storage = StorageProvider();

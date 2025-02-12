@@ -268,7 +268,7 @@ class DatabaseProvider {
   }
 
   /// Get records
-  Future<dynamic> getRecords(
+  Future<APIResult> getRecords(
     String collection, {
     int? pageSize,
     int? page,
@@ -300,14 +300,13 @@ class DatabaseProvider {
       final result = await Rest.post(
         RestParams(
           uri.toString(),
-          data: conditions ?? [],
+          data: QuerySearchItem.toJsonList(conditions ?? []),
         ),
       );
 
-      return result;
+      return APIResult.fromJson(result);
     } catch (e) {
-      // Handle exceptions if needed
-      throw Exception('Failed to get records: $e');
+      return APIResult(message: e.toString(), success: false);
     }
   }
 
@@ -317,6 +316,22 @@ class DatabaseProvider {
       var res = await Rest.get(
         RestParams(
           '/$apiraiser/$version/$provider/Database/GetPlugins',
+        ),
+      );
+      return APIResult.fromJson(res);
+    } catch (e) {
+      return APIResult(message: e.toString(), success: false);
+    }
+  }
+
+  /// Delete records by conditions
+  Future<APIResult> deleteRecordsByConditions(
+      String collection, List<QuerySearchItem> conditions) async {
+    try {
+      var res = await Rest.delete(
+        RestParams(
+          '/$apiraiser/$version/$provider/Database/Record/$collection/DeleteRecords',
+          data: conditions,
         ),
       );
       return APIResult.fromJson(res);
