@@ -82,15 +82,21 @@ class RestAPIPlugin {
           '/$apiraiser/$version/$plugin/RestAPI/GetRecordsByConditions/$collection';
       final queryParams = <String, String>{};
 
-      if (orderBy != null) queryParams['orderBy'] = orderBy;
+      if (orderBy != null) {
+        queryParams['orderBy'] = orderBy;
+      }
       if (orderDescendingBy != null) {
         queryParams['orderDescendingBy'] = orderDescendingBy;
       }
-      if (groupBy != null) queryParams['groupBy'] = groupBy;
+      if (groupBy != null) {
+        queryParams['groupBy'] = groupBy;
+      }
       if (pageSize != null && pageSize > 0) {
         queryParams['pageSize'] = pageSize.toString();
       }
-      if (page != null) queryParams['page'] = page.toString();
+      if (page != null) {
+        queryParams['page'] = page.toString();
+      }
 
       final url = Uri(
         path: baseUrl,
@@ -123,13 +129,21 @@ class RestAPIPlugin {
       final baseUrl = '/$apiraiser/$version/$plugin/RestAPI/$collection';
       final queryParams = <String, String>{};
 
-      if (orderBy != null) queryParams['orderBy'] = orderBy;
+      if (orderBy != null) {
+        queryParams['orderBy'] = orderBy;
+      }
       if (orderDescendingBy != null) {
         queryParams['orderDescendingBy'] = orderDescendingBy;
       }
-      if (groupBy != null) queryParams['groupBy'] = groupBy;
-      if (limit != null && limit > 0) queryParams['limit'] = limit.toString();
-      if (offset != null) queryParams['offset'] = offset.toString();
+      if (groupBy != null) {
+        queryParams['groupBy'] = groupBy;
+      }
+      if (limit != null && limit > 0) {
+        queryParams['limit'] = limit.toString();
+      }
+      if (offset != null) {
+        queryParams['offset'] = offset.toString();
+      }
 
       final url = Uri(
         path: baseUrl,

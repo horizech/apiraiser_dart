@@ -136,15 +136,21 @@ class ContentStudioApp {
 
     final queryParams = <String, String>{};
 
-    if (orderBy != null) queryParams['orderBy'] = orderBy;
+    if (orderBy != null) {
+      queryParams['orderBy'] = orderBy;
+    }
     if (orderDescendingBy != null) {
       queryParams['orderDescendingBy'] = orderDescendingBy;
     }
-    if (groupBy != null) queryParams['groupBy'] = groupBy;
+    if (groupBy != null) {
+      queryParams['groupBy'] = groupBy;
+    }
     if (pageSize != null && pageSize > 0) {
       queryParams['pageSize'] = pageSize.toString();
     }
-    if (page != null) queryParams['page'] = page.toString();
+    if (page != null) {
+      queryParams['page'] = page.toString();
+    }
 
     final url = Uri.parse('$baseUrl?${Uri(queryParameters: queryParams)}');
 
