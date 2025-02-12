@@ -1,3 +1,36 @@
+## 4.0.0
+- Updated API version to v4
+- Migrated project to NodeNext
+- Added new APIs in authentication provider
+- Added new profile APIs
+- Added Branding Provider and BrandWizard Plugin APIs
+- Added Branding app APIs
+- Added Authentication settings API
+- Added WorkSafety Equipments app APIs
+- Added Media by type API
+- Added SES Plugin APIs
+- Added getFavicon API in Apiraiser class
+- Added new APIs in OAuth2 Provider
+- Added Content studio APIs
+- Added Settings APIs in OAuthLink Plugin
+- Added new profile APIs
+- Added Profile APIs
+- Added plugins, apps and providers folders
+- Added AppsStudio, Records, Media, CollectionsStudio, Functions, Tasks, Notes, ImportExports and ContentStudio app classes
+- Added AccessManager, I18n, Identity, OAuthLink, SMTP, Zip, RestAPI plugins classes
+- Added Archive, Authentication, Database, Email, Encryption, Internationalization, Media, S3, Storage provider classes
+- Added multipart content-type option in import data function
+- Added content type parameter in getHeaders function
+- Added design class and getData API in it
+- Added localization class and Added getData and getLocalization APIs in it
+- Created Apiraiser Class and moved all initialize and miscellaneous APIs in this class
+- Created policy class and added getData API in it.
+- Created resumeLastSession API in Authentication class
+- Created index.js file in src folder
+- Created Records class and added getData API in it
+- Created deleteByIds function in data class
+- Updated create table using definition file function for multipart content type
+
 ## 3.0.0
 
 - Created final v3 release
