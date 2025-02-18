@@ -160,13 +160,12 @@ class CollectionsStudioApp {
     }
   }
 
-  /// Get Template
+  /// Get I18n
   Future<APIResult> getI18n() async {
     try {
       var res = await Rest.get(
         RestParams(
           '/$apiraiser/$version/$app/CollectionsStudio/I18n',
-          responseType: ResponseType.stream,
         ),
       );
       return APIResult.fromJson(res);
