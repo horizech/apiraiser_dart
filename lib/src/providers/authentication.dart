@@ -135,12 +135,9 @@ class AuthenticationProvider {
   }
 
   // Reset Email
-  Future<APIResult> resetEmail(
-      String token, String email, String confirmEmail) async {
+  Future<APIResult> resetEmail(String token) async {
     Map<String, dynamic> data = {
-      "Token": token,
-      "Email": email,
-      "ConfirmEmail": confirmEmail,
+      "token": token,
     };
     var res = await Rest.post(RestParams(
       '/$apiraiser/$version/$provider/Authentication/ResetEmail',
@@ -203,6 +200,20 @@ class AuthenticationProvider {
       ),
     );
     return result;
+  }
+
+  /// Clean Old Sessions
+  Future<APIResult> cleanOldSessions() async {
+    try {
+      var res = await Rest.get(
+        RestParams(
+          '/$apiraiser/$version/$provider/Authentication/CleanOldSessions',
+        ),
+      );
+      return APIResult.fromJson(res);
+    } catch (e) {
+      return APIResult(message: e.toString(), success: false);
+    }
   }
 
   /// Get Plugins
