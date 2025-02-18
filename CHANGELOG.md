@@ -1,4 +1,10 @@
+## Unrelased
+
+- Added getI18n API in collection studio
+- Added getTemplate API in import export class
+
 ## 4.0.0
+
 - Updated API version to v4
 - Migrated project to NodeNext
 - Added new APIs in authentication provider
