@@ -164,4 +164,18 @@ class MediaApp {
       return APIResult(message: e.toString(), success: false);
     }
   }
+
+  /// Get media by ID
+  Future<APIResult> getMediaById(String id) async {
+    try {
+      var res = await Rest.get(
+        RestParams(
+          '/$apiraiser/$version/$app/Media/GetMediaById/$id',
+        ),
+      );
+      return APIResult.fromJson(res);
+    } catch (e) {
+      return APIResult(message: e.toString(), success: false);
+    }
+  }
 }
