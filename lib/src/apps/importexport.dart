@@ -53,4 +53,19 @@ class ImportExport {
       return APIResult(message: e.toString(), success: false);
     }
   }
+
+  /// Get Template
+  Future<APIResult> getTemplate(String collection) async {
+    try {
+      var res = await Rest.get(
+        RestParams(
+          '/$apiraiser/$version/$app/ImportExport/GetTemplate/$collection',
+          responseType: ResponseType.stream,
+        ),
+      );
+      return APIResult.fromJson(res);
+    } catch (e) {
+      return APIResult(message: e.toString(), success: false);
+    }
+  }
 }
