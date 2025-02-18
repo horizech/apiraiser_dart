@@ -159,4 +159,19 @@ class CollectionsStudioApp {
       return APIResult(message: e.toString(), success: false);
     }
   }
+
+  /// Get Template
+  Future<APIResult> getI18n() async {
+    try {
+      var res = await Rest.get(
+        RestParams(
+          '/$apiraiser/$version/$app/CollectionsStudio/I18n',
+          responseType: ResponseType.stream,
+        ),
+      );
+      return APIResult.fromJson(res);
+    } catch (e) {
+      return APIResult(message: e.toString(), success: false);
+    }
+  }
 }
