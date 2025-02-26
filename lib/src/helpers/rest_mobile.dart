@@ -11,7 +11,8 @@ class RestPlatform extends Interceptor {
         baseUrl: State.endPoint ?? "",
         validateStatus: (_) => true,
         method: "GET",
-        headers: helper.Headers.getHeaders(jwt: jwt),
+        headers: helper.Headers.getHeaders(
+            jwt: jwt, contentType: restParams.headers),
         responseType: restParams.responseType,
       );
       dio.options = options;
@@ -32,7 +33,8 @@ class RestPlatform extends Interceptor {
         baseUrl: '${State.endPoint}',
         method: "POST",
         validateStatus: (_) => true,
-        headers: helper.Headers.getHeaders(jwt: jwt),
+        headers: helper.Headers.getHeaders(
+            jwt: jwt, contentType: restParams.headers),
         responseType: restParams.responseType,
       );
       dio.options = options;

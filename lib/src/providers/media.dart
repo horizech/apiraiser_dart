@@ -14,11 +14,12 @@ class MediaProvider {
 
   /// upload media
   Future<APIResult> upload(MediaUploadRequest mediaUploadRequest) async {
+    FormData formData = mediaUploadRequest.toFormData();
     try {
       var res = await Rest.post(
         RestParams(
           '/$apiraiser/$version/$provider/Media',
-          data: mediaUploadRequest,
+          data: formData,
           headers: {
             'Content-Type': 'multipart/form-data',
           },

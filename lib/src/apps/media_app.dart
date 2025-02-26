@@ -106,10 +106,11 @@ class MediaApp {
   /// Upload media
   Future<APIResult> upload(MediaUploadRequest mediaUploadRequest) async {
     try {
+      FormData formData = mediaUploadRequest.toFormData();
       var res = await Rest.post(
         RestParams(
           '/$apiraiser/$version/$app/Media',
-          data: mediaUploadRequest,
+          data: formData,
           headers: {
             'Content-Type': 'multipart/form-data',
           },
