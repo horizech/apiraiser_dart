@@ -18,6 +18,7 @@ import 'package:apiraiser/src/plugins/zip.dart';
 import 'package:apiraiser/src/providers/archive.dart';
 import 'package:apiraiser/src/api/awss3.dart';
 import 'package:apiraiser/src/plugins/commerce.dart';
+import 'package:apiraiser/src/providers/background_jobs.dart';
 import 'package:apiraiser/src/providers/database.dart';
 import 'package:apiraiser/src/providers/email.dart';
 import 'package:apiraiser/src/providers/encryption.dart';
@@ -101,6 +102,9 @@ class _Provider {
 
   /// Storage APIs
   final storage = StorageProvider();
+
+  /// Background Jobs APIs
+  final backgroundJobs = BackgroundJobsProvider();
 }
 
 class _App {

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:apiraiser/constants.dart';
 import 'package:apiraiser/src/helpers/rest.dart';
 import 'package:apiraiser/src/interfaces/add_update_translations.dart';
@@ -195,6 +197,55 @@ class I18nPlugin {
           '/$apiraiser/$version/$plugin/i18n/Currency/$id',
         ),
       );
+      return APIResult.fromJson(res);
+    } catch (e) {
+      return APIResult(message: e.toString(), success: false);
+    }
+  }
+
+  // Insert Language
+  Future<APIResult> insertLanguage(Object data) async {
+    try {
+      var res = await Rest.post(RestParams(
+        '/$apiraiser/$version/$plugin/i18n/Language',
+        data: jsonEncode(data),
+      ));
+      return APIResult.fromJson(res);
+    } catch (e) {
+      return APIResult(message: e.toString(), success: false);
+    }
+  }
+
+  // Update Language
+  Future<APIResult> updateLanguage(String id, Object data) async {
+    try {
+      var res = await Rest.put(RestParams(
+        '/$apiraiser/$version/$plugin/i18n/Language/$id',
+        data: jsonEncode(data),
+      ));
+      return APIResult.fromJson(res);
+    } catch (e) {
+      return APIResult(message: e.toString(), success: false);
+    }
+  }
+
+  // Delete Language
+  Future<APIResult> deleteLanguage(String id) async {
+    try {
+      var res = await Rest.delete(RestParams(
+        '/$apiraiser/$version/$plugin/i18n/Language/$id',
+      ));
+      return APIResult.fromJson(res);
+    } catch (e) {
+      return APIResult(message: e.toString(), success: false);
+    }
+  }
+
+  // Get User Locale
+  Future<APIResult> getUserLocale(String locale) async {
+    try {
+      var res = await Rest.get(RestParams(
+          '/$apiraiser/$version/$plugin/i18n/GetUserLocale?locale=$locale'));
       return APIResult.fromJson(res);
     } catch (e) {
       return APIResult(message: e.toString(), success: false);

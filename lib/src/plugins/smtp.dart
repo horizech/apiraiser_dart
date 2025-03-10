@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:apiraiser/apiraiser.dart';
 import 'package:apiraiser/constants.dart';
 import 'package:apiraiser/src/helpers/rest.dart';
@@ -15,7 +17,7 @@ class SMTPEmailPlugin {
       var res = await Rest.post(
         RestParams(
           '/$apiraiser/$version/$plugin/SMTP/SendEmail',
-          data: request,
+          data: jsonEncode(request),
         ),
       );
       return APIResult.fromJson(res);

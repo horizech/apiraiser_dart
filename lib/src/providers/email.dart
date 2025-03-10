@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:apiraiser/apiraiser.dart';
 import 'package:apiraiser/constants.dart';
 import 'package:apiraiser/src/helpers/rest.dart';
@@ -10,12 +11,12 @@ class EmailProvider {
   static const String provider = Constants.provider;
 
   /// Send Email
-  Future<APIResult> sendEmail(EmailRequest requst) async {
+  Future<APIResult> sendEmail(EmailRequest request) async {
     try {
       var res = await Rest.post(
         RestParams(
           '/$apiraiser/$version/$provider/Email/SendEmail',
-          data: requst,
+          data: jsonEncode(request),
         ),
       );
       return APIResult.fromJson(res);

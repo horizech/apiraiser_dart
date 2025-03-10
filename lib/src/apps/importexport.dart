@@ -14,12 +14,12 @@ class ImportExport {
   static const String app = Constants.app;
 
   /// Export Excel
-  Future<Uint8List?> exportExcel(
-      String collection, List<QuerySearchItem> conditions) async {
+  Future<Uint8List?> exportExcel(String collection,
+      List<QuerySearchItem> conditions, String locale) async {
     try {
       var res = await Rest.post(
         RestParams(
-            '/$apiraiser/$version/$app/ImportExport/ExportExcel/$collection',
+            '/$apiraiser/$version/$app/ImportExport/ExportExcel/$collection?locale=$locale',
             data: QuerySearchItem.toJsonList(conditions),
             responseType: ResponseType.stream),
       );
@@ -55,11 +55,11 @@ class ImportExport {
   }
 
   /// Get Template
-  Future<APIResult> getTemplate(String collection) async {
+  Future<APIResult> getTemplate(String collection, String locale) async {
     try {
       var res = await Rest.get(
         RestParams(
-          '/$apiraiser/$version/$app/ImportExport/GetTemplate/$collection',
+          '/$apiraiser/$version/$app/ImportExport/GetTemplate/$collection?locale=$locale',
           responseType: ResponseType.stream,
         ),
       );

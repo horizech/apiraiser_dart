@@ -38,15 +38,15 @@ class EmailRequest {
   }
 
   /// Get Json from model
-  Map<String, dynamic> toJson(EmailRequest instance) {
+  Map<String, dynamic> toJson() {
     return <String, dynamic>{
-      'SenderEmail': instance.senderEmail,
-      'SenderName': instance.senderName,
-      'Receivers': instance.receivers,
-      'Body': instance.body,
-      'Subject': instance.subject,
-      'Cc': instance.cc,
-      'Bcc': instance.bcc,
+      'SenderEmail': senderEmail,
+      'SenderName': senderName,
+      'Receivers': receivers,
+      'Body': body,
+      'Subject': subject,
+      'Cc': cc,
+      'Bcc': bcc,
     };
   }
 }

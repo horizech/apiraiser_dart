@@ -242,7 +242,7 @@ class DatabaseProvider {
         RestParams(
           '/$apiraiser/$version/$provider/Database/Record/$collection/UpdateRecords',
           data: data,
-          params: conditions,
+          params: QuerySearchItem.toJsonList(conditions),
         ),
       );
       return APIResult.fromJson(res);
@@ -337,7 +337,7 @@ class DatabaseProvider {
       var res = await Rest.delete(
         RestParams(
           '/$apiraiser/$version/$provider/Database/Record/$collection/DeleteRecords',
-          data: conditions,
+          data: QuerySearchItem.toJsonList(conditions ?? []),
         ),
       );
       return APIResult.fromJson(res);
