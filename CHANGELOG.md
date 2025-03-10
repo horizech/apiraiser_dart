@@ -1,4 +1,10 @@
-## Unrelased
+## Unreleased
+
+- Added BackgroundJobs Provider class and its APIs
+- Added GetUserLocales API in internationalization provider
+- Added Languages CRUD APIs
+- Fixed Updated Records and delete Records APIs
+- Added locale parameter in Export excel
 
 ## 4.1.0-dev.1
 
